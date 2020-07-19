@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using API.Dtos;
 using AutoMapper;
-using Core.Entities;
+using Core.Entities.OrderAggregate;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

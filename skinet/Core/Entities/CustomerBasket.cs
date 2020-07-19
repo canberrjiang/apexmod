@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Core.Entities
+namespace Core.Entities.OrderAggregate
 {
   public class CustomerBasket
   {

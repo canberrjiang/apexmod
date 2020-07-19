@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Core.Entities;
+using Core.Entities.OrderAggregate;
 using Core.Interfaces;
 using StackExchange.Redis;
 

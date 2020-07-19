@@ -1,5 +1,5 @@
 using System.Linq;
-using Core.Entities;
+using Core.Entities.OrderAggregate;
 using Core.Specifications;
 using Microsoft.EntityFrameworkCore;
 
