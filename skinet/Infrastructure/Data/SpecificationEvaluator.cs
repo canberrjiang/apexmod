@@ -28,7 +28,7 @@ namespace Infrastructure.Data
 
       if (spec.IsPagingEnabled)
       {
-        query = query.Take(spec.Take).Skip(spec.Skip);
+        query = query.Skip(spec.Skip).Take(spec.Take);
       }
 
       query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
