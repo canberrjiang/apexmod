@@ -8,5 +8,8 @@ namespace Core.Interfaces
   {
     Task<Photo> SaveToDiskAsync(IFormFile file);
     void DeleteFromDisk(Photo photo);
+
+    Task<ComponentPhoto> SaveComponentPhotoToDiskAsync(IFormFile file);
+    void DeleteComponentPhotoFromDisk(ComponentPhoto photo);
   }
 }

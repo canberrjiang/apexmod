@@ -10,5 +10,22 @@ namespace Core.Entities
     public decimal TPrice { get; set; }
     public Product Product { get; set; }
     public int ProductId { get; set; }
+    public ComponentPhoto Photo { get; set; }
+
+    public ComponentPhoto AddComponentPhoto(string pictureUrl, string fileName)
+    {
+      var photo = new ComponentPhoto
+      {
+        FileName = fileName,
+        PictureUrl = pictureUrl
+      };
+      this.Photo = photo;
+      return photo;
+    }
+
+    public void RemoveComponentPhoto(int id)
+    {
+      this.Photo = null;
+    }
   }
 }

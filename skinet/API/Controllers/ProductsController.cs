@@ -210,7 +210,6 @@ namespace API.Controllers
       if (result <= 0) return BadRequest(new ApiResponse(400, "Problem adding product component"));
 
       return Ok();
-
     }
   }
 }

@@ -30,6 +30,7 @@ namespace API.Helpers
       CreateMap<Photo, PhotoToReturnDto>()
                 .ForMember(d => d.PictureUrl,
                     o => o.MapFrom<PhotoUrlResolver>());
+      CreateMap<ComponentPhoto, ComponentPhotoToReturnDto>().ForMember(d => d.PictureUrl, o => o.MapFrom<ComponentPhotoUrlResolver>());
     }
   }
 }

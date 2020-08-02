@@ -7,5 +7,6 @@ namespace API.Dtos
     public string Description { get; set; }
     public decimal PPrice { get; set; }
     public decimal TPrice { get; set; }
+    public ComponentPhotoToReturnDto Photo { get; set; }
   }
 }

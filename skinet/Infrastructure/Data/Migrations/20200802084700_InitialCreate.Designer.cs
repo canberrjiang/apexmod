@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20200802042754_InitialCreate")]
+    [Migration("20200802084700_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,29 @@ namespace Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.6");
+
+            modelBuilder.Entity("Core.Entities.ComponentPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductComponentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductComponentId")
+                        .IsUnique();
+
+                    b.ToTable("ComponentPhoto");
+                });
 
             modelBuilder.Entity("Core.Entities.OrderAggregate.DeliveryMethod", b =>
                 {
@@ -215,6 +238,15 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductComponent");
+                });
+
+            modelBuilder.Entity("Core.Entities.ComponentPhoto", b =>
+                {
+                    b.HasOne("Core.Entities.ProductComponent", "ProductComponent")
+                        .WithOne("Photo")
+                        .HasForeignKey("Core.Entities.ComponentPhoto", "ProductComponentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Entities.OrderAggregate.Order", b =>

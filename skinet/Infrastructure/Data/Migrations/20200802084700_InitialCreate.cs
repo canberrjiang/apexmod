@@ -177,6 +177,33 @@ namespace Infrastructure.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ComponentPhoto",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PictureUrl = table.Column<string>(nullable: true),
+                    FileName = table.Column<string>(nullable: true),
+                    ProductComponentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ComponentPhoto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ComponentPhoto_ProductComponent_ProductComponentId",
+                        column: x => x.ProductComponentId,
+                        principalTable: "ProductComponent",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ComponentPhoto_ProductComponentId",
+                table: "ComponentPhoto",
+                column: "ProductComponentId",
+                unique: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
@@ -210,6 +237,9 @@ namespace Infrastructure.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ComponentPhoto");
+
             migrationBuilder.DropTable(
                 name: "OrderItems");
 
