@@ -33,7 +33,7 @@ namespace Core.Specifications
     }
 
 
-    protected void AddIncludes(Expression<Func<T, object>> includeExpression)
+    protected void AddInclude(Expression<Func<T, object>> includeExpression)
     {
       Includes.Add(includeExpression);
     }
