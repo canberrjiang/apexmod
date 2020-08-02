@@ -37,7 +37,7 @@ namespace API.Controllers
       return new UserDto
       {
         Email = user.Email,
-        Token = _tokenService.Createtoken(user),
+        Token = await _tokenService.CreateToken(user),
         DisplayName = user.DisplayName
       };
     }
@@ -86,7 +86,7 @@ namespace API.Controllers
       return new UserDto
       {
         Email = user.Email,
-        Token = _tokenService.Createtoken(user),
+        Token = await _tokenService.CreateToken(user),
         DisplayName = user.DisplayName
       };
     }
@@ -98,20 +98,26 @@ namespace API.Controllers
       {
         return new BadRequestObjectResult(new ApiValidationErrorResponse { Errors = new[] { "Email address is in use" } });
       }
+
       var user = new AppUser
       {
         DisplayName = registerDto.DisplayName,
         Email = registerDto.Email,
-        UserName = registerDto.Email,
+        UserName = registerDto.Email
       };
 
       var result = await _userManager.CreateAsync(user, registerDto.Password);
+
       if (!result.Succeeded) return BadRequest(new ApiResponse(400));
+
+      var roleAddResult = await _userManager.AddToRoleAsync(user, "Member");
+
+      if (!roleAddResult.Succeeded) return BadRequest("Failed to add to role");
 
       return new UserDto
       {
         DisplayName = user.DisplayName,
-        Token = _tokenService.Createtoken(user),
+        Token = await _tokenService.CreateToken(user),
         Email = user.Email
       };
     }

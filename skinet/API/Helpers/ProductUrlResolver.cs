@@ -1,3 +1,4 @@
+using System.Linq;
 using API.Dtos;
 using AutoMapper;
 using Core.Entities.OrderAggregate;
@@ -7,20 +8,22 @@ namespace API.Helpers
 {
   public class ProductUrlResolver : IValueResolver<Product, ProductToReturnDto, string>
   {
-    private readonly IConfiguration __config;
-    public ProductUrlResolver(IConfiguration _config)
+    private readonly IConfiguration _config;
+    public ProductUrlResolver(IConfiguration config)
     {
-      __config = _config;
+      _config = config;
     }
 
     public string Resolve(Product source, ProductToReturnDto destination, string destMember, ResolutionContext context)
     {
-      if (!string.IsNullOrEmpty(source.PictureUrl))
+      var photo = source.Photos.FirstOrDefault(x => x.IsMain);
+
+      if (photo != null)
       {
-        return __config["ApiUrl"] + source.PictureUrl;
+        return _config["ApiUrl"] + photo.PictureUrl;
       }
 
-      return null;
+      return _config["ApiUrl"] + "images/products/azure-logo.png";
     }
   }
 }
