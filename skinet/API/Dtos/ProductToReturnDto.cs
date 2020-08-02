@@ -13,5 +13,6 @@ namespace API.Dtos
     public string ProductType { get; set; }
     public string ProductBrand { get; set; }
     public IEnumerable<PhotoToReturnDto> Photos { get; set; }
+    public IEnumerable<ProductComponentToReturnDto> ProductComponents { get; set; }
   }
 }

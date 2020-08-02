@@ -15,6 +15,8 @@ namespace Core.Entities.OrderAggregate
     public int ProductBrandId { get; set; }
     private readonly List<Photo> _photos = new List<Photo>();
     public IReadOnlyList<Photo> Photos => _photos.AsReadOnly();
+    private readonly List<ProductComponent> _productComponents = new List<ProductComponent>();
+    public IReadOnlyList<ProductComponent> ProductComponents => _productComponents.AsReadOnly();
 
     public void AddPhoto(string pictureUrl, string fileName, bool isMain = false)
     {
@@ -49,6 +51,24 @@ namespace Core.Entities.OrderAggregate
         photo.IsMain = true;
         if (currentMain != null) currentMain.IsMain = false;
       }
+    }
+
+    public void AddProductComponent(string title, string description, decimal pprice, decimal tprice)
+    {
+      var productComponent = new ProductComponent
+      {
+        Title = title,
+        Description = description,
+        PPrice = pprice,
+        TPrice = tprice
+      };
+      _productComponents.Add(productComponent);
+    }
+
+    public void RemoveProductCompoent(int id)
+    {
+      var productComponent = _productComponents.Find(x => x.Id == id);
+      _productComponents.Remove(productComponent);
     }
   }
 }

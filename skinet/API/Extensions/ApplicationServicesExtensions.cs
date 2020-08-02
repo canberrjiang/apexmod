@@ -21,6 +21,7 @@ namespace API.Extensions
       services.AddScoped<IBasketRepository, BasketRepository>();
       services.AddScoped<IPaymentService, PaymentService>();
       services.AddScoped<IPhotoService, PhotoService>();
+      services.AddScoped<IProductComponent, ProductComponentService>();
       services.Configure<ApiBehaviorOptions>(options =>
       {
         options.InvalidModelStateResponseFactory = actionContext =>

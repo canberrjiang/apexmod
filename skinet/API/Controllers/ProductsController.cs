@@ -5,6 +5,7 @@ using API.Dtos;
 using API.Errors;
 using API.Helpers;
 using AutoMapper;
+using Core.Entities;
 using Core.Entities.OrderAggregate;
 using Core.Interfaces;
 using Core.Specifications;
@@ -22,9 +23,11 @@ namespace API.Controllers
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPhotoService _photoService;
+    private readonly IProductComponent _productComponent;
 
-    public ProductsController(IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
+    public ProductsController(IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService, IProductComponent productComponent)
     {
+      _productComponent = productComponent;
       _photoService = photoService;
       _unitOfWork = unitOfWork;
       _mapper = mapper;
@@ -163,6 +166,51 @@ namespace API.Controllers
       var result = await _unitOfWork.Complete();
       if (result <= 0) return BadRequest(new ApiResponse(400, "Problem adding photos"));
       return Ok();
+    }
+    [HttpPut("{id}/productcomponent")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<ProductToReturnDto>> AddProductComponent(int id, ProductComponent component)
+    {
+      var spec = new ProductsWithTypesAndBrandsSpecification(id);
+      var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
+
+      var productComponent = _productComponent.CreateProductComponent(component);
+
+      if (productComponent != null)
+      {
+        product.AddProductComponent(productComponent.Title, productComponent.Description, productComponent.PPrice, productComponent.TPrice);
+        _unitOfWork.Repository<Product>().Update(product);
+
+        var result = await _unitOfWork.Complete();
+
+        if (result <= 0) return BadRequest(new ApiResponse(400, "Problem adding product component"));
+      }
+      else
+      {
+        return BadRequest(new ApiResponse(400, "problem creating product component"));
+      }
+      return _mapper.Map<Product, ProductToReturnDto>(product);
+    }
+
+    [HttpDelete("{id}/productcomponent/{productcomponentId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult> DeleteProductComponent(int id, int productcomponentId)
+    {
+      var spec = new ProductsWithTypesAndBrandsSpecification(id);
+      var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
+
+      var productComponent = product.ProductComponents.SingleOrDefault(x => x.Id == productcomponentId);
+
+      if (productComponent == null) return BadRequest(new ApiResponse(400, "Component does not exist"));
+
+      product.RemoveProductCompoent(productcomponentId);
+      _unitOfWork.Repository<Product>().Update(product);
+
+      var result = await _unitOfWork.Complete();
+      if (result <= 0) return BadRequest(new ApiResponse(400, "Problem adding product component"));
+
+      return Ok();
+
     }
   }
 }
