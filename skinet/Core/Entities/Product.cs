@@ -9,10 +9,10 @@ namespace Core.Entities.OrderAggregate
     public string Description { get; set; }
     public decimal Price { get; set; }
     public string PictureUrl { get; set; }
-    public ProductType ProductType { get; set; }
-    public int ProductTypeId { get; set; }
-    public ProductBrand ProductBrand { get; set; }
-    public int ProductBrandId { get; set; }
+    public ProductGraphic ProductGraphic { get; set; }
+    public int ProductGraphicId { get; set; }
+    public ProductPlatform ProductPlatform { get; set; }
+    public int ProductPlatformId { get; set; }
     private readonly List<Photo> _photos = new List<Photo>();
     public IReadOnlyList<Photo> Photos => _photos.AsReadOnly();
     private readonly List<ProductComponent> _productComponents = new List<ProductComponent>();

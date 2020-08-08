@@ -12,7 +12,7 @@ using Core.Specifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static Core.Specifications.ProductWithTypesAndBrandsSpecification;
+using static Core.Specifications.ProductWithPlatformsAndGraphicsSpecification;
 
 namespace API.Controllers
 {
@@ -38,7 +38,7 @@ namespace API.Controllers
     public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts(
       [FromQuery] ProductsSpecParams productParams)
     {
-      var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
+      var spec = new ProductsWithPlatformsAndGraphicsSpecification(productParams);
       var countSpec = new ProductWithFiltersForCountSpecification(productParams);
       var totalItems = await _unitOfWork.Repository<Product>().CountAsync(countSpec);
       var products = await _unitOfWork.Repository<Product>().ListAsync(spec);
@@ -52,24 +52,23 @@ namespace API.Controllers
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
     {
-      var spec = new ProductsWithTypesAndBrandsSpecification(id);
+      var spec = new ProductsWithPlatformsAndGraphicsSpecification(id);
       var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
       if (product == null) return NotFound(new ApiResponse(404));
       return _mapper.Map<Product, ProductToReturnDto>(product);
     }
 
-    [HttpGet("brands")]
-    public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
+    [HttpGet("graphics")]
+    public async Task<ActionResult<IReadOnlyList<ProductGraphic>>> GetProductGraphics()
     {
-      var result = await _unitOfWork.Repository<Product>().ListAllAsync();
+      var result = await _unitOfWork.Repository<ProductGraphic>().ListAllAsync();
       return Ok(result);
     }
 
-    [Cached(1000)]
-    [HttpGet("types")]
-    public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
+    [HttpGet("platforms")]
+    public async Task<ActionResult<IReadOnlyList<ProductPlatform>>> GetProductPlatforms()
     {
-      var result = await _unitOfWork.Repository<Product>().ListAllAsync();
+      var result = await _unitOfWork.Repository<ProductPlatform>().ListAllAsync();
       return Ok(result);
     }
 
@@ -115,7 +114,7 @@ namespace API.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductToReturnDto>> AddProductPhoto(int id, [FromForm] ProductPhotoDto photoDto)
     {
-      var spec = new ProductsWithTypesAndBrandsSpecification(id);
+      var spec = new ProductsWithPlatformsAndGraphicsSpecification(id);
       var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
       // Todo - check nullable product.
       if (photoDto.Photo.Length > 0)
@@ -145,7 +144,7 @@ namespace API.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeleteProductPhoto(int id, int photoId)
     {
-      var spec = new ProductsWithTypesAndBrandsSpecification(id);
+      var spec = new ProductsWithPlatformsAndGraphicsSpecification(id);
       var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
 
       var photo = product.Photos.SingleOrDefault(x => x.Id == photoId);
@@ -171,7 +170,7 @@ namespace API.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductToReturnDto>> AddProductComponent(int id, ProductComponent component)
     {
-      var spec = new ProductsWithTypesAndBrandsSpecification(id);
+      var spec = new ProductsWithPlatformsAndGraphicsSpecification(id);
       var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
 
       var productComponent = _productComponent.CreateProductComponent(component);
@@ -196,7 +195,7 @@ namespace API.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeleteProductComponent(int id, int productcomponentId)
     {
-      var spec = new ProductsWithTypesAndBrandsSpecification(id);
+      var spec = new ProductsWithPlatformsAndGraphicsSpecification(id);
       var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
 
       var productComponent = product.ProductComponents.SingleOrDefault(x => x.Id == productcomponentId);

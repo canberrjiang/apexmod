@@ -23,7 +23,7 @@ namespace Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductBrands",
+                name: "ProductGraphic",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -32,11 +32,11 @@ namespace Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductBrands", x => x.Id);
+                    table.PrimaryKey("PK_ProductGraphic", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductTypes",
+                name: "ProductPlatform",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -45,7 +45,7 @@ namespace Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductTypes", x => x.Id);
+                    table.PrimaryKey("PK_ProductPlatform", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,22 +88,22 @@ namespace Infrastructure.Data.Migrations
                     Description = table.Column<string>(maxLength: 180, nullable: false),
                     Price = table.Column<double>(type: "decimal(18,2)", nullable: false),
                     PictureUrl = table.Column<string>(nullable: true),
-                    ProductTypeId = table.Column<int>(nullable: false),
-                    ProductBrandId = table.Column<int>(nullable: false)
+                    ProductGraphicId = table.Column<int>(nullable: false),
+                    ProductPlatformId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_ProductBrands_ProductBrandId",
-                        column: x => x.ProductBrandId,
-                        principalTable: "ProductBrands",
+                        name: "FK_Products_ProductGraphic_ProductGraphicId",
+                        column: x => x.ProductGraphicId,
+                        principalTable: "ProductGraphic",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_ProductTypes_ProductTypeId",
-                        column: x => x.ProductTypeId,
-                        principalTable: "ProductTypes",
+                        name: "FK_Products_ProductPlatform_ProductPlatformId",
+                        column: x => x.ProductPlatformId,
+                        principalTable: "ProductPlatform",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -225,14 +225,14 @@ namespace Infrastructure.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_ProductBrandId",
+                name: "IX_Products_ProductGraphicId",
                 table: "Products",
-                column: "ProductBrandId");
+                column: "ProductGraphicId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_ProductTypeId",
+                name: "IX_Products_ProductPlatformId",
                 table: "Products",
-                column: "ProductTypeId");
+                column: "ProductPlatformId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -259,10 +259,10 @@ namespace Infrastructure.Data.Migrations
                 name: "DeliveryMethods");
 
             migrationBuilder.DropTable(
-                name: "ProductBrands");
+                name: "ProductGraphic");
 
             migrationBuilder.DropTable(
-                name: "ProductTypes");
+                name: "ProductPlatform");
         }
     }
 }

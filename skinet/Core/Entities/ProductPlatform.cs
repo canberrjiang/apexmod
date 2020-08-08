@@ -1,6 +1,6 @@
 namespace Core.Entities.OrderAggregate
 {
-  public class ProductBrand : BaseEntity
+  public class ProductPlatform : BaseEntity
   {
     public string Name { get; set; }
   }

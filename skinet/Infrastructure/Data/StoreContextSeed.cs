@@ -18,31 +18,31 @@ namespace Infrastructure.Data
       {
         // var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        if (!context.ProductBrands.Any())
+        if (!context.ProductGraphic.Any())
         {
           var brandsData =
-              File.ReadAllText("../Infrastructure/Data/SeedData/brands.json");
+              File.ReadAllText("../Infrastructure/Data/SeedData/graphic.json");
 
-          var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
+          var brands = JsonSerializer.Deserialize<List<ProductGraphic>>(brandsData);
 
           foreach (var item in brands)
           {
-            context.ProductBrands.Add(item);
+            context.ProductGraphic.Add(item);
           }
 
           await context.SaveChangesAsync();
         }
 
-        if (!context.ProductTypes.Any())
+        if (!context.ProductPlatform.Any())
         {
           var typesData =
-              File.ReadAllText("../Infrastructure/Data/SeedData/types.json");
+              File.ReadAllText("../Infrastructure/Data/SeedData/platform.json");
 
-          var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
+          var types = JsonSerializer.Deserialize<List<ProductPlatform>>(typesData);
 
           foreach (var item in types)
           {
-            context.ProductTypes.Add(item);
+            context.ProductPlatform.Add(item);
           }
 
           await context.SaveChangesAsync();
@@ -63,8 +63,8 @@ namespace Infrastructure.Data
               Name = item.Name,
               Description = item.Description,
               Price = item.Price,
-              ProductBrandId = item.ProductBrandId,
-              ProductTypeId = item.ProductTypeId
+              ProductGraphicId = item.ProductGraphicId,
+              ProductPlatformId = item.ProductPlatformId
             };
             product.AddPhoto(item.PictureUrl, pictureFileName);
             context.Products.Add(product);

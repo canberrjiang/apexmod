@@ -138,22 +138,22 @@ namespace Infrastructure.Data.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductBrandId")
+                    b.Property<int>("ProductGraphicId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ProductTypeId")
+                    b.Property<int>("ProductPlatformId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductBrandId");
+                    b.HasIndex("ProductGraphicId");
 
-                    b.HasIndex("ProductTypeId");
+                    b.HasIndex("ProductPlatformId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Core.Entities.OrderAggregate.ProductBrand", b =>
+            modelBuilder.Entity("Core.Entities.OrderAggregate.ProductGraphic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -164,10 +164,10 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductBrands");
+                    b.ToTable("ProductGraphic");
                 });
 
-            modelBuilder.Entity("Core.Entities.OrderAggregate.ProductType", b =>
+            modelBuilder.Entity("Core.Entities.OrderAggregate.ProductPlatform", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -178,7 +178,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductTypes");
+                    b.ToTable("ProductPlatform");
                 });
 
             modelBuilder.Entity("Core.Entities.Photo", b =>
@@ -317,15 +317,15 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.OrderAggregate.Product", b =>
                 {
-                    b.HasOne("Core.Entities.OrderAggregate.ProductBrand", "ProductBrand")
+                    b.HasOne("Core.Entities.OrderAggregate.ProductGraphic", "ProductGraphic")
                         .WithMany()
-                        .HasForeignKey("ProductBrandId")
+                        .HasForeignKey("ProductGraphicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.OrderAggregate.ProductType", "ProductType")
+                    b.HasOne("Core.Entities.OrderAggregate.ProductPlatform", "ProductPlatform")
                         .WithMany()
-                        .HasForeignKey("ProductTypeId")
+                        .HasForeignKey("ProductPlatformId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

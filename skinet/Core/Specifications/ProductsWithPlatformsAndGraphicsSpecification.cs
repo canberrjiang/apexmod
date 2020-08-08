@@ -4,19 +4,19 @@ using Core.Entities.OrderAggregate;
 
 namespace Core.Specifications
 {
-  public class ProductWithTypesAndBrandsSpecification : BaseSpecification<Product>
+  public class ProductWithPlatformsAndGraphicsSpecification : BaseSpecification<Product>
   {
-    public class ProductsWithTypesAndBrandsSpecification : BaseSpecification<Product>
+    public class ProductsWithPlatformsAndGraphicsSpecification : BaseSpecification<Product>
     {
-      public ProductsWithTypesAndBrandsSpecification(ProductsSpecParams productParams)
+      public ProductsWithPlatformsAndGraphicsSpecification(ProductsSpecParams productParams)
           : base(x =>
               (string.IsNullOrEmpty(productParams.Search) || x.Name.ToLower().Contains(productParams.Search)) &&
-              (!productParams.BrandId.HasValue || x.ProductBrandId == productParams.BrandId) &&
-              (!productParams.TypeId.HasValue || x.ProductTypeId == productParams.TypeId)
+              (!productParams.GraphicId.HasValue || x.ProductGraphicId == productParams.GraphicId) &&
+              (!productParams.PlatformId.HasValue || x.ProductPlatformId == productParams.PlatformId)
           )
       {
-        AddInclude(x => x.ProductType);
-        AddInclude(x => x.ProductBrand);
+        AddInclude(x => x.ProductGraphic);
+        AddInclude(x => x.ProductPlatform);
         AddInclude(x => x.Photos);
         AddInclude(x => x.ProductComponents);
         AddOrderBy(x => x.Name);
@@ -39,11 +39,11 @@ namespace Core.Specifications
         }
       }
 
-      public ProductsWithTypesAndBrandsSpecification(int id)
+      public ProductsWithPlatformsAndGraphicsSpecification(int id)
           : base(x => x.Id == id)
       {
-        AddInclude(x => x.ProductType);
-        AddInclude(x => x.ProductBrand);
+        AddInclude(x => x.ProductGraphic);
+        AddInclude(x => x.ProductPlatform);
         AddInclude(x => x.Photos);
         AddInclude(x => x.ProductComponents);
       }

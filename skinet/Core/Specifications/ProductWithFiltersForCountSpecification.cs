@@ -9,8 +9,8 @@ namespace Core.Specifications
     public ProductWithFiltersForCountSpecification(ProductsSpecParams productParams)
       : base(x =>
             (string.IsNullOrEmpty(productParams.Search) || x.Name.ToLower().Contains(productParams.Search)) &&
-          (!productParams.BrandId.HasValue || x.ProductBrandId == productParams.BrandId) &&
-          (!productParams.TypeId.HasValue || x.ProductTypeId == productParams.TypeId)
+          (!productParams.GraphicId.HasValue || x.ProductGraphicId == productParams.GraphicId) &&
+          (!productParams.PlatformId.HasValue || x.ProductPlatformId == productParams.PlatformId)
       )
     {
     }
