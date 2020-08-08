@@ -49,9 +49,9 @@ namespace Infrastructure.Services
         _unitOfWork.Repository<Order>().Delete(existingOrder);
         await _paymentService.CreateOrUpdatePaymentIntent(basket.PaymentIntentId);
       }
-
+      
       // create order
-      var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal);
+      var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal,basket.PaymentIntentId);
       _unitOfWork.Repository<Order>().Add(order);
 
       // save to db
