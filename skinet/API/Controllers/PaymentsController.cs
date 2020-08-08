@@ -27,7 +27,7 @@ namespace API.Controllers
       return await _paymentService.CreateOrUpdatePaymentIntent(basketId);
     }
 
-    [HttpPost("{webhook}")]
+    [HttpPost("webhook")]
     public async Task<ActionResult> StripeWebhook()
     {
       var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
