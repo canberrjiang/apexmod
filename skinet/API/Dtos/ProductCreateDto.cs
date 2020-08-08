@@ -14,8 +14,8 @@ namespace API.Dtos
     public decimal Price { get; set; }
     public string PictureUrl { get; set; }
     [Required]
-    public int ProductTypeId { get; set; }
+    public int ProductGraphicId { get; set; }
     [Required]
-    public int ProductBrandId { get; set; }
+    public int ProductPlatformId { get; set; }
   }
 }
