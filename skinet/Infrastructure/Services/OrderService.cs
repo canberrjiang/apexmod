@@ -51,7 +51,7 @@ namespace Infrastructure.Services
       }
 
       // create order
-      var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal);
+      var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal, basket.PaymentIntentId);
       _unitOfWork.Repository<Order>().Add(order);
 
       // save to db
