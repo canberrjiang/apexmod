@@ -1,6 +1,7 @@
 using System.Linq;
 using API.Errors;
 using Core.Interfaces;
+using Infrastructure.Config;
 using Infrastructure.Data;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,7 @@ namespace API.Extensions
       services.AddScoped<IPaymentService, PaymentService>();
       services.AddScoped<IPhotoService, PhotoService>();
       services.AddScoped<IProductComponent, ProductComponentService>();
+      services.AddScoped<IBraintreeConfiguration, BraintreeConfiguration>();
       services.Configure<ApiBehaviorOptions>(options =>
       {
         options.InvalidModelStateResponseFactory = actionContext =>
