@@ -168,6 +168,30 @@ namespace API.Controllers
       if (result <= 0) return BadRequest(new ApiResponse(400, "Problem adding photos"));
       return Ok();
     }
+
+    [HttpPost("{id}/photo/{photoId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ProductToReturnDto>> SetMainPhoto(int id, int photoId)
+        {
+            var spec = new ProductsWithPlatformsAndGraphicsSpecification(id);
+            var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
+
+            if (product.Photos.All(x => x.Id != photoId)) return NotFound();
+            
+            product.SetMainPhoto(photoId);
+            
+            _unitOfWork.Repository<Product>().Update(product);
+            
+            var result = await _unitOfWork.Complete();
+            
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem adding photo product"));
+
+            return _mapper.Map<Product, ProductToReturnDto>(product);
+        }
+
+
+
+
     [HttpPut("{id}/productcomponent")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductToReturnDto>> AddProductComponent(int id, ProductComponent component)
