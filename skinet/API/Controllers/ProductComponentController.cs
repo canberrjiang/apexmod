@@ -74,5 +74,17 @@ namespace API.Controllers
       if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting photos"));
       return Ok();
     }
+
+    [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<ProductComponentToReturnDto>> UpdateProductcomponents(int id, ProductComponentCreateDto newComponent)
+    {
+      var component = await _unitOfWork.Repository<ProductComponent>().GetByIdAsync(id);
+      _mapper.Map(newComponent, component);
+      _unitOfWork.Repository<ProductComponent>().Update(component);
+      var result = await _unitOfWork.Complete();
+      if (result <= 0) return BadRequest(new ApiResponse(400, "Problem updating products component"));
+      return _mapper.Map<ProductComponent, ProductComponentToReturnDto>(component);
+    }
   }
 }
