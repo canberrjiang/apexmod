@@ -54,6 +54,15 @@ namespace API.Controllers
     {
       var spec = new ProductsWithPlatformsAndGraphicsSpecification(id);
       var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
+
+      // Todo - fix this hacking
+      for (int i = 0; i < product.ProductComponents.Count; i++)
+      {
+        var componentPhotos = await _unitOfWork.Repository<ComponentPhoto>().ListAllAsync();
+        var componentPhoto = componentPhotos.Where(cp => cp.ProductComponentId == product.ProductComponents[i].Id).FirstOrDefault();
+        product.ProductComponents[i].Photo = componentPhoto;
+      }
+
       if (product == null) return NotFound(new ApiResponse(404));
       return _mapper.Map<Product, ProductToReturnDto>(product);
     }
@@ -170,24 +179,24 @@ namespace API.Controllers
     }
 
     [HttpPost("{id}/photo/{photoId}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ProductToReturnDto>> SetMainPhoto(int id, int photoId)
-        {
-            var spec = new ProductsWithPlatformsAndGraphicsSpecification(id);
-            var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<ProductToReturnDto>> SetMainPhoto(int id, int photoId)
+    {
+      var spec = new ProductsWithPlatformsAndGraphicsSpecification(id);
+      var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
 
-            if (product.Photos.All(x => x.Id != photoId)) return NotFound();
-            
-            product.SetMainPhoto(photoId);
-            
-            _unitOfWork.Repository<Product>().Update(product);
-            
-            var result = await _unitOfWork.Complete();
-            
-            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem adding photo product"));
+      if (product.Photos.All(x => x.Id != photoId)) return NotFound();
 
-            return _mapper.Map<Product, ProductToReturnDto>(product);
-        }
+      product.SetMainPhoto(photoId);
+
+      _unitOfWork.Repository<Product>().Update(product);
+
+      var result = await _unitOfWork.Complete();
+
+      if (result <= 0) return BadRequest(new ApiResponse(400, "Problem adding photo product"));
+
+      return _mapper.Map<Product, ProductToReturnDto>(product);
+    }
 
 
 
