@@ -58,7 +58,7 @@ namespace API.Controllers
       var spec = new ProductComponentsWithPhotoSpecification(id);
 
       var productComponent = await _unitOfWork.Repository<ProductComponent>().GetEntityWithSpec(spec);
-      var photo = productComponent.Photo.Id == id ? productComponent.Photo : null;
+      var photo = productComponent.Photo.Id == photoId ? productComponent.Photo : null;
       if (photo != null)
       {
         _photoService.DeleteComponentPhotoFromDisk(photo);
