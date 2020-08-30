@@ -10,7 +10,7 @@ namespace Infrastructure.Config
     public void Configure(EntityTypeBuilder<Order> builder)
     {
       // Configuration the relationship between order and address
-      // Order owns addrss entity
+      // Order owns address entity
       builder.OwnsOne(o => o.ShipToAddress, a =>
       {
         a.WithOwner();

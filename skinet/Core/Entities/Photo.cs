@@ -5,7 +5,6 @@ namespace Core.Entities
   public class Photo : BasePhoto
   {
     public bool IsMain { get; set; }
-    public Product Product { get; set; }
-    public int ProductId { get; set; }
+    public BaseProduct Product { get; set; }
   }
 }

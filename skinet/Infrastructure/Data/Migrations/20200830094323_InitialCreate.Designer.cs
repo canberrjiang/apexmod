@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20200808003737_InitialCreate")]
+    [Migration("20200830094323_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,27 +18,45 @@ namespace Infrastructure.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.6");
 
-            modelBuilder.Entity("Core.Entities.ComponentPhoto", b =>
+            modelBuilder.Entity("Core.Entities.BaseProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("FileName")
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(180);
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
 
                     b.Property<string>("PictureUrl")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ProductComponentId")
+                    b.Property<double>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductCategoryId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductComponentId")
-                        .IsUnique();
+                    b.HasIndex("ProductCategoryId");
 
-                    b.ToTable("ComponentPhoto");
+                    b.ToTable("BaseProducts");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseProduct");
                 });
 
             modelBuilder.Entity("Core.Entities.OrderAggregate.DeliveryMethod", b =>
@@ -118,71 +136,6 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("Core.Entities.OrderAggregate.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(180);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("PictureUrl")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ProductGraphicId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProductPlatformId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductGraphicId");
-
-                    b.HasIndex("ProductPlatformId");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Core.Entities.OrderAggregate.ProductGraphic", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductGraphic");
-                });
-
-            modelBuilder.Entity("Core.Entities.OrderAggregate.ProductPlatform", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductPlatform");
-                });
-
             modelBuilder.Entity("Core.Entities.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -198,7 +151,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("PictureUrl")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -208,43 +161,95 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Photo");
                 });
 
-            modelBuilder.Entity("Core.Entities.ProductComponent", b =>
+            modelBuilder.Entity("Core.Entities.ProductCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(180);
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
 
-                    b.Property<double>("PPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductCategories");
+                });
+
+            modelBuilder.Entity("Core.Entities.ProductProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ChildProductId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("TPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.HasKey("Id");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
+                    b.HasIndex("ChildProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductProduct");
+                });
+
+            modelBuilder.Entity("Core.Entities.ProductTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductComponent");
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ProductTags");
                 });
 
-            modelBuilder.Entity("Core.Entities.ComponentPhoto", b =>
+            modelBuilder.Entity("Core.Entities.Tag", b =>
                 {
-                    b.HasOne("Core.Entities.ProductComponent", "ProductComponent")
-                        .WithOne("Photo")
-                        .HasForeignKey("Core.Entities.ComponentPhoto", "ProductComponentId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("Core.Entities.ChildProduct", b =>
+                {
+                    b.HasBaseType("Core.Entities.BaseProduct");
+
+                    b.HasDiscriminator().HasValue("ChildProduct");
+                });
+
+            modelBuilder.Entity("Core.Entities.Product", b =>
+                {
+                    b.HasBaseType("Core.Entities.BaseProduct");
+
+                    b.HasDiscriminator().HasValue("Product");
+                });
+
+            modelBuilder.Entity("Core.Entities.BaseProduct", b =>
+                {
+                    b.HasOne("Core.Entities.ProductCategory", "ProductCategory")
+                        .WithMany("BaseProduct")
+                        .HasForeignKey("ProductCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -317,35 +322,39 @@ namespace Infrastructure.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Core.Entities.OrderAggregate.Product", b =>
-                {
-                    b.HasOne("Core.Entities.OrderAggregate.ProductGraphic", "ProductGraphic")
-                        .WithMany()
-                        .HasForeignKey("ProductGraphicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.OrderAggregate.ProductPlatform", "ProductPlatform")
-                        .WithMany()
-                        .HasForeignKey("ProductPlatformId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Core.Entities.Photo", b =>
                 {
-                    b.HasOne("Core.Entities.OrderAggregate.Product", "Product")
+                    b.HasOne("Core.Entities.BaseProduct", "Product")
                         .WithMany("Photos")
+                        .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("Core.Entities.ProductProduct", b =>
+                {
+                    b.HasOne("Core.Entities.ChildProduct", "ChildProduct")
+                        .WithMany()
+                        .HasForeignKey("ChildProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Product", "Product")
+                        .WithMany("ChildProducts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Entities.ProductComponent", b =>
+            modelBuilder.Entity("Core.Entities.ProductTag", b =>
                 {
-                    b.HasOne("Core.Entities.OrderAggregate.Product", "Product")
-                        .WithMany("ProductComponents")
+                    b.HasOne("Core.Entities.BaseProduct", "BaseProduct")
+                        .WithMany("ProductTag")
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Tag", "Tag")
+                        .WithMany("ProductTag")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

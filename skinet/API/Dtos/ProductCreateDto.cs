@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.Dtos
@@ -7,15 +8,17 @@ namespace API.Dtos
     [Required]
     public string Name { get; set; }
     [Required]
+    public string Discriminator { get; set; }
+    [Required]
     public string Description { get; set; }
     [Required]
     [RegularExpression(@"^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$",
             ErrorMessage = "Price must be a decimal (e.g 20.30)")]
     public decimal Price { get; set; }
     public string PictureUrl { get; set; }
-    [Required]
-    public int ProductGraphicId { get; set; }
-    [Required]
-    public int ProductPlatformId { get; set; }
+    public List<int> ProductTagIds { get; set; }
+    public int ProductCategoryId { get; set; }
+    public List<int> ChildProductIds { get; set; }
+    public bool IsPublished { get; set; }
   }
 }

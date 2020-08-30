@@ -1,4 +1,4 @@
-namespace Core.Entities.OrderAggregate
+namespace Core.Entities
 {
   public class BaseEntity
   {

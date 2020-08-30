@@ -17,13 +17,11 @@ namespace API.Extensions
       services.AddScoped<ITokenService, TokenService>();
       services.AddScoped<IOrderService, OrderService>();
       services.AddScoped<IUnitOfWork, UnitOfWork>();
-      services.AddScoped<IProductRepository, ProductRepository>();
       services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddScoped<IBasketRepository, BasketRepository>();
       services.AddScoped<IPaymentService, PaymentService>();
       services.AddScoped<IPhotoService, PhotoService>();
-      services.AddScoped<IProductComponent, ProductComponentService>();
-      services.AddScoped<IBraintreeConfiguration, BraintreeConfiguration>();
+      services.AddScoped<IPaypalService, PaypalService>();
       services.Configure<ApiBehaviorOptions>(options =>
       {
         options.InvalidModelStateResponseFactory = actionContext =>

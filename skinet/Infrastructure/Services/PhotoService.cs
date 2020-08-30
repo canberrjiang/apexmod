@@ -35,32 +35,5 @@ namespace Infrastructure.Services
         File.Delete("Content/images/products/" + photo.FileName);
       }
     }
-
-    public async Task<ComponentPhoto> SaveComponentPhotoToDiskAsync(IFormFile file)
-    {
-      var photo = new ComponentPhoto();
-      if (file.Length > 0)
-      {
-        var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-        var filePath = Path.Combine("Content/images/products", fileName);
-        await using var fileStream = new FileStream(filePath, FileMode.Create);
-        await file.CopyToAsync(fileStream);
-
-        photo.FileName = fileName;
-        photo.PictureUrl = "images/products/" + fileName;
-
-        return photo;
-      }
-
-      return null;
-    }
-
-    public void DeleteComponentPhotoFromDisk(ComponentPhoto photo)
-    {
-      if (File.Exists(Path.Combine("Content/images/products", photo.FileName)))
-      {
-        File.Delete("Content/images/products/" + photo.FileName);
-      }
-    }
   }
 }

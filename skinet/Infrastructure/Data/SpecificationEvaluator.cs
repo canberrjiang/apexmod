@@ -1,5 +1,5 @@
 using System.Linq;
-using Core.Entities.OrderAggregate;
+using Core.Entities;
 using Core.Specifications;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +32,8 @@ namespace Infrastructure.Data
       }
 
       query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+      // Include any string-based include statements
+      query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
 
       return query;
     }

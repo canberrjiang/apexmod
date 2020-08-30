@@ -1,3 +1,4 @@
+using System.Linq;
 using API.Dtos;
 using AutoMapper;
 using Core.Entities;
@@ -10,9 +11,22 @@ namespace API.Helpers
     public MappingProfiles()
     {
       CreateMap<Product, ProductToReturnDto>()
-                .ForMember(d => d.ProductGraphic, o => o.MapFrom(s => s.ProductGraphic.Name))
-                .ForMember(d => d.ProductPlatform, o => o.MapFrom(s => s.ProductPlatform.Name))
+                .ForMember(d => d.ProductCategory, s => s.MapFrom(s => s.ProductCategory.Name))
+                .ForMember(d => d.Tags, o => o.MapFrom(s => s.ProductTag.Select(t => t.Tag).ToList()))
+                .ForMember(d => d.ChildProducts, o => o.MapFrom(s => s.ChildProducts.Select(t => t.ChildProduct).ToList()))
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());
+      CreateMap<BaseProduct, BaseProductToReturnDto>()
+                .ForMember(d => d.ProductCategory, s => s.MapFrom(s => s.ProductCategory.Name))
+                .ForMember(d => d.Tags, o => o.MapFrom(s => s.ProductTag.Select(t => t.Tag).ToList()))
+                .ForMember(d => d.PictureUrl, o => o.MapFrom<BaseProductUrlResolver>());
+      CreateMap<BaseProduct, ProductToReturnDto>()
+                .ForMember(d => d.ProductCategory, s => s.MapFrom(s => s.ProductCategory.Name))
+                .ForMember(d => d.Tags, o => o.MapFrom(s => s.ProductTag.Select(t => t.Tag).ToList()))
+                .ForMember(d => d.PictureUrl, o => o.MapFrom<BaseProducToProductUrlResolver>());
+      CreateMap<ChildProduct, ProductToReturnDto>()
+                .ForMember(d => d.ProductCategory, s => s.MapFrom(s => s.ProductCategory.Name))
+                .ForMember(d => d.Tags, o => o.MapFrom(s => s.ProductTag.Select(t => t.Tag).ToList()))
+                .ForMember(d => d.PictureUrl, o => o.MapFrom<ChildProducToProductUrlResolver>());
       CreateMap<Core.Entities.Identity.Address, AddressDto>().ReverseMap();
       CreateMap<CustomerBasketDto, CustomerBasket>();
       CreateMap<BasketItemDto, BasketItem>();
@@ -26,12 +40,20 @@ namespace API.Helpers
           .ForMember(d => d.PictureUrl, o => o.MapFrom(s => s.ItemOrdered.PictureUrl))
           .ForMember(d => d.PictureUrl, o => o.MapFrom<OrderItemUrlResolver>());
       CreateMap<ProductCreateDto, Product>();
-      CreateMap<ProductComponentCreateDto, ProductComponent>();
-      CreateMap<ProductComponent, ProductComponentToReturnDto>();
+      CreateMap<ProductCreateDto, ChildProduct>();
       CreateMap<Photo, PhotoToReturnDto>()
-                .ForMember(d => d.PictureUrl,
-                    o => o.MapFrom<PhotoUrlResolver>());
-      CreateMap<ComponentPhoto, ComponentPhotoToReturnDto>().ForMember(d => d.PictureUrl, o => o.MapFrom<ComponentPhotoUrlResolver>());
+                .ForMember(d => d.PictureUrl, o => o.MapFrom<PhotoUrlResolver>());
+      CreateMap<Tag, TagToReturnDto>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.Name));
+      CreateMap<ChildProduct, ChildProductToReturn>()
+        .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
+        .ForMember(d => d.Name, o => o.MapFrom(s => s.Name))
+        .ForMember(d => d.Price, o => o.MapFrom(s => s.Price))
+        .ForMember(d => d.ProductCategory, o => o.MapFrom(s => s.ProductCategory.Name))
+        .ForMember(d => d.PictureUrl, o => o.MapFrom<ChildProductPhotoUrlResolver>())
+        .ForMember(d => d.Description, o => o.MapFrom(s => s.Description));
+      CreateMap<ProductTagToCreate, ProductTag>();
     }
   }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Core.Entities;
 using Core.Entities.OrderAggregate;
 using Microsoft.Extensions.Logging;
 
@@ -18,37 +19,38 @@ namespace Infrastructure.Data
       {
         // var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        if (!context.ProductGraphic.Any())
+        if (!context.Tags.Any())
         {
-          var brandsData =
-              File.ReadAllText("../Infrastructure/Data/SeedData/graphic.json");
+          var tagsData =
+              File.ReadAllText("../Infrastructure/Data/SeedData/tag.json");
 
-          var brands = JsonSerializer.Deserialize<List<ProductGraphic>>(brandsData);
+          var tags = JsonSerializer.Deserialize<List<Tag>>(tagsData);
 
-          foreach (var item in brands)
+          foreach (var item in tags)
           {
-            context.ProductGraphic.Add(item);
+            context.Tags.Add(item);
           }
 
           await context.SaveChangesAsync();
         }
 
-        if (!context.ProductPlatform.Any())
+        if (!context.ProductCategories.Any())
         {
-          var typesData =
-              File.ReadAllText("../Infrastructure/Data/SeedData/platform.json");
+          var categoriesData =
+              File.ReadAllText("../Infrastructure/Data/SeedData/category.json");
 
-          var types = JsonSerializer.Deserialize<List<ProductPlatform>>(typesData);
+          var categories = JsonSerializer.Deserialize<List<ProductCategory>>(categoriesData);
 
-          foreach (var item in types)
+          foreach (var item in categories)
           {
-            context.ProductPlatform.Add(item);
+            context.ProductCategories.Add(item);
           }
 
           await context.SaveChangesAsync();
         }
 
-        if (!context.Products.Any())
+
+        if (!context.BaseProducts.Any())
         {
           var productsData =
               File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
@@ -63,11 +65,11 @@ namespace Infrastructure.Data
               Name = item.Name,
               Description = item.Description,
               Price = item.Price,
-              ProductGraphicId = item.ProductGraphicId,
-              ProductPlatformId = item.ProductPlatformId
+              PictureUrl = item.PictureUrl,
+              ProductCategoryId = item.ProductCategoryId
             };
             product.AddPhoto(item.PictureUrl, pictureFileName);
-            context.Products.Add(product);
+            context.BaseProducts.Add(product);
           }
 
           await context.SaveChangesAsync();

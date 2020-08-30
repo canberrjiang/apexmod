@@ -42,10 +42,15 @@ namespace API
         {
           opt.AddPolicy("CorsPolicy", policy =>
           {
-            policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+            policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200", "http://paypal.localtest.me:9002");
           });
         }
       );
+      services.AddHttpClient();
+      services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

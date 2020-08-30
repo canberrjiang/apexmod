@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Core.Entities;
 using Core.Entities.OrderAggregate;
 using Core.Interfaces;
 

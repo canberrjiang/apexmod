@@ -1,16 +1,29 @@
-using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Infrastructure.Config;
 using Microsoft.AspNetCore.Mvc;
 using PayPalCheckoutSdk.Orders;
 using PayPalCheckoutSdk.Payments;
 using PayPalHttp;
+using Core.Interfaces;
+using Newtonsoft.Json;
+using System.Text;
+using Core.Entities.Paypal;
+using System.Net;
 
 namespace API.Controllers
 {
   public class PaypalController : BaseApiController
   {
+    private readonly IHttpClientFactory _clientFactory;
+    private readonly IPaypalService _paypalService;
+    public PaypalController(IHttpClientFactory clientFactory, IPaypalService paypalService)
+    {
+      _paypalService = paypalService;
+      _clientFactory = clientFactory;
+    }
+
     //2. Set up your server to receive a call from the client
     /*
       Method to create order
@@ -20,32 +33,33 @@ namespace API.Controllers
       @throws IOException Exceptions from API if any
     */
 
-    [HttpPost]
-    [Route("createorder")]
-    public async Task<HttpResponse> CreateOrder(bool debug = false)
+    [HttpGet]
+    [Route("gettoken")]
+    public string GetToken()
     {
-      var request = new OrdersCreateRequest();
-      request.Prefer("return=representation");
-      request.RequestBody(BuildRequestBody());
-
-      var response = await PaypalConfig.client().Execute(request);
-
-      //   if (debug)
-      //   {
-      //     var result = response.Result<Order>();
-      //     Console.WriteLine("Status: {0}", result.Status);
-      //     Console.WriteLine("Order Id: {0}", result.Id);
-      //     Console.WriteLine("Intent: {0}", result.Intent);
-      //     Console.WriteLine("Links:");
-      //     foreach (LinkDescription link in result.Links)
-      //     {
-      //       Console.WriteLine("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
-      //     }
-      //     AmountWithBreakdown amount = result.PurchaseUnits[0].Amount;
-      //     Console.WriteLine("Total Amount: {0} {1}", amount.CurrencyCode, amount.Value);
-      //   }
-      return response;
+      var paypalAccessToken = _paypalService.GetAccessToken();
+      var token = paypalAccessToken.Access_Token;
+      return token;
     }
+
+    [HttpGet]
+    [Route("createorder")]
+    public async Task<PaypalOrderToReturn> CreateOrder()
+    {
+      var paypalAccessToken = _paypalService.GetAccessToken();
+      var token = paypalAccessToken.Access_Token;
+      var response = await _paypalService.CreateOrder(token);
+      if (response.status == "CREATED") return response;
+      return null;
+    }
+
+    // [HttpPost]
+    // [Route("authorizepayment/{token}/{id}")]
+    // public async Task<string> AuthorizePayment(string token, string id)
+    // {
+    //   var res = await _paypalService.AuthorizePayment(token, id);
+    //   return res;
+    // }
 
     // Retrieve an order from Paypal.
 

@@ -1,74 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Core.Entities.OrderAggregate
+namespace Core.Entities
 {
-  public class Product : BaseEntity
+  public class Product : BaseProduct
   {
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public decimal Price { get; set; }
-    public string PictureUrl { get; set; }
-    public ProductGraphic ProductGraphic { get; set; }
-    public int ProductGraphicId { get; set; }
-    public ProductPlatform ProductPlatform { get; set; }
-    public int ProductPlatformId { get; set; }
-    private readonly List<Photo> _photos = new List<Photo>();
-    public IReadOnlyList<Photo> Photos => _photos.AsReadOnly();
-    private readonly List<ProductComponent> _productComponents = new List<ProductComponent>();
-    public IReadOnlyList<ProductComponent> ProductComponents => _productComponents.AsReadOnly();
-
-    public void AddPhoto(string pictureUrl, string fileName, bool isMain = false)
-    {
-      var photo = new Photo
-      {
-        FileName = fileName,
-        PictureUrl = pictureUrl
-      };
-
-      if (_photos.Count == 0) photo.IsMain = true;
-
-      _photos.Add(photo);
-    }
-
-    public void RemovePhoto(int id)
-    {
-      var photo = _photos.Find(x => x.Id == id);
-      _photos.Remove(photo);
-    }
-
-    public void SetMainPhoto(int id)
-    {
-      var currentMain = _photos.SingleOrDefault(item => item.IsMain);
-      foreach (var item in _photos.Where(item => item.IsMain))
-      {
-        item.IsMain = false;
-      }
-
-      var photo = _photos.Find(x => x.Id == id);
-      if (photo != null)
-      {
-        photo.IsMain = true;
-        if (currentMain != null) currentMain.IsMain = false;
-      }
-    }
-
-    public void AddProductComponent(string title, string description, decimal pprice, decimal tprice)
-    {
-      var productComponent = new ProductComponent
-      {
-        Title = title,
-        Description = description,
-        PPrice = pprice,
-        TPrice = tprice
-      };
-      _productComponents.Add(productComponent);
-    }
-
-    public void RemoveProductCompoent(int id)
-    {
-      var productComponent = _productComponents.Find(x => x.Id == id);
-      _productComponents.Remove(productComponent);
-    }
+    public virtual List<ProductProduct> ChildProducts { get; set; }
   }
 }

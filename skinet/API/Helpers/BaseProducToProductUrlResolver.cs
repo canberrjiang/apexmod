@@ -1,20 +1,20 @@
 using System.Linq;
 using API.Dtos;
 using AutoMapper;
-using Core.Entities;
 using Microsoft.Extensions.Configuration;
+using Core.Entities;
 
 namespace API.Helpers
 {
-  public class ProductUrlResolver : IValueResolver<Product, ProductToReturnDto, string>
+  public class BaseProducToProductUrlResolver : IValueResolver<BaseProduct, ProductToReturnDto, string>
   {
     private readonly IConfiguration _config;
-    public ProductUrlResolver(IConfiguration config)
+    public BaseProducToProductUrlResolver(IConfiguration config)
     {
       _config = config;
     }
 
-    public string Resolve(Product source, ProductToReturnDto destination, string destMember, ResolutionContext context)
+    public string Resolve(BaseProduct source, ProductToReturnDto destination, string destMember, ResolutionContext context)
     {
       var photo = source.Photos.FirstOrDefault(x => x.IsMain);
 

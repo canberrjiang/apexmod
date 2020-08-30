@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Core.Entities.OrderAggregate;
+using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +39,10 @@ namespace Infrastructure.Data
     public async Task<T> GetEntityWithSpec(ISpecification<T> spec)
     {
       return await ApplySpecification(spec).FirstOrDefaultAsync();
+    }
+    public async Task<IReadOnlyList<T>> GetEntitiesWithSpec(ISpecification<T> spec)
+    {
+      return await ApplySpecification(spec).ToListAsync();
     }
 
     public async Task<IReadOnlyList<T>> ListAllAsync()

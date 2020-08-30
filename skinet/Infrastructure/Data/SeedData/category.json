@@ -1,0 +1,14 @@
+[
+  {
+    "Id": 1,
+    "Name": "Gaming PC"
+  },
+  {
+    "Id": 2,
+    "Name": "CPU"
+  },
+  {
+    "Id": 3,
+    "Name": "Case"
+  }
+]

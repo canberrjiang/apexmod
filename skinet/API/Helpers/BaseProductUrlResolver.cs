@@ -6,15 +6,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace API.Helpers
 {
-  public class ProductUrlResolver : IValueResolver<Product, ProductToReturnDto, string>
+  public class BaseProductUrlResolver : IValueResolver<BaseProduct, BaseProductToReturnDto, string>
   {
     private readonly IConfiguration _config;
-    public ProductUrlResolver(IConfiguration config)
+    public BaseProductUrlResolver(IConfiguration config)
     {
       _config = config;
     }
 
-    public string Resolve(Product source, ProductToReturnDto destination, string destMember, ResolutionContext context)
+    public string Resolve(BaseProduct source, BaseProductToReturnDto destination, string destMember, ResolutionContext context)
     {
       var photo = source.Photos.FirstOrDefault(x => x.IsMain);
 

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Core.Entities;
 using Core.Entities.OrderAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -15,9 +16,10 @@ namespace Infrastructure.Data
     }
 
     // Properties
-    public DbSet<Product> Products { get; set; }
-    public DbSet<ProductGraphic> ProductGraphic { get; set; }
-    public DbSet<ProductPlatform> ProductPlatform { get; set; }
+    public DbSet<BaseProduct> BaseProducts { get; set; }
+    public DbSet<ProductCategory> ProductCategories { get; set; }
+    public DbSet<Tag> Tags { get; set; }
+    public DbSet<ProductTag> ProductTags { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<DeliveryMethod> DeliveryMethods { get; set; }

@@ -23,7 +23,7 @@ namespace Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductGraphic",
+                name: "ProductCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -32,11 +32,11 @@ namespace Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductGraphic", x => x.Id);
+                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductPlatform",
+                name: "Tags",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -45,7 +45,7 @@ namespace Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductPlatform", x => x.Id);
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,31 +79,26 @@ namespace Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "BaseProducts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
                     Description = table.Column<string>(maxLength: 180, nullable: false),
                     Price = table.Column<double>(type: "decimal(18,2)", nullable: false),
                     PictureUrl = table.Column<string>(nullable: true),
-                    ProductGraphicId = table.Column<int>(nullable: false),
-                    ProductPlatformId = table.Column<int>(nullable: false)
+                    ProductCategoryId = table.Column<int>(nullable: false),
+                    IsPublished = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_BaseProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_ProductGraphic_ProductGraphicId",
-                        column: x => x.ProductGraphicId,
-                        principalTable: "ProductGraphic",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_ProductPlatform_ProductPlatformId",
-                        column: x => x.ProductPlatformId,
-                        principalTable: "ProductPlatform",
+                        name: "FK_BaseProducts_ProductCategories_ProductCategoryId",
+                        column: x => x.ProductCategoryId,
+                        principalTable: "ProductCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -141,68 +136,75 @@ namespace Infrastructure.Data.Migrations
                     PictureUrl = table.Column<string>(nullable: true),
                     FileName = table.Column<string>(nullable: true),
                     IsMain = table.Column<bool>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Photo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Photo_Products_ProductId",
+                        name: "FK_Photo_BaseProducts_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Products",
+                        principalTable: "BaseProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductProduct",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProductId = table.Column<int>(nullable: false),
+                    ChildProductId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductProduct", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductProduct_BaseProducts_ChildProductId",
+                        column: x => x.ChildProductId,
+                        principalTable: "BaseProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductProduct_BaseProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "BaseProducts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductComponent",
+                name: "ProductTags",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(maxLength: 100, nullable: false),
-                    Description = table.Column<string>(maxLength: 180, nullable: false),
-                    PPrice = table.Column<double>(type: "decimal(18,2)", nullable: false),
-                    TPrice = table.Column<double>(type: "decimal(18,2)", nullable: false),
-                    ProductId = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(nullable: false),
+                    TagId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductComponent", x => x.Id);
+                    table.PrimaryKey("PK_ProductTags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductComponent_Products_ProductId",
+                        name: "FK_ProductTags_BaseProducts_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Products",
+                        principalTable: "BaseProducts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ComponentPhoto",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    PictureUrl = table.Column<string>(nullable: true),
-                    FileName = table.Column<string>(nullable: true),
-                    ProductComponentId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ComponentPhoto", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ComponentPhoto_ProductComponent_ProductComponentId",
-                        column: x => x.ProductComponentId,
-                        principalTable: "ProductComponent",
+                        name: "FK_ProductTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ComponentPhoto_ProductComponentId",
-                table: "ComponentPhoto",
-                column: "ProductComponentId",
-                unique: true);
+                name: "IX_BaseProducts_ProductCategoryId",
+                table: "BaseProducts",
+                column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
@@ -220,26 +222,28 @@ namespace Infrastructure.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductComponent_ProductId",
-                table: "ProductComponent",
+                name: "IX_ProductProduct_ChildProductId",
+                table: "ProductProduct",
+                column: "ChildProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductProduct_ProductId",
+                table: "ProductProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_ProductGraphicId",
-                table: "Products",
-                column: "ProductGraphicId");
+                name: "IX_ProductTags_ProductId",
+                table: "ProductTags",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_ProductPlatformId",
-                table: "Products",
-                column: "ProductPlatformId");
+                name: "IX_ProductTags_TagId",
+                table: "ProductTags",
+                column: "TagId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ComponentPhoto");
-
             migrationBuilder.DropTable(
                 name: "OrderItems");
 
@@ -247,22 +251,25 @@ namespace Infrastructure.Data.Migrations
                 name: "Photo");
 
             migrationBuilder.DropTable(
-                name: "ProductComponent");
+                name: "ProductProduct");
+
+            migrationBuilder.DropTable(
+                name: "ProductTags");
 
             migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "BaseProducts");
+
+            migrationBuilder.DropTable(
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "DeliveryMethods");
 
             migrationBuilder.DropTable(
-                name: "ProductGraphic");
-
-            migrationBuilder.DropTable(
-                name: "ProductPlatform");
+                name: "ProductCategories");
         }
     }
 }

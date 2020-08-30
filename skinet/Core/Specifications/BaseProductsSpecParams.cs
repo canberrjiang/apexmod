@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using Core.Entities;
+
 namespace Core.Specifications
 {
-  public class ProductsSpecParams
+  public class BaseProductsSpecParams
   {
     private const int MaxPageSize = 50;
     public int PageIndex { get; set; } = 1;
@@ -12,8 +15,8 @@ namespace Core.Specifications
       set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
     }
 
-    public int? PlatformId { get; set; }
-    public int? GraphicId { get; set; }
+    public int? ProductCategoryId { get; set; }
+    public List<ProductTag> ProductTag { get; set; }
 
     public string Sort { get; set; }
     private string _search;
