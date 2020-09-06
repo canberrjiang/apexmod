@@ -6,5 +6,6 @@ namespace Core.Entities
     public Product Product { get; set; }
     public ChildProduct ChildProduct { get; set; }
     public int ChildProductId { get; set; }
+    public bool IsDefault { get; set; }
   }
 }

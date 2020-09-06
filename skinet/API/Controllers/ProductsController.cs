@@ -54,6 +54,15 @@ namespace API.Controllers
       return Ok(data);
     }
 
+    [HttpGet("publishstatus/{publishstatus}")]
+    public async Task<ActionResult<IReadOnlyList<BaseProductToReturnDto>>> GetUnpublishedProducts(bool publishstatus)
+    {
+      var spec = new ProductByPublishStatusSpecification(publishstatus);
+      var products = await _unitOfWork.Repository<BaseProduct>().ListAsync(spec);
+      var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
+      return Ok(data);
+    }
+
     // [Cached(600)]
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -112,10 +121,9 @@ namespace API.Controllers
     {
       ProductToReturnDto productCreated = null;
       var result = 0;
-      var tagResult = 0;
 
       // Handle base64 image string
-      if (string.IsNullOrEmpty(productCreated.Description))
+      if (string.IsNullOrEmpty(productToCreate.Description))
       {
 
       }
@@ -126,26 +134,6 @@ namespace API.Controllers
         _unitOfWork.Repository<Product>().Add(product);
         productCreated = _mapper.Map<Product, ProductToReturnDto>(product);
         result = await _unitOfWork.Complete();
-
-        for (int i = 0; i < productToCreate.ProductTagIds.Count; i++)
-        {
-          ProductTag productTag = new ProductTag()
-          {
-            ProductId = product.Id,
-            TagId = productToCreate.ProductTagIds[i]
-          };
-          _unitOfWork.Repository<ProductTag>().Add(productTag);
-        }
-        for (int i = 0; i < productToCreate.ChildProductIds.Count; i++)
-        {
-          ProductProduct productProduct = new ProductProduct()
-          {
-            Product = product,
-            ChildProductId = productToCreate.ChildProductIds[i]
-          };
-          _unitOfWork.Repository<ProductProduct>().Add(productProduct);
-        }
-        tagResult = await _unitOfWork.Complete();
       }
       else if (productToCreate.Discriminator == "ChildProduct")
       {
@@ -153,34 +141,19 @@ namespace API.Controllers
         _unitOfWork.Repository<ChildProduct>().Add(childProduct);
         productCreated = _mapper.Map<ChildProduct, ProductToReturnDto>(childProduct);
         result = await _unitOfWork.Complete();
-        for (int i = 0; i < productToCreate.ProductTagIds.Count; i++)
-        {
-          ProductTag productTag = new ProductTag()
-          {
-            ProductId = childProduct.Id,
-            TagId = productToCreate.ProductTagIds[i]
-          };
-          _unitOfWork.Repository<ProductTag>().Add(productTag);
-        }
-        tagResult = await _unitOfWork.Complete();
       }
 
-      if (result <= 0 || tagResult <= 0) return BadRequest(new ApiResponse(400, "Problem creating products"));
+      if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating products"));
       return Ok(productToCreate);
     }
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult> UpdateProduct(int id, ProductCreateDto productToUpdate)
+    public async Task<ActionResult<ProductToReturnDto>> UpdateProduct(int id, ProductCreateDto productToUpdate)
     {
       ProductToReturnDto productToReturn;
       if (productToUpdate.Discriminator == "Product")
       {
-        var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
-        if (product == null) return BadRequest(new ApiResponse(400, "Product does not exist"));
-        _mapper.Map(productToUpdate, product);
-        _unitOfWork.Repository<Product>().Update(product);
-
         // Update ProductTag Table - Delete all producattag relationship by productid and then add new producttag.
         var spec = new ProductTagByProductIdSpecification(id);
         var productTags = await _unitOfWork.Repository<ProductTag>().GetEntitiesWithSpec(spec);
@@ -188,18 +161,6 @@ namespace API.Controllers
         {
           _unitOfWork.Repository<ProductTag>().Delete(productTags[j]);
         }
-
-        for (int i = 0; i < productToUpdate.ProductTagIds.Count; i++)
-        {
-          ProductTag newProductTag = new ProductTag()
-          {
-            ProductId = id,
-            TagId = productToUpdate.ProductTagIds[i]
-          };
-
-          _unitOfWork.Repository<ProductTag>().Add(newProductTag);
-        }
-
         // Update ProductProduct Table
 
         var productProductSpec = new ProductProductByProductIdSpecification(id);
@@ -210,26 +171,15 @@ namespace API.Controllers
           _unitOfWork.Repository<ProductProduct>().Delete(productProducts[j]);
         }
 
-        for (int i = 0; i < productToUpdate.ChildProductIds.Count; i++)
-        {
-          ProductProduct newProductProduct = new ProductProduct()
-          {
-            ProductId = id,
-            ChildProductId = productToUpdate.ChildProductIds[i]
-          };
-
-          _unitOfWork.Repository<ProductProduct>().Add(newProductProduct);
-        }
+        var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
+        if (product == null) return BadRequest(new ApiResponse(400, "Product does not exist"));
+        _mapper.Map(productToUpdate, product);
+        _unitOfWork.Repository<Product>().Update(product);
 
         productToReturn = _mapper.Map<Product, ProductToReturnDto>(product);
       }
       else if (productToUpdate.Discriminator == "ChildProduct")
       {
-        var childProduct = await _unitOfWork.Repository<ChildProduct>().GetByIdAsync(id);
-        if (childProduct == null) return BadRequest(new ApiResponse(400, "Product does not exist"));
-        _mapper.Map(productToUpdate, childProduct);
-        _unitOfWork.Repository<ChildProduct>().Update(childProduct);
-
         // Update ProductTag Table - Delete all producattag relationship by productid and then add new producttag.
         var spec = new ProductTagByProductIdSpecification(id);
         var productTags = await _unitOfWork.Repository<ProductTag>().GetEntitiesWithSpec(spec);
@@ -238,16 +188,11 @@ namespace API.Controllers
           _unitOfWork.Repository<ProductTag>().Delete(productTags[j]);
         }
 
-        for (int i = 0; i < productToUpdate.ProductTagIds.Count; i++)
-        {
-          ProductTag newProductTag = new ProductTag()
-          {
-            ProductId = id,
-            TagId = productToUpdate.ProductTagIds[i]
-          };
+        var childProduct = await _unitOfWork.Repository<ChildProduct>().GetByIdAsync(id);
+        if (childProduct == null) return BadRequest(new ApiResponse(400, "Product does not exist"));
+        _mapper.Map(productToUpdate, childProduct);
+        _unitOfWork.Repository<ChildProduct>().Update(childProduct);
 
-          _unitOfWork.Repository<ProductTag>().Add(newProductTag);
-        }
         productToReturn = _mapper.Map<ChildProduct, ProductToReturnDto>(childProduct);
       }
       else
@@ -257,7 +202,7 @@ namespace API.Controllers
 
       var result = await _unitOfWork.Complete();
       if (result <= 0) return BadRequest(new ApiResponse(400, "Problem updating products"));
-      return Ok();
+      return Ok(productToReturn);
     }
 
     [HttpDelete("{id}")]

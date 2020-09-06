@@ -3,7 +3,7 @@ using Core.Entities;
 
 namespace API.Dtos
 {
-  public class ChildProductToReturn
+  public class ChildProductToReturnDto
   {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -12,5 +12,6 @@ namespace API.Dtos
     public decimal Price { get; set; }
     public string PictureUrl { get; set; }
     public bool IsPublished { get; set; }
+    public bool IsDefault { get; set; }
   }
 }

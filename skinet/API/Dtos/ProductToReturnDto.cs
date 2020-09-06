@@ -13,7 +13,7 @@ namespace API.Dtos
     public string PictureUrl { get; set; }
     public string ProductCategory { get; set; }
     public IEnumerable<TagToReturnDto> Tags { get; set; }
-    public IEnumerable<ChildProductToReturn> ChildProducts { get; set; }
+    public List<ChildProductsToReturnDto> ChildProducts { get; set; }
     public IEnumerable<PhotoToReturnDto> Photos { get; set; }
     public bool IsPublished { get; set; }
   }

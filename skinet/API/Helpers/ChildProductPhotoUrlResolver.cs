@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace API.Helpers
 {
-  public class ChildProductPhotoUrlResolver : IValueResolver<ChildProduct, ChildProductToReturn, string>
+  public class ChildProductPhotoUrlResolver : IValueResolver<ChildProduct, ChildProductToReturnDto, string>
   {
     private readonly IConfiguration _config;
     public ChildProductPhotoUrlResolver(IConfiguration config)
@@ -14,7 +14,7 @@ namespace API.Helpers
       _config = config;
     }
 
-    public string Resolve(ChildProduct source, ChildProductToReturn destination, string destMember, ResolutionContext context)
+    public string Resolve(ChildProduct source, ChildProductToReturnDto destination, string destMember, ResolutionContext context)
     {
       var photo = source.Photos.FirstOrDefault(x => x.IsMain);
 

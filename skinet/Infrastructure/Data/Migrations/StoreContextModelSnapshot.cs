@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Infrastructure.Date.Migrations
+namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
     partial class StoreContextModelSnapshot : ModelSnapshot
@@ -180,6 +180,9 @@ namespace Infrastructure.Date.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ChildProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDefault")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ProductId")

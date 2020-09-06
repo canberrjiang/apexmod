@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Infrastructure.Date.Migrations
+namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20200905110907_InitialCreate")]
+    [Migration("20200906054216_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,6 +182,9 @@ namespace Infrastructure.Date.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ChildProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDefault")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ProductId")

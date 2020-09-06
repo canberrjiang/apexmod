@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.Date.Migrations
+namespace Infrastructure.Data.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -157,7 +157,8 @@ namespace Infrastructure.Date.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ProductId = table.Column<int>(nullable: false),
-                    ChildProductId = table.Column<int>(nullable: false)
+                    ChildProductId = table.Column<int>(nullable: false),
+                    IsDefault = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
