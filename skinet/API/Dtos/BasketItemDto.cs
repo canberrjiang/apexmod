@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.Dtos
@@ -22,10 +23,6 @@ namespace API.Dtos
     [Required]
     public string PictureUrl { get; set; }
 
-    [Required]
-    public string Graphic { get; set; }
-
-    [Required]
-    public string Platform { get; set; }
+    public List<Dictionary<string, int>> ChildProducts { get; set; }
   }
 }

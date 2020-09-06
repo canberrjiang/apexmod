@@ -6,6 +6,7 @@ namespace Core.Entities.OrderAggregate
 {
   public class Order : BaseEntity
   {
+    // EF needs a parameterless constructor
     public Order()
     {
     }

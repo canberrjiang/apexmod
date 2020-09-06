@@ -54,6 +54,7 @@ namespace API.Helpers
         .ForMember(d => d.PictureUrl, o => o.MapFrom<ChildProductPhotoUrlResolver>())
         .ForMember(d => d.Description, o => o.MapFrom(s => s.Description));
       CreateMap<ProductTagToCreate, ProductTag>();
+      CreateMap<ProductCategory, ProductCategoryToReturnDto>();
     }
   }
 }

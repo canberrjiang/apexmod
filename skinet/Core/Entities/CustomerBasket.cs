@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 
-namespace Core.Entities.OrderAggregate
+namespace Core.Entities
 {
   public class CustomerBasket
   {
+    // For redis only - avoid issues creating instance in Redis
     public CustomerBasket()
     {
     }

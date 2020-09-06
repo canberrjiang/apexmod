@@ -1,7 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using API.Errors;
-using Core.Entities.OrderAggregate;
+using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -45,6 +45,15 @@ namespace API.Controllers
       return Ok(new Pagination<BaseProductToReturnDto>(productParams.PageIndex, productParams.PageSize, totalItems, data));
     }
 
+    [HttpGet("discriminator/{discriminator}")]
+    public async Task<ActionResult<IReadOnlyList<BaseProductToReturnDto>>> GetProductsByDiscriminator(string discriminator)
+    {
+      var spec = new ChildProductSpecification(discriminator);
+      var products = await _unitOfWork.Repository<BaseProduct>().ListAsync(spec);
+      var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
+      return Ok(data);
+    }
+
     // [Cached(600)]
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -77,6 +86,14 @@ namespace API.Controllers
       return Ok(tagToReturn);
     }
 
+    [HttpGet("categories")]
+    public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetProductCategories()
+    {
+      var result = await _unitOfWork.Repository<ProductCategory>().ListAllAsync();
+      var categoryToReturn = _mapper.Map<IReadOnlyList<ProductCategory>, IReadOnlyList<ProductCategoryToReturnDto>>(result);
+      return Ok(categoryToReturn);
+    }
+
 
     // [HttpPost]
     // [Authorize(Roles = "Admin")]
@@ -96,6 +113,12 @@ namespace API.Controllers
       ProductToReturnDto productCreated = null;
       var result = 0;
       var tagResult = 0;
+
+      // Handle base64 image string
+      if (string.IsNullOrEmpty(productCreated.Description))
+      {
+
+      }
 
       if (productToCreate.Discriminator == "Product")
       {

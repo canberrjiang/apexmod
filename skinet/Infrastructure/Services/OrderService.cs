@@ -5,6 +5,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Core.Entities.OrderAggregate;
 using Core.Specifications;
+using System;
 
 namespace Infrastructure.Services
 {
@@ -28,11 +29,33 @@ namespace Infrastructure.Services
       var items = new List<OrderItem>();
       foreach (var item in basket.Items)
       {
+        var productDescription = "";
         var productItem = await _unitOfWork.Repository<Product>().GetByIdAsync(item.Id);
-        var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Name,
-                   productItem.Photos.FirstOrDefault(x => x.IsMain)?.PictureUrl);
-        var orderItem = new OrderItem(itemOrdered, item.Price, item.Quantity);
-        items.Add(orderItem);
+
+        if (item.ChildProducts.Count > 0)
+        {
+          decimal calcPrice = 0;
+          foreach (var subItem in item.ChildProducts)
+          {
+            var childItemId = subItem.FirstOrDefault().Value;
+            var childItem = await _unitOfWork.Repository<BaseProduct>().GetByIdAsync(childItemId);
+            productDescription += childItem.Name + Environment.NewLine;
+            calcPrice += childItem.Price;
+          }
+          var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Name, productDescription,
+                  productItem.Photos.FirstOrDefault(x => x.IsMain)?.PictureUrl);
+
+          var orderItem = new OrderItem(itemOrdered, calcPrice, item.Quantity);
+          items.Add(orderItem);
+        }
+        else
+        {
+          var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Name, productDescription,
+                  productItem.Photos.FirstOrDefault(x => x.IsMain)?.PictureUrl);
+
+          var orderItem = new OrderItem(itemOrdered, item.Price, item.Quantity);
+          items.Add(orderItem);
+        }
       }
       // get delivery method from repo
       var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
@@ -47,7 +70,7 @@ namespace Infrastructure.Services
       if (existingOrder != null)
       {
         _unitOfWork.Repository<Order>().Delete(existingOrder);
-        await _paymentService.CreateOrUpdatePaymentIntent(basket.PaymentIntentId);
+        await _paymentService.CreateOrUpdatePaymentIntent(basket.Id);
       }
 
       // create order

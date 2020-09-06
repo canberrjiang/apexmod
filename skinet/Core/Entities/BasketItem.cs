@@ -1,4 +1,6 @@
-namespace Core.Entities.OrderAggregate
+using System.Collections.Generic;
+
+namespace Core.Entities
 {
   public class BasketItem
   {
@@ -7,7 +9,6 @@ namespace Core.Entities.OrderAggregate
     public decimal Price { get; set; }
     public int Quantity { get; set; }
     public string PictureUrl { get; set; }
-    public string Graphic { get; set; }
-    public string Platform { get; set; }
+    public List<Dictionary<string, int>> ChildProducts { get; set; }
   }
 }
