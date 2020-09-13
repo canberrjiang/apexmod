@@ -110,28 +110,44 @@ namespace API.Controllers
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<ProductToReturnDto>> CreateProduct(ProductCreateDto productToCreate)
+    public async Task<ActionResult<int>> CreateProduct(ProductCreateDto productToCreate)
     {
-      ProductToReturnDto productCreated = null;
       var result = 0;
+      var tagResult = 0;
+      var productCreatedId = 0;
 
       if (productToCreate.Discriminator == "Product")
       {
         var product = _mapper.Map<ProductCreateDto, Product>(productToCreate);
         _unitOfWork.Repository<Product>().Add(product);
-        productCreated = _mapper.Map<Product, ProductToReturnDto>(product);
         result = await _unitOfWork.Complete();
+        productCreatedId = product.Id;
       }
       else if (productToCreate.Discriminator == "ChildProduct")
       {
         var childProduct = _mapper.Map<ProductCreateDto, ChildProduct>(productToCreate);
         _unitOfWork.Repository<ChildProduct>().Add(childProduct);
-        productCreated = _mapper.Map<ChildProduct, ProductToReturnDto>(childProduct);
         result = await _unitOfWork.Complete();
+        productCreatedId = childProduct.Id;
       }
 
-      if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating products"));
-      return Ok(productToCreate);
+      if (productToCreate.ProductTagIds.Count > 0)
+      {
+        for (int i = 0; i < productToCreate.ProductTagIds.Count; i++)
+        {
+          ProductTag productTag = new ProductTag()
+          {
+            ProductId = productCreatedId,
+            TagId = productToCreate.ProductTagIds[i]
+          };
+
+          _unitOfWork.Repository<ProductTag>().Add(productTag);
+          tagResult = await _unitOfWork.Complete();
+        }
+      }
+
+      if (result <= 0 || tagResult <= 0) return BadRequest(new ApiResponse(400, "Problem creating products"));
+      return Ok(productCreatedId);
     }
 
     [HttpPut("{id}")]
@@ -139,6 +155,7 @@ namespace API.Controllers
     public async Task<ActionResult<ProductToReturnDto>> UpdateProduct(int id, ProductCreateDto productToUpdate)
     {
       ProductToReturnDto productToReturn;
+      var updatedProductId = 0;
       if (productToUpdate.Discriminator == "Product")
       {
         // Update ProductTag Table - Delete all producattag relationship by productid and then add new producttag.
@@ -164,6 +181,7 @@ namespace API.Controllers
         _unitOfWork.Repository<Product>().Update(product);
 
         productToReturn = _mapper.Map<Product, ProductToReturnDto>(product);
+        updatedProductId = product.Id;
       }
       else if (productToUpdate.Discriminator == "ChildProduct")
       {
@@ -181,12 +199,32 @@ namespace API.Controllers
         _unitOfWork.Repository<ChildProduct>().Update(childProduct);
 
         productToReturn = _mapper.Map<ChildProduct, ProductToReturnDto>(childProduct);
+        updatedProductId = childProduct.Id;
       }
       else
       {
-        productToReturn = null;
+        return BadRequest(new ApiResponse(400, "No such a product"));
       }
 
+      // Manually update ProductTag relationship table
+      if (productToUpdate.ProductTagIds.Count > 0 && updatedProductId != 0)
+      {
+        var spec = new ProductTagByProductIdSpecification(updatedProductId);
+        var productTagEntities = await _unitOfWork.Repository<ProductTag>().GetEntitiesWithSpec(spec);
+
+        for (int i = 0; i < productToUpdate.ProductTagIds.Count; i++)
+        {
+          ProductTag productTag = new ProductTag()
+          {
+            ProductId = updatedProductId,
+            TagId = productToUpdate.ProductTagIds[i]
+          };
+
+          _unitOfWork.Repository<ProductTag>().Add(productTag);
+          // tagResult = await _unitOfWork.Complete();
+          // if (tagResult <= 0) return BadRequest(new ApiResponse(400, "error updating products"));
+        }
+      }
       var result = await _unitOfWork.Complete();
       if (result <= 0) return BadRequest(new ApiResponse(400, "Problem updating products"));
       return Ok(productToReturn);
