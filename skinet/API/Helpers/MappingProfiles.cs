@@ -64,6 +64,7 @@ namespace API.Helpers
       CreateMap<ChildProductToCreate, ProductProduct>();
       CreateMap<ProductTagToCreate, ProductTag>();
       CreateMap<ProductProduct, ChildProductsToReturnDto>().
+      ForMember(d => d.Id, o => o.MapFrom(s => s.ChildProduct.Id)).
       ForMember(d => d.Name, o => o.MapFrom(s => s.ChildProduct.Name)).
       ForMember(d => d.Description, o => o.MapFrom(s => s.ChildProduct.Description)).
       ForMember(d => d.ProductCategory, o => o.MapFrom(s => s.ChildProduct.ProductCategory.Name)).
