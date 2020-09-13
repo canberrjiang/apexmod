@@ -1,10 +1,34 @@
 [
   {
     "Id": 1,
-    "Name": "AMD"
+    "Name": "amd"
   },
   {
     "Id": 2,
-    "Name": "Intel"
+    "Name": "intel"
+  },
+  {
+    "Id": 3,
+    "Name": "pc"
+  },
+  {
+    "Id": 4,
+    "Name": "monitor"
+  },
+  {
+    "Id": 5,
+    "Name": "cpu"
+  },
+  {
+    "Id": 6,
+    "Name": "gpu"
+  },
+  {
+    "Id": 7,
+    "Name": "cooling"
+  },
+  {
+    "Id": 8,
+    "Name": "case"
   }
 ]

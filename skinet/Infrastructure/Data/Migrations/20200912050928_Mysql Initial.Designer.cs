@@ -9,46 +9,46 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20200906054216_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200912050928_Mysql Initial")]
+    partial class MysqlInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.6");
+                .HasAnnotation("ProductVersion", "3.1.6")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Core.Entities.BaseProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(180);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("IsPublished")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
                         .HasMaxLength(100);
 
                     b.Property<string>("PictureUrl")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("Price")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProductCategoryId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -63,19 +63,19 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("DeliveryTime")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("decimcal(18,2)");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ShortName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -86,26 +86,26 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("BuyerEmail")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int?>("DeliveryMethodId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
-                    b.Property<long>("OrderDate")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTimeOffset>("OrderDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("PaymentIntentId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("Subtotal")
-                        .HasColumnType("REAL");
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(65,30)");
 
                     b.HasKey("Id");
 
@@ -118,16 +118,16 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int?>("OrderId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
-                    b.Property<double>("Price")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -140,19 +140,19 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("FileName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("IsMain")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("PictureUrl")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int?>("ProductId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -165,10 +165,10 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -179,16 +179,16 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("ChildProductId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDefault")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -203,13 +203,13 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("TagId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -224,10 +224,10 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -266,25 +266,25 @@ namespace Infrastructure.Data.Migrations
                     b.OwnsOne("Core.Entities.OrderAggregate.Address", "ShipToAddress", b1 =>
                         {
                             b1.Property<int>("OrderId")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("City")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<string>("FirstName")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<string>("LastName")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<string>("State")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<string>("Street")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<string>("Zipcode")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.HasKey("OrderId");
 
@@ -305,19 +305,19 @@ namespace Infrastructure.Data.Migrations
                     b.OwnsOne("Core.Entities.OrderAggregate.ProductItemOrdered", "ItemOrdered", b1 =>
                         {
                             b1.Property<int>("OrderItemId")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("PictureUrl")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<string>("ProductDescription")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<int>("ProductItemId")
-                                .HasColumnType("INTEGER");
+                                .HasColumnType("int");
 
                             b1.Property<string>("ProductName")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.HasKey("OrderItemId");
 

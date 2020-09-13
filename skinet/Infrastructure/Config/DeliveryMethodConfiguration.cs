@@ -9,7 +9,7 @@ namespace Infrastructure.Config
     public void Configure(EntityTypeBuilder<DeliveryMethod> builder)
     {
       // Store the price data as decimal in our database.
-      builder.Property(d => d.Price).HasColumnType("decimcal(18,2)");
+      builder.Property(d => d.Price).HasColumnType("decimal(18,2)");
     }
   }
 }

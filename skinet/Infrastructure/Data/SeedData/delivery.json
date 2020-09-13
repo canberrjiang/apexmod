@@ -22,9 +22,9 @@
   },
   {
     "Id": 4,
-    "ShortName": "FREE",
-    "Description": "Free! You get what you pay for",
+    "ShortName": "Deposit Only",
+    "Description": "Deposit Only. The rest payment will be required after receiving the product",
     "DeliveryTime": "1-2 Weeks",
-    "Price": 0
+    "Price": 20
   }
 ]

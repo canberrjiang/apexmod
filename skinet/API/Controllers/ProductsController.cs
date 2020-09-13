@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
@@ -12,6 +15,7 @@ using Core.Specifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static System.Net.Mime.MediaTypeNames;
 using static Core.Specifications.BaseProductWithTagsAndCategoriesSpecification;
 using static Core.Specifications.ProductWithTagsAndCategoriesSpecification;
 
@@ -104,29 +108,12 @@ namespace API.Controllers
     }
 
 
-    // [HttpPost]
-    // [Authorize(Roles = "Admin")]
-    // public async Task<ActionResult<ProductToReturnDto>> CreateProduct(ProductCreateDto productToCreate)
-    // {
-    //   var product = _mapper.Map<ProductCreateDto, Product>(productToCreate);
-    //   _unitOfWork.Repository<Product>().Add(product);
-    //   var result = await _unitOfWork.Complete();
-    //   if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating products"));
-    //   return _mapper.Map<Product, ProductToReturnDto>(product);
-    // }
-
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductToReturnDto>> CreateProduct(ProductCreateDto productToCreate)
     {
       ProductToReturnDto productCreated = null;
       var result = 0;
-
-      // Handle base64 image string
-      if (string.IsNullOrEmpty(productToCreate.Description))
-      {
-
-      }
 
       if (productToCreate.Discriminator == "Product")
       {
@@ -239,6 +226,22 @@ namespace API.Controllers
       if (result <= 0 || objectRelationshipResult <= 0) return BadRequest(new ApiResponse(400, "Problem deleting products"));
       return Ok();
     }
+
+    // Process images uploaded from client via richtext editor and return a photo url if successful.
+    [HttpPost("richtextphoto")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<string>> AddRichtextPhoto([FromForm] ProductPhotoDto photoDto)
+    {
+      if (photoDto.Photo.Length > 0)
+      {
+        var photo = await _photoService.SaveToDiskAsync(photoDto.Photo);
+        if (photo == null) return BadRequest(new ApiResponse(400, "problem saving photo to disk"));
+        return Ok(photo.PictureUrl);
+      }
+
+      return BadRequest(new ApiResponse(400, "This is not a valid photo."));
+    }
+
 
     [HttpPut("{id}/photo")]
     [Authorize(Roles = "Admin")]

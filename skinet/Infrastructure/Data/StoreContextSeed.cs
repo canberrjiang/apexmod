@@ -17,12 +17,12 @@ namespace Infrastructure.Data
     {
       try
       {
-        // var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         if (!context.Tags.Any())
         {
           var tagsData =
-              File.ReadAllText("../Infrastructure/Data/SeedData/tag.json");
+              File.ReadAllText(path + @"/Data/SeedData/tag.json");
 
           var tags = JsonSerializer.Deserialize<List<Tag>>(tagsData);
 
@@ -37,7 +37,7 @@ namespace Infrastructure.Data
         if (!context.ProductCategories.Any())
         {
           var categoriesData =
-              File.ReadAllText("../Infrastructure/Data/SeedData/category.json");
+              File.ReadAllText(path + @"/Data/SeedData/category.json");
 
           var categories = JsonSerializer.Deserialize<List<ProductCategory>>(categoriesData);
 
@@ -53,7 +53,7 @@ namespace Infrastructure.Data
         if (!context.BaseProducts.Any())
         {
           var productsData =
-              File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
+              File.ReadAllText(path + @"/Data/SeedData/products.json");
 
           var products = JsonSerializer.Deserialize<List<ProductSeedModel>>(productsData);
 
@@ -78,7 +78,7 @@ namespace Infrastructure.Data
         if (!context.DeliveryMethods.Any())
         {
           var dmData =
-              File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json");
+              File.ReadAllText(path + @"/Data/SeedData/delivery.json");
 
           var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(dmData);
 

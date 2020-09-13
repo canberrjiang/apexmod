@@ -1,14 +1,42 @@
 [
   {
     "Id": 1,
-    "Name": "Gaming PC"
+    "Name": "pc"
   },
   {
     "Id": 2,
-    "Name": "CPU"
+    "Name": "cpu"
   },
   {
     "Id": 3,
-    "Name": "Case"
+    "Name": "case"
+  },
+  {
+    "Id": 4,
+    "Name": "monitor"
+  },
+  {
+    "Id": 5,
+    "Name": "gpu"
+  },
+  {
+    "Id": 6,
+    "Name": "motherboard"
+  },
+  {
+    "Id": 7,
+    "Name": "cooling"
+  },
+  {
+    "Id": 8,
+    "Name": "ram"
+  },
+  {
+    "Id": 9,
+    "Name": "ssd"
+  },
+  {
+    "Id": 10,
+    "Name": "hdd"
   }
 ]
