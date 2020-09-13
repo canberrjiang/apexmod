@@ -12,7 +12,7 @@ namespace Core.Specifications
       public BaseProductsWithTagsAndCategoriesSpecification(BaseProductsSpecParams baseProductParams)
           : base(x =>
               (string.IsNullOrEmpty(baseProductParams.Search) || x.Name.ToLower().Contains(baseProductParams.Search)) &&
-              (!baseProductParams.ProductCategoryId.HasValue || x.ProductCategoryId == baseProductParams.ProductCategoryId)
+              (!baseProductParams.ProductTagId.HasValue || x.ProductTag.Where(pt => pt.TagId == baseProductParams.ProductTagId).Count() > 0)
           )
       {
         AddInclude(x => x.ProductCategory);

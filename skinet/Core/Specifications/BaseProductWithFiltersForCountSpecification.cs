@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using Core.Entities;
 
@@ -9,7 +10,7 @@ namespace Core.Specifications
     public BaseProductWithFiltersForCountSpecification(BaseProductsSpecParams baseProductParams)
       : base(x =>
             (string.IsNullOrEmpty(baseProductParams.Search) || x.Name.ToLower().Contains(baseProductParams.Search)) &&
-          (!baseProductParams.ProductCategoryId.HasValue || x.ProductCategoryId == baseProductParams.ProductCategoryId)
+          (!baseProductParams.ProductTagId.HasValue || x.ProductTag.Where(pt => pt.TagId == baseProductParams.ProductTagId).Count() > 0)
       )
     {
     }
