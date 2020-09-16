@@ -30,8 +30,9 @@ namespace Infrastructure.Services
     {
       var orderId = braintreePurchaseRequest.OrderId;
       var paymentMethodNonce = braintreePurchaseRequest.Nonce;
-      var order = await _unitOfWork.Repository<Core.Entities.OrderAggregate.Order>().GetByIdAsync(orderId);
-      var deliveryMethodPrice = (order.DeliveryMethod != null) ? order.DeliveryMethod.Price : 0;
+      var orderSpec = new Core.Specifications.OrderWithDeliveryMethodSpecification(orderId);
+      var order = await _unitOfWork.Repository<Core.Entities.OrderAggregate.Order>().GetEntityWithSpec(orderSpec);
+      var deliveryMethodPrice = (order != null) ? order.DeliveryMethod.Price : 0;
       var totalPrice = order.Subtotal + deliveryMethodPrice;
       // Only charge for deposit price if a user choses "Deposity Only".
       if (order.DeliveryMethod.ShortName == "Deposit Only")
