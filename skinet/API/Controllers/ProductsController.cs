@@ -52,7 +52,7 @@ namespace API.Controllers
     [HttpGet("discriminator/{discriminator}")]
     public async Task<ActionResult<IReadOnlyList<BaseProductToReturnDto>>> GetProductsByDiscriminator(string discriminator)
     {
-      var spec = new ChildProductSpecification(discriminator);
+      var spec = new BaseProductWithDiscriminatorAndCategory(discriminator);
       var products = await _unitOfWork.Repository<BaseProduct>().ListAsync(spec);
       var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
       return Ok(data);
@@ -165,8 +165,8 @@ namespace API.Controllers
         {
           _unitOfWork.Repository<ProductTag>().Delete(productTags[j]);
         }
-        // Update ProductProduct Table
 
+        // Update ProductProduct Table
         var productProductSpec = new ProductProductByProductIdSpecification(id);
         var productProducts = await _unitOfWork.Repository<ProductProduct>().GetEntitiesWithSpec(productProductSpec);
 
@@ -236,20 +236,26 @@ namespace API.Controllers
     {
       var spec = new ProductTagByProductIdSpecification(id);
       var productTags = await _unitOfWork.Repository<ProductTag>().GetEntitiesWithSpec(spec);
-      for (int j = 0; j < productTags.Count; j++)
+      if (productTags.Count > 0)
       {
-        _unitOfWork.Repository<ProductTag>().Delete(productTags[j]);
+        for (int j = 0; j < productTags.Count; j++)
+        {
+          _unitOfWork.Repository<ProductTag>().Delete(productTags[j]);
+        }
       }
+
 
       var productProductSpec = new ProductProductByProductIdSpecification(id);
       var productProducts = await _unitOfWork.Repository<ProductProduct>().GetEntitiesWithSpec(productProductSpec);
 
-      for (int j = 0; j < productProducts.Count; j++)
+      if (productProducts.Count > 0)
       {
-        _unitOfWork.Repository<ProductProduct>().Delete(productProducts[j]);
+        for (int j = 0; j < productProducts.Count; j++)
+        {
+          _unitOfWork.Repository<ProductProduct>().Delete(productProducts[j]);
+        }
       }
 
-      var objectRelationshipResult = await _unitOfWork.Complete();
       var product = await _unitOfWork.Repository<BaseProduct>().GetByIdAsync(id);
       if (product.Photos.Count > 0)
       {
@@ -261,7 +267,7 @@ namespace API.Controllers
 
       _unitOfWork.Repository<BaseProduct>().Delete(product);
       var result = await _unitOfWork.Complete();
-      if (result <= 0 || objectRelationshipResult <= 0) return BadRequest(new ApiResponse(400, "Problem deleting products"));
+      if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting products"));
       return Ok();
     }
 

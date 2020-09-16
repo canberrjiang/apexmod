@@ -10,12 +10,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.1"/>
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="5.5.1"/>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6"/>
-    <PackageReference Include="Braintree" Version="4.18.0"/>
+    <PackageReference Include="Braintree" Version="5.0.0"/>
     <PackageReference Include="PayPalCheckoutSdk" Version="1.0.3"/>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7"/>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\**" CopyToPublishDirectory="PreserveNewest" />
+    <!-- <Content Include="Content\**" CopyToPublishDirectory="PreserveNewest"/> -->
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
   </ItemGroup>
 </Project>

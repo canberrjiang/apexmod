@@ -40,7 +40,7 @@ namespace API.Helpers
           .ForMember(d => d.PictureUrl, o => o.MapFrom(s => s.ItemOrdered.PictureUrl))
           .ForMember(d => d.PictureUrl, o => o.MapFrom<OrderItemUrlResolver>());
       CreateMap<Product, ProductCreateDto>()
-        .ForMember(d => d.ChildProducts, o => o.MapFrom(s => s.ChildProducts))
+        .ForMember(d => d.SelectedChildProducts, o => o.MapFrom(s => s.ChildProducts))
         .ForMember(d => d.ProductTagIds, o => o.MapFrom(s => s.ProductTag.Select(t => t.TagId).ToList()))
         .ReverseMap();
       CreateMap<ProductCreateDto, ChildProduct>();
