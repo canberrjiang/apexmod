@@ -10,5 +10,10 @@ namespace Core.Specifications
     {
       AddInclude(x => x.ProductCategory);
     }
+
+    public BaseProductWithDiscriminatorAndCategory(int productCategoryId) : base(x => (x.ProductCategoryId == productCategoryId))
+    {
+      AddInclude(x => x.ProductCategory);
+    }
   }
 }

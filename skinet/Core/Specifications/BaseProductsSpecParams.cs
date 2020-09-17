@@ -16,6 +16,7 @@ namespace Core.Specifications
     }
 
     public int? ProductTagId { get; set; }
+    public int? ProductCategoryId { get; set; }
 
     public string Sort { get; set; }
     private string _search;

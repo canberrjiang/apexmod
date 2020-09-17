@@ -49,6 +49,15 @@ namespace API.Controllers
       return Ok(new Pagination<BaseProductToReturnDto>(productParams.PageIndex, productParams.PageSize, totalItems, data));
     }
 
+    [HttpGet("productcategory/{productcategoryid}")]
+    public async Task<ActionResult<IReadOnlyList<BaseProductToReturnDto>>> GetProductsByCategory(int productcategoryid)
+    {
+      var spec = new BaseProductWithDiscriminatorAndCategory(productcategoryid);
+      var products = await _unitOfWork.Repository<BaseProduct>().ListAsync(spec);
+      var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
+      return Ok(data);
+    }
+
     [HttpGet("discriminator/{discriminator}")]
     public async Task<ActionResult<IReadOnlyList<BaseProductToReturnDto>>> GetProductsByDiscriminator(string discriminator)
     {
