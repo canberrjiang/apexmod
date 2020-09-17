@@ -184,7 +184,8 @@ namespace API.Controllers
           _unitOfWork.Repository<ProductProduct>().Delete(productProducts[j]);
         }
 
-        var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
+        var productSpec = new ProductsWithTagAndCategorySpecification(id);
+        var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(productSpec);
         if (product == null) return BadRequest(new ApiResponse(400, "Product does not exist"));
         _mapper.Map(productToUpdate, product);
         _unitOfWork.Repository<Product>().Update(product);
@@ -202,7 +203,8 @@ namespace API.Controllers
           _unitOfWork.Repository<ProductTag>().Delete(productTags[j]);
         }
 
-        var childProduct = await _unitOfWork.Repository<ChildProduct>().GetByIdAsync(id);
+        var childProductSpec = new ChildProductsWithTagAndCategoriesSpecification(id);
+        var childProduct = await _unitOfWork.Repository<ChildProduct>().GetEntityWithSpec(childProductSpec);
         if (childProduct == null) return BadRequest(new ApiResponse(400, "Product does not exist"));
         _mapper.Map(productToUpdate, childProduct);
         _unitOfWork.Repository<ChildProduct>().Update(childProduct);
