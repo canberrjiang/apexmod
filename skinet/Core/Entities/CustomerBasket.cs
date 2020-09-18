@@ -18,5 +18,6 @@ namespace Core.Entities
     public List<BasketItem> Items { get; set; } = new List<BasketItem>();
     public int? DeliveryMethodId { get; set; }
     public int? OrderId { get; set; }
+    public decimal ShippingPrice { get; set; }
   }
 }

@@ -24,7 +24,7 @@ namespace API.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<Order>> CreateOrder(OrderDto orderDto)
+    public async Task<ActionResult<OrderToReturnDto>> CreateOrder(OrderDto orderDto)
     {
       var email = HttpContext.User.RetrieveEmailFromPrincipal();
 
@@ -34,19 +34,19 @@ namespace API.Controllers
 
       if (order == null) return BadRequest(new ApiResponse(400, "Problem creating order"));
 
-      return Ok(order);
+      return Ok(_mapper.Map<Order, OrderToReturnDto>(order));
     }
 
     [HttpGet("all")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<IReadOnlyList<Order>>> GetAllOrders()
+    public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetAllOrders()
     {
       var orders = await _orderService.GetAllOrders();
       return Ok(_mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderToReturnDto>>(orders));
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Order>>> GetOrdersForUser()
+    public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser()
     {
       var email = HttpContext.User.RetrieveEmailFromPrincipal();
 
