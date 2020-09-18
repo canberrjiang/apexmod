@@ -30,10 +30,9 @@ namespace Infrastructure.Services
       foreach (var item in basket.Items)
       {
         var productDescription = "";
-        var productItem = await _unitOfWork.Repository<Product>().GetByIdAsync(item.Id);
-
         if (item.ChildProducts.Count > 0)
         {
+          var productItem = await _unitOfWork.Repository<Product>().GetByIdAsync(item.Id);
           decimal calcPrice = 0;
           foreach (var subItem in item.ChildProducts)
           {
@@ -50,9 +49,14 @@ namespace Infrastructure.Services
         }
         else
         {
-          var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Name, productDescription,
-                  productItem.Photos.FirstOrDefault(x => x.IsMain)?.PictureUrl);
+          var childProductItem = await _unitOfWork.Repository<ChildProduct>().GetByIdAsync(item.Id);
+          var itemOrdered = new ProductItemOrdered(childProductItem.Id, childProductItem.Name, productDescription,
+                  childProductItem.Photos.FirstOrDefault(x => x.IsMain)?.PictureUrl);
 
+          if (item.Price != childProductItem.Price)
+          {
+            item.Price = childProductItem.Price;
+          }
           var orderItem = new OrderItem(itemOrdered, item.Price, item.Quantity);
           items.Add(orderItem);
         }
@@ -64,14 +68,14 @@ namespace Infrastructure.Services
       var subtotal = items.Sum(item => item.Price * item.Quantity);
 
       // check to see if order exists
-      var spec = new OrderByPaymentIntentIdSpecification(basket.PaymentIntentId);
-      var existingOrder = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+      // var spec = new OrderByPaymentIntentIdSpecification(basket.PaymentIntentId);
+      // var existingOrder = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
 
-      if (existingOrder != null)
-      {
-        _unitOfWork.Repository<Order>().Delete(existingOrder);
-        await _paymentService.CreateOrUpdatePaymentIntent(basket.Id);
-      }
+      // if (existingOrder != null)
+      // {
+      //   _unitOfWork.Repository<Order>().Delete(existingOrder);
+      //   await _paymentService.CreateOrUpdatePaymentIntent(basket.Id);
+      // }
 
       // create order
       var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal, basket.PaymentIntentId);
@@ -103,6 +107,13 @@ namespace Infrastructure.Services
       var spec = new OrdersWithItemsAndOrderingSpecification(buyerEmail);
 
       return await _unitOfWork.Repository<Order>().ListAsync(spec);
+    }
+
+    public async Task<IReadOnlyList<Order>> GetAllOrders()
+    {
+      var spec = new OrdersWithItemsAndOrderingSpecification();
+      var result = await _unitOfWork.Repository<Order>().GetEntitiesWithSpec(spec);
+      return result;
     }
   }
 }

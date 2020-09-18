@@ -9,6 +9,7 @@ using AutoMapper;
 using Core.Interfaces;
 using Core.Entities.OrderAggregate;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -34,6 +35,14 @@ namespace API.Controllers
       if (order == null) return BadRequest(new ApiResponse(400, "Problem creating order"));
 
       return Ok(order);
+    }
+
+    [HttpGet("all")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<IReadOnlyList<Order>>> GetAllOrders()
+    {
+      var orders = await _orderService.GetAllOrders();
+      return Ok(_mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderToReturnDto>>(orders));
     }
 
     [HttpGet]
