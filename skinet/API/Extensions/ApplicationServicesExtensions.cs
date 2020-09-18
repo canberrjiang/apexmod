@@ -22,6 +22,7 @@ namespace API.Extensions
       services.AddScoped<IPaymentService, PaymentService>();
       services.AddScoped<IPhotoService, PhotoService>();
       services.AddScoped<IPaypalService, PaypalService>();
+      services.AddScoped<IEmailService, EmailService>();
       services.AddScoped<IBraintreeService, BraintreeService>();
       services.Configure<ApiBehaviorOptions>(options =>
       {

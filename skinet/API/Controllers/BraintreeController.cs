@@ -11,8 +11,10 @@ namespace API.Controllers
   public class BraintreeController : BaseApiController
   {
     private readonly IBraintreeService _braintreeService;
-    public BraintreeController(IBraintreeService braintreeService)
+    private readonly IEmailService _emailService;
+    public BraintreeController(IBraintreeService braintreeService, IEmailService emailService)
     {
+      _emailService = emailService;
       _braintreeService = braintreeService;
     }
 
@@ -62,6 +64,13 @@ namespace API.Controllers
         }
       }
 
+      return Ok();
+    }
+
+    [HttpGet("email")]
+    public ActionResult SendEmail()
+    {
+      _emailService.SendEmail();
       return Ok();
     }
   }
