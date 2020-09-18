@@ -15,7 +15,7 @@ namespace Infrastructure.Config
       {
         a.WithOwner();
       });
-
+      builder.Property(o => o.Subtotal).HasColumnType("decimal(18,2)");
       // Convert the OrderStatus enum return value
       // Instead of returning int, we convert the result to string
       builder.Property(s => s.Status)

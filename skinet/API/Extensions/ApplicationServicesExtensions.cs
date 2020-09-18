@@ -19,7 +19,7 @@ namespace API.Extensions
       services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddScoped<IBasketRepository, BasketRepository>();
-      services.AddScoped<IPaymentService, PaymentService>();
+      // services.AddScoped<IPaymentService, PaymentService>();
       services.AddScoped<IPhotoService, PhotoService>();
       services.AddScoped<IPaypalService, PaypalService>();
       services.AddScoped<IEmailService, EmailService>();

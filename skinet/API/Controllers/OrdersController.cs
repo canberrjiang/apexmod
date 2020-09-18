@@ -74,5 +74,15 @@ namespace API.Controllers
 
       return Ok(deliveryMethods);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Order>> DeleteOrder(int id)
+    {
+      var email = HttpContext.User.RetrieveEmailFromPrincipal();
+      var order = await _orderService.GetOrderByIdAsync(id, email);
+      var result = await _orderService.DeleteOrder(order);
+      if (result == null) return BadRequest("Failed to delete order");
+      return Ok(result);
+    }
   }
 }

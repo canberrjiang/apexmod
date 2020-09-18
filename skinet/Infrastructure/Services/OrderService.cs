@@ -6,6 +6,8 @@ using Core.Interfaces;
 using Core.Entities.OrderAggregate;
 using Core.Specifications;
 using System;
+using static Core.Specifications.BaseProductWithTagsAndCategoriesSpecification;
+using static Core.Specifications.ProductWithTagsAndCategoriesSpecification;
 
 namespace Infrastructure.Services
 {
@@ -14,9 +16,8 @@ namespace Infrastructure.Services
     private readonly IUnitOfWork _unitOfWork;
     private readonly IBasketRepository _basketRepo;
     private readonly IPaymentService _paymentService;
-    public OrderService(IUnitOfWork unitOfWork, IBasketRepository basketRepo, IPaymentService paymentService)
+    public OrderService(IUnitOfWork unitOfWork, IBasketRepository basketRepo)
     {
-      _paymentService = paymentService;
       _unitOfWork = unitOfWork;
       _basketRepo = basketRepo;
     }
@@ -32,7 +33,8 @@ namespace Infrastructure.Services
         var productDescription = "";
         if (item.ChildProducts.Count > 0)
         {
-          var productItem = await _unitOfWork.Repository<Product>().GetByIdAsync(item.Id);
+          var productItemSpec = new ProductsWithTagAndCategorySpecification(item.Id);
+          var productItem = await _unitOfWork.Repository<Product>().GetEntityWithSpec(productItemSpec);
           decimal calcPrice = 0;
           foreach (var subItem in item.ChildProducts)
           {
@@ -49,7 +51,8 @@ namespace Infrastructure.Services
         }
         else
         {
-          var childProductItem = await _unitOfWork.Repository<ChildProduct>().GetByIdAsync(item.Id);
+          var childProductSpec = new BaseProductsWithTagsAndCategoriesSpecification(item.Id);
+          var childProductItem = await _unitOfWork.Repository<BaseProduct>().GetEntityWithSpec(childProductSpec);
           var itemOrdered = new ProductItemOrdered(childProductItem.Id, childProductItem.Name, productDescription,
                   childProductItem.Photos.FirstOrDefault(x => x.IsMain)?.PictureUrl);
 
@@ -65,7 +68,7 @@ namespace Infrastructure.Services
       var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
 
       // calc subtotal
-      var subtotal = items.Sum(item => item.Price * item.Quantity);
+      var subtotal = (decimal)items.Sum(item => item.Price * item.Quantity);
 
       // check to see if order exists
       // var spec = new OrderByPaymentIntentIdSpecification(basket.PaymentIntentId);
@@ -77,8 +80,19 @@ namespace Infrastructure.Services
       //   await _paymentService.CreateOrUpdatePaymentIntent(basket.Id);
       // }
 
+      // check to see if order exists
+      if (basket.OrderId != null)
+      {
+        var existingOrder = await _unitOfWork.Repository<Order>().GetByIdAsync((int)basket.OrderId);
+        if (existingOrder != null)
+        {
+          _unitOfWork.Repository<Order>().Delete(existingOrder);
+        }
+      }
+
+
       // create order
-      var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal, basket.PaymentIntentId);
+      var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal);
       _unitOfWork.Repository<Order>().Add(order);
 
       // save to db
@@ -114,6 +128,14 @@ namespace Infrastructure.Services
       var spec = new OrdersWithItemsAndOrderingSpecification();
       var result = await _unitOfWork.Repository<Order>().GetEntitiesWithSpec(spec);
       return result;
+    }
+
+    public async Task<Order> DeleteOrder(Order order)
+    {
+      _unitOfWork.Repository<Order>().Delete(order);
+      var result = await _unitOfWork.Complete();
+      if (result <= 0) return null;
+      return order;
     }
   }
 }
