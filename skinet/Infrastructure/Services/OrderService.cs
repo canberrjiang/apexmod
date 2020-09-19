@@ -15,7 +15,6 @@ namespace Infrastructure.Services
   {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IBasketRepository _basketRepo;
-    private readonly IPaymentService _paymentService;
     public OrderService(IUnitOfWork unitOfWork, IBasketRepository basketRepo)
     {
       _unitOfWork = unitOfWork;
