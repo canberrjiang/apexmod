@@ -3,14 +3,17 @@ using Braintree;
 using Core.Entities.Braintree;
 using Core.Entities.OrderAggregate;
 using Core.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Services
 {
   public class BraintreeService : IBraintreeService
   {
     private readonly IUnitOfWork _unitOfWork;
-    public BraintreeService(IUnitOfWork unitOfWork)
+    private readonly IConfiguration _config;
+    public BraintreeService(IUnitOfWork unitOfWork, IConfiguration config)
     {
+      _config = config;
       _unitOfWork = unitOfWork;
     }
 
@@ -19,9 +22,9 @@ namespace Infrastructure.Services
       var gateway = new BraintreeGateway
       {
         Environment = Braintree.Environment.SANDBOX,
-        MerchantId = "c2xsphr95p2v96qn",
-        PublicKey = "39nkzcvs9rz634pb",
-        PrivateKey = "4c1f8685a34c8fd93a509e411b5b0f2d"
+        MerchantId = _config["BraintreeMerchantId"],
+        PublicKey = _config["BraintreePublicKey"],
+        PrivateKey = _config["BraintreePrivateKey"]
       };
       return gateway;
     }
