@@ -5,15 +5,14 @@ using Core.Entities;
 
 namespace Core.Specifications
 {
-  public class BaseProductWithTagsAndCategoriesSpecification : BaseSpecification<BaseProduct>
+  public class AllBaseProductWithTagsAndCategoriesSpecification : BaseSpecification<BaseProduct>
   {
-    public class BaseProductsWithTagsAndCategoriesSpecification : BaseSpecification<BaseProduct>
+    public class AllBaseProductsWithTagsAndCategoriesSpecification : BaseSpecification<BaseProduct>
     {
-      public BaseProductsWithTagsAndCategoriesSpecification(BaseProductsSpecParams baseProductParams)
+      public AllBaseProductsWithTagsAndCategoriesSpecification(BaseProductsSpecParams baseProductParams)
           : base(x =>
               (string.IsNullOrEmpty(baseProductParams.Search) || x.Name.ToLower().Contains(baseProductParams.Search)) &&
-              (!baseProductParams.ProductTagId.HasValue || x.ProductTag.Where(pt => pt.TagId == baseProductParams.ProductTagId).Count() > 0) &&
-              (x.IsPublished == true)
+              (!baseProductParams.ProductTagId.HasValue || x.ProductTag.Where(pt => pt.TagId == baseProductParams.ProductTagId).Count() > 0)
           )
       {
         AddInclude(x => x.ProductCategory);
@@ -40,7 +39,7 @@ namespace Core.Specifications
         }
       }
 
-      public BaseProductsWithTagsAndCategoriesSpecification(int id)
+      public AllBaseProductsWithTagsAndCategoriesSpecification(int id)
           : base(x => (x.Id == id) && (x.IsPublished == true))
       {
         AddInclude(x => x.ProductCategory);

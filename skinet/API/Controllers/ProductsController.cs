@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
+using API.Extensions;
 using API.Helpers;
 using AutoMapper;
 using Core.Entities;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static System.Net.Mime.MediaTypeNames;
+using static Core.Specifications.AllBaseProductWithTagsAndCategoriesSpecification;
 using static Core.Specifications.BaseProductWithTagsAndCategoriesSpecification;
 using static Core.Specifications.ProductWithTagsAndCategoriesSpecification;
 
@@ -41,8 +43,15 @@ namespace API.Controllers
     public async Task<ActionResult<Pagination<BaseProductToReturnDto>>> GetProducts(
       [FromQuery] BaseProductsSpecParams productParams)
     {
+      var email = HttpContext.User.RetrieveEmailFromPrincipal();
       var spec = new BaseProductsWithTagsAndCategoriesSpecification(productParams);
       var countSpec = new BaseProductWithFiltersForCountSpecification(productParams);
+      // if (email == "admin@test.com")
+      // {
+      //   var specForAdmin = new AllBaseProductsWithTagsAndCategoriesSpecification(productParams);
+      //   var countSpecForAdmin = new AllBaseProductWithFiltersForCountSpecification(productParams);
+      // }
+
       var totalItems = await _unitOfWork.Repository<BaseProduct>().CountAsync(countSpec);
       var products = await _unitOfWork.Repository<BaseProduct>().ListAsync(spec);
       var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
@@ -58,19 +67,19 @@ namespace API.Controllers
       return Ok(data);
     }
 
-    [HttpGet("discriminator/{discriminator}")]
-    public async Task<ActionResult<IReadOnlyList<BaseProductToReturnDto>>> GetProductsByDiscriminator(string discriminator)
-    {
-      var spec = new BaseProductWithDiscriminatorAndCategory(discriminator);
-      var products = await _unitOfWork.Repository<BaseProduct>().ListAsync(spec);
-      var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
-      return Ok(data);
-    }
+    // [HttpGet("discriminator/{discriminator}")]
+    // public async Task<ActionResult<IReadOnlyList<BaseProductToReturnDto>>> GetProductsByDiscriminator(string discriminator)
+    // {
+    //   var spec = new BaseProductWithDiscriminatorAndCategory(discriminator);
+    //   var products = await _unitOfWork.Repository<BaseProduct>().ListAsync(spec);
+    //   var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
+    //   return Ok(data);
+    // }
 
     [HttpGet("publishstatus/{publishstatus}")]
     public async Task<ActionResult<IReadOnlyList<BaseProductToReturnDto>>> GetUnpublishedProducts(bool publishstatus)
     {
-      var spec = new ProductByPublishStatusSpecification(publishstatus);
+      var spec = new BaseProductByPublishStatusSpecification(publishstatus);
       var products = await _unitOfWork.Repository<BaseProduct>().ListAsync(spec);
       var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
       return Ok(data);

@@ -79,15 +79,6 @@ namespace Infrastructure.Services
       //   await _paymentService.CreateOrUpdatePaymentIntent(basket.Id);
       // }
 
-      // check to see if order exists
-      if (basket.OrderId != null)
-      {
-        var existingOrder = await _unitOfWork.Repository<Order>().GetByIdAsync((int)basket.OrderId);
-        if (existingOrder != null)
-        {
-          _unitOfWork.Repository<Order>().Delete(existingOrder);
-        }
-      }
 
 
       // create order

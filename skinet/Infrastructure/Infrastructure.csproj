@@ -16,6 +16,7 @@
     <PackageReference Include="MailKit" Version="2.9.0"/>
   </ItemGroup>
   <ItemGroup>
+  <None Include="Data\SeedData\**" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="..\Core\Core.csproj"/>
   </ItemGroup>
 </Project>

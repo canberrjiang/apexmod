@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7"/>
   </ItemGroup>
   <ItemGroup>
-    <!-- <Content Include="Content\**" CopyToPublishDirectory="PreserveNewest"/> -->
+    <CONTENT Include="Content\**" CopyToPublishDirectory="PreserveNewest"/>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
   </ItemGroup>
 </Project>
