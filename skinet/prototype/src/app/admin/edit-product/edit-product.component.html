@@ -1,0 +1,44 @@
+<section class="product-edit mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mb-4">
+        <button routerLink="/admin" class="btn btn-outline-primary float-left">
+          Back To Product List
+        </button>
+      </div>
+      <div class="col-12">
+        <div class="tab-panel">
+          <tabset class="product-tabset">
+            <tab heading="Edit Product">
+              <div class="col-lg-10">
+                <app-edit-product-form
+                  [product]="productFormValues"
+                  [rows]="aChildProducts"
+                  [edit]="edit"
+                  [categories]="categories"
+                  [tags]="tags"
+                ></app-edit-product-form>
+                <!-- <app-edit-product-form
+                [product]="productFormValues"
+                [platforms]="platforms"
+                [graphics]="graphics"
+              ></app-edit-product-form> -->
+              </div>
+            </tab>
+            <tab *ngIf="edit" heading="Edit Photos">
+              <app-edit-product-photos
+                [product]="product"
+              ></app-edit-product-photos>
+            </tab>
+            <!-- <tab *ngIf="edit" heading="Edit Components">
+              <app-edit-product-component
+                [product]="product"
+              ></app-edit-product-component>
+            </tab> -->
+          </tabset>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

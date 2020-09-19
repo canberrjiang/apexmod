@@ -1,0 +1,74 @@
+
+<div>
+  <h3>添加修改子产品</h3>
+
+  <ngx-datatable
+  class="material"
+    [rows]="rows"
+    [columns]="columns"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="100"
+    [reorderable]="reorderable"
+  >
+  <ngx-datatable-column [width]="50" name="id"></ngx-datatable-column>
+  <ngx-datatable-column name="name"></ngx-datatable-column>
+  <ngx-datatable-column name="productCategory"></ngx-datatable-column>
+  <ngx-datatable-column  name="price"></ngx-datatable-column>
+  <ngx-datatable-column name="isDefault" sortable="true"></ngx-datatable-column>
+
+  <ngx-datatable-column [width]="150" name="Actions" sortable="false">
+    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+      <!-- <button slot="end" color="primary" name="create" [routerLink]="['/','UpdateEmployee',row.empId]" ></button> -->
+      <button class="mr-1" type="button" slot="end" (click)="setDefault(row.id)">Main</button>
+      <button type="button" slot="end" (click)="deleteProduct(row.id)">DEL</button>
+    </ng-template>
+  </ngx-datatable-column>
+
+  </ngx-datatable>
+
+  <div class="form-row mt-3">
+    <div class="form-group col-md-4">
+      <label for="isPublished">Category</label>
+      <select
+        id="type"
+        class="form-control"
+        name="productCategoryId"
+        required
+        [(ngModel)]="pickCategoryId"
+        (change)="RenderChildProduct()"
+      >
+      <option
+      *ngFor="let category of categories"
+      [ngValue]="category.id"
+      
+    >
+      {{ category.name }}
+    </option>
+
+      </select>
+    </div>
+
+    <div class="form-group col-md-5">
+      <label for="type">ChildProduct</label>
+      <select
+        id="type"
+        class="form-control"
+        name="productCategoryId"
+
+        required
+      >
+        <option
+        >
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-3">
+      <label for="type">ADD</label>
+      <button type="button" class="form-control" (click)="handleAddChildProduct()">Add</button>
+    </div>
+  </div>
+
+</div>

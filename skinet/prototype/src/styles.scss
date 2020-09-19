@@ -1,0 +1,69 @@
+
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+/* You can add global styles to this file, and also import other style files */
+.xng-breadcrumb-root {
+  padding: 8px 16px;
+  display: inline;
+  border-radius: 0;
+}
+
+label.xng-breadcrumb-trail {
+  margin-bottom: 0;
+  color: orange;
+}
+
+.xng-breadcrumb-separator {
+  padding: 0 0;
+}
+
+.StripeElement {
+  height: 3.125em;
+}
+
+.product-tabset > .nav-tabs > li.open > a, .product-tabset > .nav-tabs > li:hover > a {
+  border: 0;
+  background: none !important;
+  color: #333333;
+}
+
+.product-tabset > .nav-tabs > li.open > a > i, .product-tabset > .nav-tabs > li:hover > a > i {
+  color: #a6a6a6;
+}
+
+.product-tabset > .nav-tabs > li.open .dropdown-menu, .product-tabset > .nav-tabs > li:hover .dropdown-menu {
+  margin-top: 0px;
+}
+
+.product-tabset > .nav-tabs > li.active {
+  border-bottom: 4px solid #E95420;
+  position: relative;
+}
+
+.product-tabset > .nav-tabs > li.active > a {
+  border: 0 !important;
+  color: #333333;
+}
+
+.product-tabset > .nav-tabs > li.active > a > i {
+  color: #404040;
+}
+
+.product-tabset > .tab-content {
+  margin-top: -3px;
+  background-color: #fff;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 15px 0;
+}
+
+
+#description--text{
+  width: inherit;
+  & >p{
+    width: inherit !important;
+  } 
+  & img{
+    width: 100% !important;
+    height: auto !important;
+  }
+}

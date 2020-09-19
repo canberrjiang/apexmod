@@ -1,0 +1,383 @@
+<form
+  class="mt-4"
+  #productForm="ngForm"
+  (ngSubmit)="onSubmit(productForm.valid && productForm.value)"
+>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="name">Product Name</label>
+      <input
+        [ngClass]="{
+          'is-invalid': name.invalid && (name.dirty || name.touched)
+        }"
+        required
+        type="text"
+        class="form-control"
+        id="name"
+        placeholder="Product Name"
+        name="name"
+        #name="ngModel"
+        [(ngModel)]="product.name"
+      />
+      <div
+        *ngIf="name.invalid && (name.dirty || name.touched)"
+        class="invalid-feedback"
+      >
+        <div *ngIf="name.errors.required">Product Name is required</div>
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="price">Price</label>
+      <input
+        [ngClass]="{
+          'is-invalid': price.invalid && (price.dirty || price.touched)
+        }"
+        required
+        type="text"
+        class="form-control"
+        id="price"
+        placeholder="Price"
+        currencyMask
+        name="price"
+        #price="ngModel"
+        min="0.01"
+        [ngModel]="+product.price"
+        (ngModelChange)="updatePrice(+$event)"
+      />
+      <div
+        *ngIf="price.invalid && (price.dirty || price.touched)"
+        class="invalid-feedback"
+      >
+        <div *ngIf="price.errors.required">Product price is required</div>
+        <div *ngIf="price.errors.pattern">
+          Product price needs to be decimal value
+        </div>
+        <div *ngIf="price.errors.min">
+          Product price must be greater than zero
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="description">Description</label>
+      <textarea
+        [ngClass]="{
+          'is-invalid':
+            description.invalid && (description.dirty || description.touched)
+        }"
+        required
+        #description="ngModel"
+        class="form-control"
+        id="description"
+        [(ngModel)]="product.description"
+        name="description"
+        rows="3"
+      ></textarea>
+      <div
+        *ngIf="
+          description.invalid && (description.dirty || description.touched)
+        "
+        class="invalid-feedback"
+      >
+        <div *ngIf="description.errors.required">Description is required</div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="brand">PlatForm</label>
+      <select
+        id="brand"
+        class="form-control"
+        name="productPlatformId"
+        [(ngModel)]="product.productPlatformId"
+        required
+      >
+        <option
+          *ngFor="let platForm of platforms"
+          [selected]="product.productPlatformId === platForm.id"
+          [ngValue]="platForm.id"
+          >{{ platForm.name }}</option
+        >
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="type">Graphics</label>
+      <select
+        id="type"
+        class="form-control"
+        name="productGraphicId"
+        [(ngModel)]="product.productGraphicId"
+        required
+      >
+        <option
+          *ngFor="let graphic of graphics"
+          [selected]="product.productGraphicId === graphic.id"
+          [ngValue]="graphic.id"
+          >{{ graphic.name }}</option
+        >
+      </select>
+    </div>
+  </div> -->
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="isPublished">IsPublished</label>
+      <select
+        id="isPublished"
+        class="form-control"
+        name="isPublished"
+        [(ngModel)]="product.isPublished"
+        required
+      >
+        <option [selected]="product.isPublished === true" value="{{ true }}">
+          True
+        </option>
+        <option [selected]="product.isPublished === false" value="{{ false }}">
+          False
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="type">Category</label>
+      <select
+        id="type"
+        class="form-control"
+        name="productCategoryId"
+        [(ngModel)]="product.productCategoryId"
+        required
+      >
+        <option
+          *ngFor="let category of categories"
+          [selected]="product.productCategoryId === category.id"
+          [ngValue]="category.id"
+        >
+          {{ category.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="tag">Tags：</label>
+      <div class="form-check" *ngFor="let tag of tags">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="productTagIds"
+          id="{{ tag.id }}"
+          value="{{ tag.id }}"
+          [checked]="product.productTagIds.includes(tag.id)"
+          (click)="handleChangeTagIds(tag.id)"
+        />
+        <label class="form-check-label" for="exampleRadios1">
+          {{ tag.name }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="description">Description</label>
+      <textarea
+        [ngClass]="{
+          'is-invalid':
+            description.invalid && (description.dirty || description.touched)
+        }"
+        required
+        #description="ngModel"
+        class="form-control"
+        id="description"
+        [(ngModel)]="product.description"
+        name="description"
+        rows="3"
+      ></textarea>
+      <div
+        *ngIf="
+          description.invalid && (description.dirty || description.touched)
+        "
+        class="invalid-feedback"
+      >
+        <div *ngIf="description.errors.required">Description is required</div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="discriminator">Description</label>
+      <editor
+        id="description"
+        name="description"
+        initialValue="{{ product.description }}"
+        [init]="editorConfig"
+        [(ngModel)]="product.description"
+       
+        [ngClass]="{
+          'is-invalid':
+            description.invalid && (description.dirty || description.touched)
+        }"
+        
+        #description="ngModel"
+       required
+      >
+      </editor>
+      <div
+        *ngIf="
+          description.invalid && (description.dirty || description.touched)
+        "
+        class="invalid-feedback"
+      >
+        <div *ngIf="description.errors.required">Description is required</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!edit" class="form-row">
+    <div class="form-group col-md-6">
+      <label for="discriminator" class="text-danger">此产品为：</label>
+      <select
+        id="discriminator"
+        class="form-control is-invalid"
+        name="discriminator"
+        [(ngModel)]="product.discriminator"
+        required
+      >
+        <option value="Product">整机</option>
+        <option value="ChildProduct">单品</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="edit" class="form-row">
+    <div *ngIf="product.productCategoryId == 1" class="form-group col-md-12">
+      <h4 for="discriminator" class="text-danger mt-3">添加修改子产品：</h4>
+      <div>
+        <ngx-datatable
+          class="material"
+          [rows]="rows"
+          [columns]="columns"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="100"
+          [reorderable]="reorderable"
+        >
+          <ngx-datatable-column [width]="50" name="id"></ngx-datatable-column>
+          <ngx-datatable-column name="name"></ngx-datatable-column>
+          <ngx-datatable-column name="productCategory"></ngx-datatable-column>
+          <ngx-datatable-column name="price"></ngx-datatable-column>
+          <ngx-datatable-column
+            name="isDefault"
+            sortable="true"
+          ></ngx-datatable-column>
+
+          <ngx-datatable-column [width]="150" name="Actions" sortable="false">
+            <ng-template
+              let-row="row"
+              let-value="value"
+              ngx-datatable-cell-template
+            >
+              <button
+                class="mr-1"
+                type="button"
+                slot="end"
+                (click)="setDefault(row.id)"
+              >
+                Main
+              </button>
+              <button type="button" slot="end" (click)="deleteProduct(row.id)">
+                Delete
+              </button>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+
+        <div class="form-row mt-3">
+          <div class="form-group col-md-4">
+            <label for="isPublished">Choose Category</label>
+            <select
+              id="type"
+              class="form-control"
+              [(ngModel)]="pickCategoryId"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="RenderChildProduct()"
+            >
+              <option
+                *ngFor="let category of categories"
+                [ngValue]="category.id"
+              >
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-5">
+            <label for="type">Pick ChildProduct</label>
+            <select
+              id="type"
+              class="form-control"
+              [(ngModel)]="pickChildProduct"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="HandleChildProduct()"
+            >
+              <option
+                *ngFor="let product of childProductsGroupByCate"
+                [ngValue]="product"
+              >
+                Id :{{ product.id }} - {{ product.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="type">ADD</label>
+            <button
+              type="button"
+              class="form-control"
+              (click)="handleAddChildProduct()"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- <app-producttable [categories]="categories"></app-producttable> -->
+    </div>
+  </div>
+
+  <div class="float-right">
+    <button
+      [disabled]="!productForm.valid"
+      type="submit"
+      class="btn btn-primary mt-3"
+    >
+      Submit
+    </button>
+  </div>
+  <br /><br /><br />
+  <div class="float-right">
+    <div
+      *ngIf="success"
+      class="alert alert-dismissible alert-success mt-2 float-right"
+    >
+      <button
+        type="button"
+        class="close"
+        (click)="closeAlert()"
+        data-dismiss="alert"
+      >
+        &times;
+      </button>
+      <strong>Well done!</strong> You Submit successfully!
+      <!-- <a href="#" class="alert-link"> this important alert message</a>. -->
+    </div>
+  </div>
+</form>

@@ -1,0 +1,49 @@
+<div *ngIf="order" class="container mt-5">
+  <h2>Order Number: {{ order && order.id }}</h2>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-8">
+        <div class="tab-panel">
+          <tabset class="product-tabset">
+            <tab heading="PayPal">
+              <!-- <div #paypal></div> -->
+              <div id="dropin-container"></div>
+              <button id="submit-button" (click)="pay()">Request payment method</button>    
+            </tab>
+            <tab heading="WeChat Pay">
+              <img
+                src="https://i.ibb.co/LNM5h7t/Wechat-IMG32.jpg"
+                style="width: 350px"
+              />
+            </tab>
+            <tab heading="AliPay">
+              <img
+                src="https://i.ibb.co/LNM5h7t/Wechat-IMG32.jpg"
+                style="width: 350px"
+              />
+            </tab>
+          </tabset>
+        </div>
+      </div>
+      <div class="col-4">
+        <app-order-totals
+          *ngIf="order"
+          [shippingPrice]="order.shippingPrice"
+          [subtotal]="order.subtotal"
+          [total]="order.total"
+        ></app-order-totals>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!order" class="container mt-5">
+  <div><i class="fa fa-ban fa-5x" style="color: red;"></i></div>
+  <h2>OOP!, Order Not Found!!!</h2>
+  <p class="mb-4">Please check the order, or created a new one!</p>
+  <button *ngIf="!order" routerLink="/orders/" class="btn btn-outline-success">View your order</button>
+</div>
+
+
+
