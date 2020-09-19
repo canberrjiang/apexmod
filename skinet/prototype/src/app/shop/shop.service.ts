@@ -13,13 +13,14 @@ import { map, delay } from 'rxjs/operators';
 import { ShopParams } from '../shared/models/shopParams';
 import { IProduct } from '../shared/models/products';
 import { of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShopService {
   // baseUrl = 'https://localhost:5001/api/';
-  baseUrl = 'http://104.210.85.29/api/';
+  baseUrl = environment.apiUrl;
 
   products: IProduct[] = [];
   // brands: IBrand[] = [];
@@ -33,7 +34,7 @@ export class ShopService {
   pagination = new Pagination();
   shopParams = new ShopParams();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getProducts(useCache: boolean) {
     if (useCache === false) {
