@@ -1,16 +1,23 @@
 using Core.Interfaces;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Configuration;
 using MimeKit;
 
 namespace Infrastructure.Services
 {
   public class EmailService : IEmailService
   {
+    private readonly IConfiguration _config;
+    public EmailService(IConfiguration config)
+    {
+      _config = config;
+    }
+
     public void SendEmail()
     {
       var email = new MimeMessage();
-      email.Sender = MailboxAddress.Parse("jiangliyangfan@gmail.com");
-      email.To.Add(MailboxAddress.Parse("canberrajiang@hotmail.com"));
+      email.Sender = MailboxAddress.Parse(_config["Email:SenderAddress"]);
+      email.To.Add(MailboxAddress.Parse(_config["Email:RecipientAddress"]));
       email.Subject = "You have an new order";
       email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
       {
@@ -19,8 +26,8 @@ namespace Infrastructure.Services
 
       // send email
       using var smtp = new SmtpClient();
-      smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-      smtp.Authenticate("[username]", "[password]");
+      smtp.Connect(_config["Email:Host"], 587, MailKit.Security.SecureSocketOptions.StartTls);
+      smtp.Authenticate(_config["Email:Username"], _config["Email:Password"]);
       smtp.Send(email);
       smtp.Disconnect(true);
     }

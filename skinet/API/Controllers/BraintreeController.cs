@@ -40,6 +40,7 @@ namespace API.Controllers
         Result<Transaction> result = gateway.Transaction.Sale(request);
         if (result.IsSuccess())
         {
+          _emailService.SendEmail();
           await _braintreeService.UpdateOrderPaymentSucceeded(order.OrderId);
           Transaction transaction = result.Target;
           Console.WriteLine("Success!: " + transaction.Id);
@@ -48,23 +49,15 @@ namespace API.Controllers
         {
           await _braintreeService.UpdateOrderPaymentFailed(order.OrderId);
           Transaction transaction = result.Transaction;
-          Console.WriteLine("Error processing transaction:");
-          Console.WriteLine("  Status: " + transaction.Status);
-          Console.WriteLine("  Code: " + transaction.ProcessorResponseCode);
-          Console.WriteLine("  Text: " + transaction.ProcessorResponseText);
-        }
-        else
-        {
-          foreach (ValidationError error in result.Errors.DeepAll())
-          {
-            Console.WriteLine("Attribute: " + error.Attribute);
-            Console.WriteLine("  Code: " + error.Code);
-            Console.WriteLine("  Message: " + error.Message);
-          }
+          // Console.WriteLine("Error processing transaction:");
+          // Console.WriteLine("  Status: " + transaction.Status);
+          // Console.WriteLine("  Code: " + transaction.ProcessorResponseCode);
+          // Console.WriteLine("  Text: " + transaction.ProcessorResponseText);
+          return BadRequest(transaction.ProcessorResponseText);
         }
       }
 
-      return Ok();
+      return BadRequest();
     }
 
     [HttpGet("email")]
