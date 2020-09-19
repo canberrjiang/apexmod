@@ -35,7 +35,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   reorderable = true;
   childProductsGroupByCate = [];
   pickChildProduct;
-  childProductNewFormatGroup=[]
+  childProductNewFormatGroup = [];
   pickCategoryId: number;
   columns = [
     { prop: 'id' },
@@ -45,21 +45,16 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     { name: 'isDefault', sortable: false },
   ];
 
-
-
   constructor(
     private route: ActivatedRoute,
     private adminService: AdminService,
     private router: Router
-  ) { 
+  ) {}
 
-  }
-
-  setRowsData(){
+  setRowsData() {
     this.rows = this.product.childProducts;
-    this.updateChildProductUpdateFormat()
+    this.updateChildProductUpdateFormat();
   }
-
 
   deleteProduct(id) {
     console.log(id);
@@ -75,7 +70,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     let rows = [...this.rows];
     rows.splice(resultIndex, 1);
     this.rows = rows;
-    this.updateChildProductUpdateFormat()
+    this.updateChildProductUpdateFormat();
     console.log(this.rows);
   }
 
@@ -91,17 +86,18 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
   RenderChildProduct() {
     console.log(this.pickCategoryId);
-    this.adminService.getChildProductByCategory(this.pickCategoryId).subscribe((response: []) => {
-      // console.log(response);
-      this.childProductsGroupByCate = response;
-      console.log(this.childProductsGroupByCate);
-    });
+    this.adminService
+      .getChildProductByCategory(this.pickCategoryId)
+      .subscribe((response: []) => {
+        // console.log(response);
+        this.childProductsGroupByCate = response;
+        console.log(this.childProductsGroupByCate);
+      });
   }
 
   HandleChildProduct() {
     console.log(this.pickChildProduct);
   }
-
 
   handleAddChildProduct() {
     let newChildProduct = this.changeChildProductData(this.pickChildProduct);
@@ -109,7 +105,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     // console.log('row',newChildProduct)
     let rows = [...this.rows, newChildProduct];
     this.rows = rows;
-    this.updateChildProductUpdateFormat()
+    this.updateChildProductUpdateFormat();
   }
   // getAllChildProduct(){
   //   return this.http.get(this.baseUrl+ '/products/discriminator/childproduct');
@@ -128,13 +124,16 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     };
   }
 
-  updateChildProductUpdateFormat(){
-    const newRows = this.rows.map((element, idx, elements)=>{
-      const newElement = {childProductId: element.id,  isDefault: element.isDefault};
+  updateChildProductUpdateFormat() {
+    const newRows = this.rows.map((element, idx, elements) => {
+      const newElement = {
+        childProductId: element.id,
+        isDefault: element.isDefault,
+      };
       return newElement;
-    })
+    });
     this.childProductNewFormatGroup = newRows;
-    console.log( this.childProductNewFormatGroup);
+    console.log(this.childProductNewFormatGroup);
   }
 
   ngOnInit(): void {
@@ -167,7 +166,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
         });
       },
     };
-    this.setRowsData()
+    this.setRowsData();
   }
 
   ngAfterViewInit() {}
@@ -180,12 +179,14 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
       this.product.productTagIds.push(id);
       console.log(this.product);
     } else {
-      const index = this.product.productTagIds.findIndex( indexId => indexId === id);
+      const index = this.product.productTagIds.findIndex(
+        (indexId) => indexId === id
+      );
       this.product.productTagIds.splice(index, 1);
     }
     console.log(this.product.productTagIds);
   }
- 
+
   deleteSomeObjectKey() {
     delete this.product.childProducts;
     delete this.product.productCategory;
@@ -194,7 +195,10 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
   async onSubmit(product: ProductFormValues) {
     this.deleteSomeObjectKey();
-    await this.updateChildProductUpdateFormat();
+    if (this.product.discriminator === 'Product') {
+      await this.updateChildProductUpdateFormat();
+    }
+
     if (this.route.snapshot.url[0].path === 'edit') {
       console.log('submit: ', this.product);
       const updatedProduct = {
@@ -220,7 +224,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
         ...product,
         price: +product.price,
         productTagIds: this.product.productTagIds,
-        description:this.product.description
+        description: this.product.description,
       };
 
       console.log(0, product);
