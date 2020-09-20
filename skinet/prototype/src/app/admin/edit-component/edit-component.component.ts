@@ -28,11 +28,11 @@ export class EditComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.loadProductId();
+
     if (this.route.snapshot.url[2].path === 'component') {
       this.loadProduct();
     }
-   // console.log("id",this.componentId);
+
    if (this.route.snapshot.url[2].path === 'create') {
     this.edit = false;
     }
@@ -45,17 +45,14 @@ export class EditComponentComponent implements OnInit {
 
   loadProduct() {
     this.shopService.getProduct(this.productId).subscribe((response: any) => {
-      //const component = this.component && this.platforms.find(x => x.name === response.productPlatform).id;
-      //this.product.productComponents.splice(this.product.productComponents.findIndex(p => p.id === productcomponentId), 1);
-      // this.component = response.product;
-      // this.productFormValues = {...response};
+
 
       const newComponent = response.productComponents.find(
         (x) => x.id === this.componentId
       );
       
       this.component = {...newComponent};
-      // this.componentData = {...newComponent}
+
       console.log("comp",this.component);
     });
   }

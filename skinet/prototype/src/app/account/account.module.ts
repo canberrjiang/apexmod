@@ -6,12 +6,9 @@ import { SharedModule } from '../shared/shared.module';
 
 import { FormsModule, FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings,RecaptchaFormsModule } from 'ng-recaptcha';
-// import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-// import { FormsDemoComponent } from './forms-demo.component';
-// import { settings } from './forms-demo.data';
 
 
 @NgModule({

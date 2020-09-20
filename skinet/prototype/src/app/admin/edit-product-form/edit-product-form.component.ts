@@ -1,15 +1,12 @@
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { IProduct, ProductFormValues } from '../../shared/models/products';
-// import {IBrand} from '../../shared/models/brand';
-// import {IType} from '../../shared/models/productType';
-// import { IPlatform } from 'src/app/shared/models/platform';
-// import { IGraphic } from 'src/app/shared/models/productGraphic';
+
 import { ICategory } from 'src/app/shared/models/category';
 import { ITag } from 'src/app/shared/models/tag';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../admin.service';
 
-// declare var tinymce: any;
+
 @Component({
   selector: 'app-edit-product-form',
   templateUrl: './edit-product-form.component.html',
@@ -18,9 +15,7 @@ import { AdminService } from '../admin.service';
 export class EditProductFormComponent implements OnInit, AfterViewInit {
   @Input() product: ProductFormValues;
   @Input() edit: boolean;
-  // @Input() brands: IBrand[];
-  // @Input() types: IType[];
-  // @Input() platforms: IPlatform[];
+
   @Input() categories: ICategory[];
   @Input() tags: ITag[];
 
@@ -29,7 +24,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
   //for data table
   @Input() rows = [];
-  // rows = [];
+
   selected = [];
   loadingIndicator = true;
   reorderable = true;
@@ -89,7 +84,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     this.adminService
       .getChildProductByCategory(this.pickCategoryId)
       .subscribe((response: []) => {
-        // console.log(response);
+
         this.childProductsGroupByCate = response;
         console.log(this.childProductsGroupByCate);
       });
@@ -101,15 +96,11 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
   handleAddChildProduct() {
     let newChildProduct = this.changeChildProductData(this.pickChildProduct);
-    // console.log('row',this.rows)
-    // console.log('row',newChildProduct)
+
     let rows = [...this.rows, newChildProduct];
     this.rows = rows;
     this.updateChildProductUpdateFormat();
   }
-  // getAllChildProduct(){
-  //   return this.http.get(this.baseUrl+ '/products/discriminator/childproduct');
-  // }
 
   changeChildProductData(product) {
     return {
@@ -137,8 +128,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.product, this.product.productCategory);
-    // console.log(this.categories);
+
     let self = this;
     this.editorConfig = {
       base_url: '/tinymce', // Root for resources
@@ -172,9 +162,9 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {}
 
   handleChangeTagIds(id) {
-    //console.log(id);
+
     const checkCurrentTagId = this.product.productTagIds.includes(id);
-    // console.log(this.product.productTagIds);
+
     if (checkCurrentTagId === false) {
       this.product.productTagIds.push(id);
       console.log(this.product);
@@ -205,7 +195,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
         ...this.product,
         ...product,
         price: +product.price,
-        // productTagIds: [1, 2],
+
         selectedChildProducts: this.childProductNewFormatGroup,
       };
       console.log('update', updatedProduct);
@@ -215,7 +205,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
           this.router.navigate([
             `/admin/edit/${+this.route.snapshot.paramMap.get('id')}`,
           ]);
-          // alert(`${response.name} updated!`);
+
           console.log(response);
           this.success = true;
         });
@@ -231,15 +221,13 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
       console.log(1, newProduct);
       this.adminService.createProduct(newProduct).subscribe((response: any) => {
         this.router.navigate([`/admin/edit/${response}`]);
-        // alert(`${response.name} created!`);
-        // this.success = true;
+
       });
     }
   }
 
   updatePrice(event: any) {
     this.product.price = event;
-    //console.log(this.product)
   }
 
   closeAlert() {

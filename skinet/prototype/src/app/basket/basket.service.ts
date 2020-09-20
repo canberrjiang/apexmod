@@ -37,13 +37,12 @@ export class BasketService {
   
 
   setShippingPrice(deliveryMethod: IDeliveryMethod) {
-    // console.log(deliveryMethod.id)
+
     if(deliveryMethod.id === 4){
       this.shipping = deliveryMethod.price;
       const basket = this.getCurrentBasketValue();
       basket.deliveryMethodId = deliveryMethod.id;
       basket.shippingPrice = deliveryMethod.price;
-      // this.calculateTotalWithDeposit();
       this.calculateTotals();
       this.setBasket(basket);
     }else{
@@ -162,15 +161,6 @@ export class BasketService {
     this.basketTotalSource.next({shipping, total, subtotal});
   }
 
-  // private calculateTotalWithDeposit() {
-  //   const basket = this.getCurrentBasketValue();
-  //   const shipping = this.shipping;
-  //   const subtotal = basket.items.reduce((prevValue, item) => (item.price * item.quantity) + prevValue, 0);
-  //   const total = 50;
-  //   console.log(shipping, total, subtotal)
-  //   this.basketTotalSource.next({shipping, total, subtotal});
-  // }
-
   private calculateItemsQuantity(){
     const basket = this.getCurrentBasketValue();
     const quantity =  basket.items.reduce((prevValue, item) =>  item.quantity + prevValue, 0);
@@ -214,10 +204,7 @@ export class BasketService {
       childProducts: childProducts,
       productCategory: item.productCategory,
       basketProducts:basketProduct
-      // brand: item.productBrand,
-      // type: item.productType
-      // platform: item.productPlatform,
-      // graphic: item.productGraphic,
+
     };
   }
 }

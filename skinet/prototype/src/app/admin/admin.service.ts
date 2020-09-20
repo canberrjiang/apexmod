@@ -73,14 +73,7 @@ export class AdminService {
   }
 
 
-  // uploadRichImage(file: File) {
-  //   const formData = new FormData();
-  //   formData.append('Photo', file, 'image.png');
-  //   return this.http.post(this.baseUrl + 'products/richtextphoto', formData, {
-  //     reportProgress: true,
-  //     observe: 'events'
-  //   });
-  // }
+
   uploadRichImages(formData) {
     return this.http.post(this.baseUrl + 'products/richtextphoto', formData, {
       responseType: 'text'

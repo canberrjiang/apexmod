@@ -27,7 +27,6 @@ export class ProducttableComponent implements OnInit {
     { name: 'isDefault', sortable: false },
   ];
 
-  // ColumnMode = ColumnMode;
 
   constructor(private adminService: AdminService) {
     this.fetch((data) => {
@@ -79,7 +78,7 @@ export class ProducttableComponent implements OnInit {
   RenderChildProduct() {
     console.log(this.pickCategoryId);
     this.adminService.getAllChildProduct().subscribe((response: []) => {
-      // console.log(response);
+
       this.childProductsGroupByCate = response;
       console.log(this.childProductsGroupByCate);
     });
@@ -92,15 +91,12 @@ export class ProducttableComponent implements OnInit {
 
   handleAddChildProduct() {
     let newChildProduct = this.changeChildProductData(this.pickChildProduct);
-    // console.log('row',this.rows)
-    // console.log('row',newChildProduct)
+
     let rows = [...this.rows, newChildProduct];
     this.rows = rows;
     this.updateChildProductUpdateFormat()
   }
-  // getAllChildProduct(){
-  //   return this.http.get(this.baseUrl+ '/products/discriminator/childproduct');
-  // }
+
 
   changeChildProductData(product) {
     return {
@@ -124,12 +120,7 @@ export class ProducttableComponent implements OnInit {
     console.log( this.childProductNewFormatGroup);
   }
 
-  // mapChildProductToNewFormat(product) {
-  //   return {
-  //       childProductId: product.id,
-  //       isDefault: product.isDefault
-  //     };
-  // }
+
 
   onActivate(event) {
     console.log('Activate Event', event);

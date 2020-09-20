@@ -18,11 +18,7 @@ import { ITag } from 'src/app/shared/models/tag';
 export class EditProductComponent implements OnInit {
   product: IProduct;
   productFormValues: ProductFormValues;
-  // brands: IBrand[];
-  // types: IType[];
 
-  // platforms: IPlatform[];
-  // graphics: IGraphic[];
   categories: ICategory[];
   tags: ITag[];
   success = false;
@@ -38,27 +34,10 @@ export class EditProductComponent implements OnInit {
     this.productFormValues = new ProductFormValues();
   }
 
-  // ngOnInit() {
-  //   const platForms = this.getPlatforms();
-  //   const graphics = this.getGraphics();
-  //   forkJoin([graphics, platForms]).subscribe(results => {
-  //     this.graphics = results[0];
-  //     this.platforms = results[1];
-  //   }, error => {
-  //     console.log(error);
-  //   }, () => {
-  //     if (this.route.snapshot.url[0].path === 'edit') {
-  //       this.loadProduct();
-  //     }
-  //   });
-  //   if (this.route.snapshot.url[0].path === 'create') {
-  //     this.edit = false;
-  //   }
-  // }
+  
 
   ngOnInit() {
-    // const platForms = this.getPlatforms();
-    // const graphics = this.getGraphics();
+
     const categories = this.getCategories();
     const tags = this.getTags();
 
@@ -67,7 +46,7 @@ export class EditProductComponent implements OnInit {
       (results) => {
         this.categories = results[0];
         this.tags = results[1];
-        // this.platforms = results[1];
+
       },
       (error) => {
         console.log(error);
@@ -85,15 +64,14 @@ export class EditProductComponent implements OnInit {
 
   updatePrice(event: any) {
     this.product.price = event;
-    //console.log(this.product.price)
+)
   }
 
   loadProduct() {
     this.shopService
       .getProduct(+this.route.snapshot.paramMap.get('id'))
       .subscribe((response: any) => {
-        // const productPlatformId = this.platforms && this.platforms.find(x => x.name === response.productPlatform).id;
-        // const productGraphicId = this.graphics && this.graphics.find(x => x.name === response.productGraphic).id;
+
         const productCategoryId =
           this.categories &&
           this.categories.find((x) => x.name === response.productCategory).id;
@@ -101,17 +79,10 @@ export class EditProductComponent implements OnInit {
         this.productFormValues = { ...response, productCategoryId };
         this.aChildProducts = this.productFormValues.childProducts
         console.log('Load product Form', this.productFormValues);
-        // console.log("Load product response" , this.product)
+
       });
   }
 
-  // getPlatforms() {
-  //   return this.shopService.getPlatforms();
-  // }
-
-  // getGraphics() {
-  //   return this.shopService.getGraphics();
-  // }
   getCategories() {
     return this.shopService.getCategories();
   }

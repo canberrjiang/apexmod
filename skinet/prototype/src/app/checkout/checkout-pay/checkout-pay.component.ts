@@ -15,14 +15,13 @@ import { CheckoutService } from '../checkout.service';
 export class CheckoutPayComponent implements OnInit, AfterViewInit {
   basketTotals$: Observable<IBasketTotals>;
   order:IOrder;
-  // order$:IOrder;
   braintreeIsReady: boolean;
   dropIninstance: any;
   braintreeKey:any;
   
   constructor(private router: Router,private basketService: BasketService,private checkoutService: CheckoutService,) { 
     const navigation = this.router.getCurrentNavigation();
-    // this.getPayPalToken()
+
     const state = navigation && navigation.extras && navigation.extras.state;
     if (state) {
       this.order = state as IOrder; 
