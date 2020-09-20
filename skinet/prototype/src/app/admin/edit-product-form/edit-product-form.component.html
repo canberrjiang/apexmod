@@ -325,7 +325,9 @@
               class="form-control"
               [(ngModel)]="pickChildProduct"
               [ngModelOptions]="{ standalone: true }"
+              (change)="HandleChildProduct()"
             >
+            <option value="none" selected>-- None --</option>
               <option
                 *ngFor="let product of childProductsGroupByCate"
                 [ngValue]="product"

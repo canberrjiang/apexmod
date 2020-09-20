@@ -79,23 +79,37 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   }
 
   RenderChildProduct() {
-
+    // console.log(this.pickCategoryId);
+    this.childProductsGroupByCate = [];
+    this.pickChildProduct ='none';
     this.adminService
       .getChildProductByCategory(this.pickCategoryId)
       .subscribe((response: []) => {
 
         this.childProductsGroupByCate = response;
-
+        // console.log(this.childProductsGroupByCate);
       });
   }
 
 
   handleAddChildProduct() {
-    let newChildProduct = this.changeChildProductData(this.pickChildProduct);
-
+    // console.log(1, this.pickChildProduct); 
+    if (this.pickChildProduct === "none") {
+      return
+    } else {
+          let newChildProduct = this.changeChildProductData(this.pickChildProduct);
+    // console.log(2, newChildProduct); 
     let rows = [...this.rows, newChildProduct];
     this.rows = rows;
     this.updateChildProductUpdateFormat();
+    }
+
+  }
+
+  HandleChildProduct(value) {
+    // console.log(value);
+    // console.log(this.pickChildProduct);
+    // this.pickChildProduct = 
   }
 
   changeChildProductData(product) {
