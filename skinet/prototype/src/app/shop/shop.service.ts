@@ -22,15 +22,11 @@ export class ShopService {
   // baseUrl = 'https://localhost:5001/api/';
   baseUrl = environment.apiUrl;
 
+  //caching
   products: IProduct[] = [];
-  // brands: IBrand[] = [];
-  // platforms: IPlatform[] = [];
 
-  // types: IType[] = [];
-  // graphics: IGraphic[] = [];
   categories: ICategory[] = [];
   tags: ITag[] = [];
-
   pagination = new Pagination();
   shopParams = new ShopParams();
 
@@ -58,26 +54,12 @@ export class ShopService {
 
     let params = new HttpParams();
 
-    // if (this.shopParams.brandId !== 0) {
-    //   params = params.append('brandId', this.shopParams.brandId.toString());
-    // }
-    // if (this.shopParams.platformId !== 0) {
-    //   params = params.append('platformId', this.shopParams.platformId.toString());
-    // }
-
-    // if (this.shopParams.typeId !== 0) {
-    //   params = params.append('typeId', this.shopParams.typeId.toString());
-    // }
-    // if (this.shopParams.graphicId !== 0) {
-    //   params = params.append('graphicId', this.shopParams.graphicId.toString());
-    // }
     if (this.shopParams.producttagid !== 0) {
       params = params.append(
         'producttagid',
         this.shopParams.producttagid.toString()
       );
     }
-
     if (this.shopParams.search) {
       params = params.append('search', this.shopParams.search);
     }
@@ -109,49 +91,13 @@ export class ShopService {
   }
 
   getProduct(id: number) {
+    //caching, data not match
     // const product = this.products.find(p => p.id === id);
-
     // if (product) {
     //   return of(product);
     // }
     return this.http.get<IProduct>(this.baseUrl + 'products/' + id);
   }
-
-  // getBrands() {
-  //   if (this.brands.length > 0) {
-  //     return of(this.brands);
-  //   }
-  //   return this.http.get<IBrand[]>(this.baseUrl + 'products/brands').pipe(
-  //     map(response => {
-  //       this.brands = response;
-  //       return response;
-  //     })
-  //   );
-  // }
-
-  // getPlatforms() {
-  //   if (this.platforms.length > 0) {
-  //     return of(this.platforms);
-  //   }
-  //   return this.http.get<IPlatform[]>(this.baseUrl + 'products/platforms').pipe(
-  //     map(response => {
-  //       this.platforms = response;
-  //       return response;
-  //     })
-  //   );
-  // }
-
-  // getGraphics() {
-  //   if (this.graphics.length > 0) {
-  //     return of(this.graphics);
-  //   }
-  //   return this.http.get<IGraphic[]>(this.baseUrl + 'products/graphics').pipe(
-  //     map(response => {
-  //       this.graphics = response;
-  //       return response;
-  //     })
-  //   );
-  // }
 
   getCategories() {
     if (this.categories.length > 0) {

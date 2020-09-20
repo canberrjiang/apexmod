@@ -60,6 +60,7 @@ export class CheckoutReviewComponent implements OnInit {
     // );
     const createdOrder = await this.createOrder(basket);
     console.log(createdOrder);
+    this.basketService.deleteBasket(basket);
     const navigationExtras: NavigationExtras = { state: createdOrder };
     this.router.navigate(['checkout/pay'], navigationExtras);
 

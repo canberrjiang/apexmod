@@ -32,9 +32,9 @@
                                         class="text-dark">{{item.productName}}</a>
                                 </h5>
                                 <span
-                                    *ngIf="item.type"
-                                    class="text-muted font-weight-normal font-italic d-block">
-                                    Type: {{item.type}}
+                                    *ngIf="item.productDescription"
+                                    class="text-muted font-weight-normal font-italic d-block product-description__name">
+                                    Product: <p> {{item.productDescription}}</p>
                                 </span>
                             </div>
     

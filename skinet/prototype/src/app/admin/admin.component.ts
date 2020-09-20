@@ -15,11 +15,13 @@ export class AdminComponent implements OnInit {
   shopParams: ShopParams;
 
   constructor(private shopService: ShopService, private adminService: AdminService) {
+    this.shopParams = new ShopParams();
+    this.shopService.setShopParams(this.shopParams);
     this.shopParams = this.shopService.getShopParams();
   }
 
   ngOnInit(): void {
-    this.getProducts();
+    this.getProducts(false);
   }
 
   getProducts(useCache = false) {
