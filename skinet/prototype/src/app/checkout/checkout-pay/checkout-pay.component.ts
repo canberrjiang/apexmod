@@ -10,30 +10,33 @@ import { CheckoutService } from '../checkout.service';
 @Component({
   selector: 'app-checkout-pay',
   templateUrl: './checkout-pay.component.html',
-  styleUrls: ['./checkout-pay.component.scss']
+  styleUrls: ['./checkout-pay.component.scss'],
 })
 export class CheckoutPayComponent implements OnInit, AfterViewInit {
   basketTotals$: Observable<IBasketTotals>;
-  order:IOrder;
+  order: IOrder;
   braintreeIsReady: boolean;
   dropIninstance: any;
-  braintreeKey:any;
-  
-  constructor(private router: Router,private basketService: BasketService,private checkoutService: CheckoutService,) { 
+  braintreeKey: any;
+
+  constructor(
+    private router: Router,
+    private basketService: BasketService,
+    private checkoutService: CheckoutService
+  ) {
     const navigation = this.router.getCurrentNavigation();
 
     const state = navigation && navigation.extras && navigation.extras.state;
     if (state) {
-      this.order = state as IOrder; 
+      this.order = state as IOrder;
       console.log(this.order);
     }
 
-    this.getPayPalToken()
-   
+    this.getPayPalToken();
   }
 
-  getPayPalToken(){
-    this.checkoutService.getPayPalToken().subscribe((response:string) => {
+  getPayPalToken() {
+    this.checkoutService.getPayPalToken().subscribe((response: string) => {
       this.braintreeKey = response;
 
       dropin.create(
@@ -43,8 +46,8 @@ export class CheckoutPayComponent implements OnInit, AfterViewInit {
           // container: '#dropin-container',
           // bank card payments are enabled by default. To enable paypal option, check out the below line.
           paypal: {
-            flow: 'vault'
-          }
+            flow: 'vault',
+          },
         },
         (err, dropinInstance) => {
           if (err) {
@@ -56,39 +59,35 @@ export class CheckoutPayComponent implements OnInit, AfterViewInit {
           this.braintreeIsReady = true;
         }
       );
-    })
+    });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.basketTotals$ = this.basketService.basketTotal$;
     //  this.getPayPalToken();
-
   }
 
-  ngAfterViewInit() {
-    // this.getPayPalToken();
-    // console.log(this.braintreeKey);
-  }
-
-
+  ngAfterViewInit() {}
 
   pay() {
     this.dropIninstance.requestPaymentMethod((err, payload) => {
       if (err) {
         // deal with error
         console.log(err);
-      }
-      else {
-        console.log(payload)
+      } else {
+        console.log(payload);
 
         const paymentData = {
           orderid: this.order && this.order.id,
           nonce: payload.nonce,
         };
         //send nonce to the server
-        this.checkoutService.handlePayPalPayment(paymentData).subscribe((response) => {
-          console.log(response); 
-        })
+        this.checkoutService
+          .handlePayPalPayment(paymentData)
+          .subscribe((response) => {
+            this.router.navigate(['checkout/success']);
+            console.log(response);
+          });
       }
     });
   }

@@ -3,10 +3,6 @@ import { AdminService } from '../admin.service';
 import { ShopService } from '../../shop/shop.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductFormValues, IProduct } from '../../shared/models/products';
-// import {IBrand} from '../../shared/models/brand';
-// import {IType} from '../../shared/models/productType';
-import { IPlatform } from 'src/app/shared/models/platform';
-import { IGraphic } from 'src/app/shared/models/productGraphic';
 import { ICategory } from 'src/app/shared/models/category';
 import { forkJoin } from 'rxjs';
 import { ITag } from 'src/app/shared/models/tag';
@@ -23,7 +19,7 @@ export class EditProductComponent implements OnInit {
   tags: ITag[];
   success = false;
   edit = true;
-  aChildProducts =[]
+  aChildProducts = [];
 
   constructor(
     private adminService: AdminService,
@@ -34,19 +30,14 @@ export class EditProductComponent implements OnInit {
     this.productFormValues = new ProductFormValues();
   }
 
-  
-
   ngOnInit() {
-
     const categories = this.getCategories();
     const tags = this.getTags();
-
 
     forkJoin([categories, tags]).subscribe(
       (results) => {
         this.categories = results[0];
         this.tags = results[1];
-
       },
       (error) => {
         console.log(error);
@@ -64,22 +55,19 @@ export class EditProductComponent implements OnInit {
 
   updatePrice(event: any) {
     this.product.price = event;
-)
   }
 
   loadProduct() {
     this.shopService
       .getProduct(+this.route.snapshot.paramMap.get('id'))
       .subscribe((response: any) => {
-
         const productCategoryId =
           this.categories &&
           this.categories.find((x) => x.name === response.productCategory).id;
         this.product = response;
         this.productFormValues = { ...response, productCategoryId };
-        this.aChildProducts = this.productFormValues.childProducts
+        this.aChildProducts = this.productFormValues.childProducts;
         console.log('Load product Form', this.productFormValues);
-
       });
   }
 

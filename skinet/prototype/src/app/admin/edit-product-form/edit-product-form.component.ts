@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { IProduct, ProductFormValues } from '../../shared/models/products';
-
 import { ICategory } from 'src/app/shared/models/category';
 import { ITag } from 'src/app/shared/models/tag';
 import { ActivatedRoute, Router } from '@angular/router';

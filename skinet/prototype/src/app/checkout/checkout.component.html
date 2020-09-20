@@ -11,12 +11,7 @@
                 </cdk-step>
                 <cdk-step [label]="'Review'" >
                     <app-checkout-review [checkoutForm]="checkoutForm" [appStepper]='appStepper'></app-checkout-review>
-                    <!-- <app-checkout-review [appStepper]='appStepper'></app-checkout-review> -->
                 </cdk-step>
-                <!-- <cdk-step [label]="'Payment'">
-                    <app-checkout-payment [checkoutForm]="checkoutForm"></app-checkout-payment>
-                    <app-checkout-paypal [totalPay]="(basketTotals$ | async).total"></app-checkout-paypal>
-                </cdk-step> -->
             </app-stepper>
         </div>
         <div class="col-4">

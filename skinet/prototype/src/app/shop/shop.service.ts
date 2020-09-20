@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IPagination, Pagination } from '../shared/models/pagination';
-// import { IBrand } from '../shared/models/brand';
-// import { IPlatform } from '../shared/models/platform';
-
-// import { IType } from '../shared/models/productType';
-// import { IGraphic } from '../shared/models/productGraphic';
 
 import { ICategory } from '../shared/models/category';
 import { ITag } from '../shared/models/tag';

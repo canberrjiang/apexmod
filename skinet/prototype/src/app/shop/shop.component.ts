@@ -1,10 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { IProduct } from '../shared/models/products';
 import { ShopService } from './shop.service';
-// import { IBrand } from '../shared/models/brand';
-// import { IType } from '../shared/models/productType';
-import { IPlatform } from '../shared/models/platform';
-import { IGraphic } from '../shared/models/productGraphic';
+
 import { ITag } from '../shared/models/tag';
 import { ShopParams } from '../shared/models/shopParams';
 

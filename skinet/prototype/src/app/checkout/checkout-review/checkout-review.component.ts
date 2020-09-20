@@ -44,20 +44,6 @@ export class CheckoutReviewComponent implements OnInit {
 
   async createOrderIntent() {
     const basket = this.basketService.getCurrentBasketValue();
-    // await this.createOrder(basket).then(
-    //   (response: any) => {
-    //     // this.toastr.success('success and created')
-    //     console.log('xxx', response);
-    //     const orderId = { orderId: response.id };
-    //     this.checkoutForm.get('OrderForm').reset(orderId);
-    //     // console.log(this.checkoutForm);
-    //     this.appStepper.next();
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //     this.toastr.error(error.massage);
-    //   }
-    // );
     const createdOrder = await this.createOrder(basket);
     console.log(createdOrder);
     this.basketService.deleteBasket(basket);

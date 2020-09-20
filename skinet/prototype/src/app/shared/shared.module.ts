@@ -19,13 +19,12 @@ import { PhotoWidgetComponent } from './components/photo-widget/photo-widget.com
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 import { EditorModule,TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { DatatableComponent } from './components/datatable/datatable.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 
 @NgModule({
-  declarations: [PagingHeaderComponent, PagerComponent, OrderTotalsComponent, TextInputComponent, StepperComponent, BasketSummaryComponent, PhotoWidgetComponent, DatatableComponent],
+  declarations: [PagingHeaderComponent, PagerComponent, OrderTotalsComponent, TextInputComponent, StepperComponent, BasketSummaryComponent, PhotoWidgetComponent],
   imports: [
     CommonModule,
     PaginationModule.forRoot(),
@@ -64,7 +63,6 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     ImageCropperModule,
     PhotoWidgetComponent,
     EditorModule,
-    DatatableComponent,
     NgxDatatableModule,
     CollapseModule
   ],
