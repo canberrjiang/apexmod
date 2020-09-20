@@ -52,7 +52,7 @@ export class EditProductPhotosComponent implements OnInit {
       this.product.photos.splice(photoIndex, 1);
     }, error => {
       this.toast.error('Problem deleting photo');
-      console.log(error);
+      // console.log(error);
     });
   }
 

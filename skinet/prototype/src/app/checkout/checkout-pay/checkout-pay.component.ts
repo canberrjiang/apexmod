@@ -29,7 +29,6 @@ export class CheckoutPayComponent implements OnInit, AfterViewInit {
     const state = navigation && navigation.extras && navigation.extras.state;
     if (state) {
       this.order = state as IOrder;
-      console.log(this.order);
     }
 
     this.getPayPalToken();
@@ -73,9 +72,8 @@ export class CheckoutPayComponent implements OnInit, AfterViewInit {
     this.dropIninstance.requestPaymentMethod((err, payload) => {
       if (err) {
         // deal with error
-        console.log(err);
+        // console.log(err);
       } else {
-        console.log(payload);
 
         const paymentData = {
           orderid: this.order && this.order.id,
@@ -86,7 +84,6 @@ export class CheckoutPayComponent implements OnInit, AfterViewInit {
           .handlePayPalPayment(paymentData)
           .subscribe((response) => {
             this.router.navigate(['checkout/success']);
-            console.log(response);
           });
       }
     });

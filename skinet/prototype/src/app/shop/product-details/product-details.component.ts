@@ -66,13 +66,10 @@ export class ProductDetailsComponent implements OnInit {
     return count;
   }
 
-  handleChange(productCategory, id, price,name) {
+  handleChange(productCategory, id, price, name) {
     this.childComponentsId[productCategory] = id;
     this.childComponentsPrice[productCategory] = price;
     this.childComponentsName[productCategory] = name;
-    console.log(this.childComponentsId);
-    console.log(this.childComponentsPrice);
-    console.log(this.childComponentsName);
     this.setPrice(this.childComponentsPrice);
   }
 
@@ -169,10 +166,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addItemToBasket() {
-    // console.log(this.product);
     this.handlerChangeChildrenProductsObjectToArry();
     this.handlerChangeProductNameObjectToArry();
-    console.log(this.basketProduct);
 
     this.basketService.addItemToBasket(
       this.product,
@@ -198,11 +193,10 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe(
         (product) => {
           this.product = product;
-          console.log(this.product);
           this.bcService.set('@productDetails', product.name);
           this.initializeGallery();
 
-          if (this.product.productCategory==="pc") {
+          if (this.product.productCategory === 'pc') {
             const componentGroup = this.mapChildrenProductsForRender(
               this.product.childProducts
             );
@@ -216,24 +210,14 @@ export class ProductDetailsComponent implements OnInit {
               this.product.childProducts
             );
 
-
             this.components = componentGroup;
             this.childComponentsId = idGroup;
             this.childComponentsPrice = priceGroup;
             this.childComponentsName = nameGroup;
-            console.log('array', this.components);
-            console.log('id', this.childComponentsId);
-            console.log('price', this.childComponentsPrice);
-            console.log('Name', this.childComponentsName);
-
           }
-
-
-          // this.product.price = this.setPrice(this.componentTotalPrice)
-          // console.log(this.setPrice(this.componentTotalPrice));
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
   }

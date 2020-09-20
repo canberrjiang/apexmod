@@ -21,7 +21,6 @@ export class CheckoutComponent implements OnInit {
     this.getAddressFormValues();
     this.getDeliveryMethodValue();
     this.basketTotals$ = this.basketService.basketTotal$;
-    console.log(this.basketTotals$);
   }
 
   createCheckoutForm() {
@@ -52,7 +51,7 @@ export class CheckoutComponent implements OnInit {
         this.checkoutForm.get('addressForm').patchValue(address);
       }
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 

@@ -40,7 +40,7 @@ export class ShopComponent implements OnInit {
       this.products = response.data;
       this.totalCount = response.count;
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 
@@ -48,7 +48,7 @@ export class ShopComponent implements OnInit {
     this.shopService.getTags().subscribe(response => {
       this.tags = [{ id: 0, name: 'All' }, ...response];
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 

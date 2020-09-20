@@ -34,6 +34,6 @@ export class PhotoWidgetComponent implements OnInit {
   }
 
   onUpload() {
-    console.log(base64ToFile(this.croppedImage));
+    // console.log(base64ToFile(this.croppedImage));
     this.addFile.emit(base64ToFile(this.croppedImage));  }
 }

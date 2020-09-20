@@ -77,7 +77,7 @@ export class BasketService {
       this.calculateTotals();
       this.calculateItemsQuantity();
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 
@@ -91,8 +91,7 @@ export class BasketService {
     if (basket === null) {
       basket = this.createBasket();
     }
-    console.log(basket)
-    console.log("itemToAdd",itemToAdd)
+
    basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity);
    this.setBasket(basket);
   }
@@ -143,7 +142,7 @@ export class BasketService {
       this.quantityNumSource.next(null);
       localStorage.removeItem('basket_id');
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 

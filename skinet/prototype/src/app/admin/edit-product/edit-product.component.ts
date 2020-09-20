@@ -40,7 +40,7 @@ export class EditProductComponent implements OnInit {
         this.tags = results[1];
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
       },
       () => {
         if (this.route.snapshot.url[0].path === 'edit') {
@@ -67,7 +67,6 @@ export class EditProductComponent implements OnInit {
         this.product = response;
         this.productFormValues = { ...response, productCategoryId };
         this.aChildProducts = this.productFormValues.childProducts;
-        console.log('Load product Form', this.productFormValues);
       });
   }
 

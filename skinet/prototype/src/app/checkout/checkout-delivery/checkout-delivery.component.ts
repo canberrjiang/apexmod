@@ -17,10 +17,9 @@ export class CheckoutDeliveryComponent implements OnInit {
 
   ngOnInit() {
     this.checkoutService.getDeliveryMethods().subscribe((dm: IDeliveryMethod[]) => {
-      console.log(dm)
       this.deliveryMethods = dm;
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 

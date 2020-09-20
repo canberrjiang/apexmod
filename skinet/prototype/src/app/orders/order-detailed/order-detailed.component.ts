@@ -28,7 +28,7 @@ export class OrderDetailedComponent implements OnInit {
       }
       this.breadcrumbService.set('@OrderDetailed', `Order# ${order.id} - ${order.status}`);
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 

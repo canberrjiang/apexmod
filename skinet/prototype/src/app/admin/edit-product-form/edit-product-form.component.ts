@@ -51,7 +51,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   }
 
   deleteProduct(id) {
-    console.log(id);
+
 
     const resultIndex = this.rows.findIndex((item, index, items) => {
       return item.id === id;
@@ -65,7 +65,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     rows.splice(resultIndex, 1);
     this.rows = rows;
     this.updateChildProductUpdateFormat();
-    console.log(this.rows);
+
   }
 
   setDefault(id) {
@@ -79,19 +79,16 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   }
 
   RenderChildProduct() {
-    console.log(this.pickCategoryId);
+
     this.adminService
       .getChildProductByCategory(this.pickCategoryId)
       .subscribe((response: []) => {
 
         this.childProductsGroupByCate = response;
-        console.log(this.childProductsGroupByCate);
+
       });
   }
 
-  HandleChildProduct() {
-    console.log(this.pickChildProduct);
-  }
 
   handleAddChildProduct() {
     let newChildProduct = this.changeChildProductData(this.pickChildProduct);
@@ -123,7 +120,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
       return newElement;
     });
     this.childProductNewFormatGroup = newRows;
-    console.log(this.childProductNewFormatGroup);
+
   }
 
   ngOnInit(): void {
@@ -149,8 +146,8 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
         const file = blobInfo.blob();
         self.adminService.uploadRichImages(formData).subscribe((response) => {
-          console.log(response);
-          let url = 'http://104.210.85.29/Content/' + response;
+
+          let url = 'https://www.apexmod.com.au//Content/' + response;
           success(url);
         });
       },
@@ -166,14 +163,13 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
     if (checkCurrentTagId === false) {
       this.product.productTagIds.push(id);
-      console.log(this.product);
     } else {
       const index = this.product.productTagIds.findIndex(
         (indexId) => indexId === id
       );
       this.product.productTagIds.splice(index, 1);
     }
-    console.log(this.product.productTagIds);
+
   }
 
   deleteSomeObjectKey() {
@@ -189,7 +185,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     }
 
     if (this.route.snapshot.url[0].path === 'edit') {
-      console.log('submit: ', this.product);
+
       const updatedProduct = {
         ...this.product,
         ...product,
@@ -197,15 +193,13 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
         selectedChildProducts: this.childProductNewFormatGroup,
       };
-      console.log('update', updatedProduct);
+
       this.adminService
         .updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id'))
         .subscribe((response: any) => {
           this.router.navigate([
             `/admin/edit/${+this.route.snapshot.paramMap.get('id')}`,
           ]);
-
-          console.log(response);
           this.success = true;
         });
     } else {
@@ -215,9 +209,6 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
         productTagIds: this.product.productTagIds,
         description: this.product.description,
       };
-
-      console.log(0, product);
-      console.log(1, newProduct);
       this.adminService.createProduct(newProduct).subscribe((response: any) => {
         this.router.navigate([`/admin/edit/${response}`]);
 

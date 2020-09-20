@@ -25,7 +25,7 @@ export class CheckoutAddressComponent implements OnInit {
         this.checkoutForm.get('addressForm').reset(address);
       }, error => {
         // this.toastr.error(error.message);
-        console.log(error);
+        // console.log(error);
       });
   }
 
