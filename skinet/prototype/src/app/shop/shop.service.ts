@@ -77,6 +77,12 @@ export class ShopService {
       );
   }
 
+  getProductsByAdmin() {
+    return this.http.get(this.baseUrl + 'products/admin/products')
+  }
+
+
+
   getShopParams() {
     return this.shopParams;
   }

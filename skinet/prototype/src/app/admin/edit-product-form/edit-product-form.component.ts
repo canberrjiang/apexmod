@@ -161,7 +161,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
         const file = blobInfo.blob();
         self.adminService.uploadRichImages(formData).subscribe((response) => {
 
-          let url = 'https://www.apexmod.com.au//Content/' + response;
+          let url = 'https://www.apexmod.com.au/Content/' + response;
           success(url);
         });
       },

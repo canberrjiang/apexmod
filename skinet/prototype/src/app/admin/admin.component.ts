@@ -21,26 +21,27 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProducts(false);
+    this.getProductsByAdmin();
   }
 
-  getProducts(useCache = false) {
-    this.shopService.getProducts(useCache).subscribe(response => {
-      this.products = response.data;
-      this.totalCount = response.count;
+  getProductsByAdmin() {
+    this.shopService.getProductsByAdmin().subscribe((response:[]) => {
+      this.products = response;
+      console.log(response)
+      // this.totalCount = response.count;
     }, error => {
       // console.log(error);
     });
   }
 
-  onPageChanged(event: any) {
-    const params = this.shopService.getShopParams();
-    if (params.pageNumber !== event) {
-      params.pageNumber = event;
-      this.shopService.setShopParams(params);
-      this.getProducts(true);
-    }
-  }
+  // onPageChanged(event: any) {
+  //   const params = this.shopService.getShopParams();
+  //   if (params.pageNumber !== event) {
+  //     params.pageNumber = event;
+  //     this.shopService.setShopParams(params);
+  //     this.getProductsByAdmin();
+  //   }
+  // }
 
   deleteProduct(id: number) {
     this.adminService.deleteProduct(id).subscribe((response: any) => {
