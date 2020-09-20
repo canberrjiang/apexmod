@@ -44,8 +44,9 @@
       </div>
     </div>
 
-    <div class="row mt-5">
-      <div class="col-12 ml-3" *ngFor="let component of components">
+    <div class="col-12 mt-5">
+      <h4>Core Components</h4>
+      <div class="col-12 component-main" *ngFor="let component of components">
         <h4>{{ component.category }}</h4>
         <div class="form-check" *ngFor="let item of component.itemsList">
           
@@ -62,6 +63,8 @@
             {{ item.name }}
           </label>
         </div>
+
+        <hr>
       </div>
     </div>
   </div>
