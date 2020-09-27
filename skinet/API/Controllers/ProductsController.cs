@@ -16,7 +16,6 @@ using Core.Specifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static System.Net.Mime.MediaTypeNames;
 using static Core.Specifications.AllBaseProductWithTagsAndCategoriesSpecification;
 using static Core.Specifications.BaseProductWithTagsAndCategoriesSpecification;
 using static Core.Specifications.ProductWithTagsAndCategoriesSpecification;
@@ -38,7 +37,7 @@ namespace API.Controllers
       _mapper = mapper;
     }
 
-    // [Cached(600)]
+    [Cached(600)]
     [HttpGet]
     public async Task<ActionResult<Pagination<BaseProductToReturnDto>>> GetProducts(
       [FromQuery] BaseProductsSpecParams productParams)
@@ -80,7 +79,7 @@ namespace API.Controllers
       return Ok(data);
     }
 
-    // [Cached(600)]
+    [Cached(600)]
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
