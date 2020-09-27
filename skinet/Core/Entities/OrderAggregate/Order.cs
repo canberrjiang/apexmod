@@ -30,6 +30,11 @@ namespace Core.Entities.OrderAggregate
     public OrderStatus Status { get; set; } = OrderStatus.Pending;
     public decimal GetTotal()
     {
+      // Deposit Only
+      if (DeliveryMethod.ShortName == "Deposit Only")
+      {
+        return DeliveryMethod.Price;
+      }
       return Subtotal + DeliveryMethod.Price;
     }
   }

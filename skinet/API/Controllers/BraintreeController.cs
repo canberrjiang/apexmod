@@ -5,6 +5,7 @@ using Core.Entities.Braintree;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using API.Extensions;
 
 namespace API.Controllers
 {
@@ -30,41 +31,43 @@ namespace API.Controllers
     [HttpPost]
     public async Task<ActionResult> CreatePurchase(BraintreePurchaseRequest order)
     {
+      var email = HttpContext.User.RetrieveEmailFromPrincipal();
       var gateway = _braintreeService.CreateGateway();
       string nonceFromTheClient = order.Nonce;
 
       if (!string.IsNullOrEmpty(nonceFromTheClient))
       {
-        var request = await _braintreeService.CreateBraintreeOrder(order);
+        var request = await _braintreeService.CreateBraintreeOrder(order, email);
         if (request == null) return BadRequest("Failed to process payment");
         Result<Transaction> result = gateway.Transaction.Sale(request);
         if (result.IsSuccess())
         {
           await _braintreeService.UpdateOrderPaymentSucceeded(order.OrderId);
-          Transaction transaction = result.Target;
-          Console.WriteLine("Success!: " + transaction.Id);
+          // Transaction transaction = result.Target;
+          // Console.WriteLine("Success!: " + transaction.Id);
+          return Ok();
         }
         else if (result.Transaction != null)
         {
           await _braintreeService.UpdateOrderPaymentFailed(order.OrderId);
-          Transaction transaction = result.Transaction;
-          Console.WriteLine("Error processing transaction:");
-          Console.WriteLine("  Status: " + transaction.Status);
-          Console.WriteLine("  Code: " + transaction.ProcessorResponseCode);
-          Console.WriteLine("  Text: " + transaction.ProcessorResponseText);
+          // Transaction transaction = result.Transaction;
+          // Console.WriteLine("Error processing transaction:");
+          // Console.WriteLine("  Status: " + transaction.Status);
+          // Console.WriteLine("  Code: " + transaction.ProcessorResponseCode);
+          // Console.WriteLine("  Text: " + transaction.ProcessorResponseText);
         }
-        else
-        {
-          foreach (ValidationError error in result.Errors.DeepAll())
-          {
-            Console.WriteLine("Attribute: " + error.Attribute);
-            Console.WriteLine("  Code: " + error.Code);
-            Console.WriteLine("  Message: " + error.Message);
-          }
-        }
+        // else
+        // {
+        //   foreach (ValidationError error in result.Errors.DeepAll())
+        //   {
+        //     Console.WriteLine("Attribute: " + error.Attribute);
+        //     Console.WriteLine("  Code: " + error.Code);
+        //     Console.WriteLine("  Message: " + error.Message);
+        //   }
+        // }
       }
 
-      return Ok();
+      return BadRequest("Payment Failed");
     }
 
     [HttpGet("email")]

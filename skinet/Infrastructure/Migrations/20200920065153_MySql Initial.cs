@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Migrations
 {
-    public partial class MysqlInitial : Migration
+    public partial class MySqlInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -87,9 +87,11 @@ namespace Infrastructure.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
+                    Information = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PictureUrl = table.Column<string>(nullable: true),
+                    Stock = table.Column<int>(nullable: false),
                     ProductCategoryId = table.Column<int>(nullable: false),
                     IsPublished = table.Column<bool>(nullable: false)
                 },

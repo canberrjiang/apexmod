@@ -29,25 +29,18 @@ namespace Infrastructure.Services
       return gateway;
     }
 
-    public async Task<TransactionRequest> CreateBraintreeOrder(BraintreePurchaseRequest braintreePurchaseRequest)
+    public async Task<TransactionRequest> CreateBraintreeOrder(BraintreePurchaseRequest braintreePurchaseRequest, string email)
     {
       var orderId = braintreePurchaseRequest.OrderId;
       var paymentMethodNonce = braintreePurchaseRequest.Nonce;
       var orderSpec = new Core.Specifications.OrderWithDeliveryMethodSpecification(orderId);
       var order = await _unitOfWork.Repository<Core.Entities.OrderAggregate.Order>().GetEntityWithSpec(orderSpec);
-      var deliveryMethodPrice = (order != null) ? order.DeliveryMethod.Price : 0;
-      var totalPrice = order.Subtotal + deliveryMethodPrice;
-      // Only charge for deposit price if a user choses "Deposity Only".
-      if (order.DeliveryMethod.ShortName == "Deposit Only")
-      {
-        totalPrice = order.DeliveryMethod.Price;
-      }
 
       if (!string.IsNullOrEmpty(paymentMethodNonce))
       {
         var request = new TransactionRequest
         {
-          Amount = totalPrice,
+          Amount = order.GetTotal(),
           PaymentMethodNonce = paymentMethodNonce,
           OrderId = orderId.ToString(),
           ShippingAddress = new AddressRequest()
@@ -58,6 +51,12 @@ namespace Infrastructure.Services
             Locality = order.ShipToAddress.City,
             Region = order.ShipToAddress.State,
             PostalCode = order.ShipToAddress.Zipcode
+          },
+          Customer = new CustomerRequest
+          {
+            FirstName = order.ShipToAddress.FirstName,
+            LastName = order.ShipToAddress.LastName,
+            Email = email
           },
           Options = new TransactionOptionsRequest
           {

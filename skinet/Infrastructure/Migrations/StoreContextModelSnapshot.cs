@@ -3,16 +3,14 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20200919035823_Mysql Initial")]
-    partial class MysqlInitial
+    partial class StoreContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,6 +31,9 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("Information")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<bool>("IsPublished")
                         .HasColumnType("tinyint(1)");
 
@@ -48,6 +49,9 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProductCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

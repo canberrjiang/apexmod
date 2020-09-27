@@ -1,16 +1,13 @@
-using System;
-using System.Linq.Expressions;
 using Core.Entities;
 
 namespace Core.Specifications
 {
-  public class ProductTagByProductIdSpecification : BaseSpecification<ProductTag>
+  public class ProductTagWithProductAndTagSpecification : BaseSpecification<ProductTag>
   {
-    public ProductTagByProductIdSpecification(int productId)
-        : base(pt =>
-              (pt.ProductId == productId)
-        )
+    public ProductTagWithProductAndTagSpecification() : base()
     {
+      AddInclude(pt => pt.BaseProduct);
+      AddInclude(pt => pt.Tag);
     }
   }
 }
