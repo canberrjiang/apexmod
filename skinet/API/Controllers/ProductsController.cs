@@ -331,7 +331,7 @@ namespace API.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<BaseProductToReturnDto>> AddProductPhoto(int id, [FromForm] ProductPhotoDto photoDto)
     {
-      var spec = new BaseProductsWithTagsAndCategoriesSpecification(id);
+      var spec = new AllBaseProductsWithTagsAndCategoriesSpecification(id);
       var product = await _unitOfWork.Repository<BaseProduct>().GetEntityWithSpec(spec);
       // Todo - check nullable product.
       if (photoDto.Photo.Length > 0)
@@ -361,7 +361,7 @@ namespace API.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeleteProductPhoto(int id, int photoId)
     {
-      var spec = new BaseProductsWithTagsAndCategoriesSpecification(id);
+      var spec = new AllBaseProductsWithTagsAndCategoriesSpecification(id);
       var product = await _unitOfWork.Repository<BaseProduct>().GetEntityWithSpec(spec);
 
       var photo = product.Photos.SingleOrDefault(x => x.Id == photoId);
@@ -388,7 +388,7 @@ namespace API.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<BaseProductToReturnDto>> SetMainPhoto(int id, int photoId)
     {
-      var spec = new BaseProductsWithTagsAndCategoriesSpecification(id);
+      var spec = new AllBaseProductsWithTagsAndCategoriesSpecification(id);
       var product = await _unitOfWork.Repository<BaseProduct>().GetEntityWithSpec(spec);
 
       if (product.Photos.All(x => x.Id != photoId)) return NotFound();
