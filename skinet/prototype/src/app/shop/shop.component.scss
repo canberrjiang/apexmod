@@ -5,16 +5,61 @@
   font-size: 1.1em;
 
   &:focus {
-      outline: none;
+    outline: none;
   }
 
   &.active {
-      border-radius: 10px;
+    border-radius: 10px;
   }
 
   &:not(.active):hover {
-      color: #fff;
-      background-color: rgba(126, 124, 123, 0.41);
-      border-radius: 10px;
+    color: #fff;
+    background-color: rgba(126, 124, 123, 0.41);
+    border-radius: 10px;
   }
 }
+
+.filter__title {
+  font-weight: bold;
+}
+
+.product-groups {
+  display: flex;
+  flex-wrap: wrap;
+  .product {
+    width: 32.1%;
+    margin-right: 5px;
+  }
+  @media (max-width: 768px) {
+    .product {
+      width: 48.5%;
+      margin-right: 5px;
+    }
+  }
+  @media (max-width: 426px) {
+    .product {
+      width: 99.5%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+
+.search-box{
+   min-width: 250px;
+}
+
+
+@media (max-width: 575px) {
+    .filter__list--li {
+    display: none;
+    }
+  }
+
+  @media (min-width: 575px) {
+    .filter__list--option {
+    display: none;
+    }
+  }
+
