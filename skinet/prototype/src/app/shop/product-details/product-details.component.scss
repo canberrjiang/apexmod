@@ -83,3 +83,12 @@
     flex-grow: 0; /* default 0 */
   }
 }
+
+.component__image{
+  width: 100px;
+  height: 100px;
+
+  @media (max-width: 575px) {
+    display: none;
+  }
+}

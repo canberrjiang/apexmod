@@ -54,23 +54,36 @@
       <h4 class='product__title'>Core Components</h4>
       <hr/>
       <div class="col-12 component-main" *ngFor="let component of components">
-        <h4>{{ component.category }}</h4>
-        <div class="form-check" *ngFor="let item of component.itemsList">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="{{ item.productCategory }}"
-            id="{{ item.id }}"
-            value="{{ item.id }}"
-            [checked]="item.isDefault"
-            (click)="
-              handleChange(item.productCategory, item.id, item.price, item.name)
-            "
-          />
-          <label class="form-check-label" for="exampleRadios1">
-            {{ item.name }} - ${{item.price}}
-          </label>
+       
+        <div class="row"> 
+
+          <div class="col-12 col-sm-8" >
+             <h4 *ngIf="component.category as category">{{category}}</h4>
+            <div class="form-check" *ngFor="let item of component.itemsList">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="{{ item.productCategory }}"
+              id="{{ item.id }}"
+              value="{{ item.id }}"
+              [checked]="item.isDefault"
+              (click)="
+                handleChange(item.productCategory, item.id, item.price, item.pictureUrl)
+              "
+            />
+            <label class="form-check-label" for="exampleRadios1">
+              {{ item.name }} - ${{item.price}}
+            </label>
+          </div>
+          </div>
+          
+
+          <div  *ngIf="component.category as category" class="col-4">
+            <img class="component__image" src="{{childComponentsImg[category]}}" alt="">
+          </div>
+
         </div>
+
 
         <hr />
       </div>
