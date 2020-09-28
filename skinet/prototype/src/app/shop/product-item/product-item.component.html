@@ -23,19 +23,19 @@
 </div> -->
 
 <div class="card h-100 shadow-sm product-card">
-  <div class="image position-relative" style="cursor: pointer">
+  <div class="image position-relative img-box" style="cursor: pointer">
     <img
       src="{{ product.pictureUrl }}"
       alt="{{ product.name }}"
       routerLink="/shop/{{ product.id }}"
-      class="img-fluid bg-Light"
+      class="img-fluid bg-Light "
     />
 
   </div>
 
   <div class="card-body ">
-    <a routerLink="/shop/{{ product.id }}">
-      <h5 class="card-title">{{ product.name }}</h5>
+    <a routerLink="/shop/{{ product.id }}" class="">
+      <h5 class="card-title product-item__title">{{ product.name }}</h5>
     </a>
     <p class="card-text">{{ product.price | currency }}</p>
 

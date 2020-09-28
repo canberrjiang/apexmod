@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center mt-5">
-  <div class="col-3">
+  <div class="login-container">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="text-center mb-4">
         <h1 class="h3 mb-3 font-weight-normal">Register</h1>
@@ -16,7 +16,7 @@
           </li>
       </ul>
      
-      <button [disabled]="registerForm.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      <button [disabled]="registerForm.invalid" class="btn btn-lg btn-primary btn-block mt-3" type="submit">Register</button>
     </form>
   </div>
 </div>

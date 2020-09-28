@@ -24,7 +24,7 @@ export class ProductDetailsComponent implements OnInit {
   components: IChildrenComponent[];
   childComponentsId: any;
   childComponentsPrice: any;
-  childComponentsName: any;
+  childComponentsImg: any;
   childProducts: any;
   basketProduct: any;
 
@@ -44,8 +44,8 @@ export class ProductDetailsComponent implements OnInit {
   initializeGallery() {
     this.galleryOptions = [
       {
-        width: '500px',
-        height: '600px',
+        width: '100%',
+        height: '100%',
         imagePercent: 100,
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Fade,
@@ -66,10 +66,11 @@ export class ProductDetailsComponent implements OnInit {
     return count;
   }
 
-  handleChange(productCategory, id, price, name) {
+  handleChange(productCategory, id, price, pictureUrl) {
     this.childComponentsId[productCategory] = id;
     this.childComponentsPrice[productCategory] = price;
-    this.childComponentsName[productCategory] = name;
+    this.childComponentsImg[productCategory] = pictureUrl;
+    // console.log(this.childComponentsImg);
     this.setPrice(this.childComponentsPrice);
   }
 
@@ -98,12 +99,12 @@ export class ProductDetailsComponent implements OnInit {
     return priceGroup;
   }
 
-  mapChildrenProductsName(arr) {
+  mapChildrenProductsImg(arr) {
     let priceGroup = {};
     arr.forEach((items, index) => {
       let products = priceGroup[items.productCategory] || [];
       if (items.isDefault) {
-        products = items.name;
+        products = items.pictureUrl;
       }
       priceGroup[items.productCategory] = products;
     });
@@ -154,26 +155,26 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.childProducts = output;
   }
-  handlerChangeProductNameObjectToArry() {
-    let input = this.childComponentsName;
-    let output = [];
-    for (var type in input) {
-      let item = {};
-      item[type] = input[type];
-      output.push(item);
-    }
-    this.basketProduct = output;
-  }
+  // handlerChangeProductNameObjectToArry() {
+  //   let input = this.childComponentsName;
+  //   let output = [];
+  //   for (var type in input) {
+  //     let item = {};
+  //     item[type] = input[type];
+  //     output.push(item);
+  //   }
+  //   this.basketProduct = output;
+  // }
 
   addItemToBasket() {
     this.handlerChangeChildrenProductsObjectToArry();
-    this.handlerChangeProductNameObjectToArry();
+    // this.handlerChangeProductNameObjectToArry();
 
     this.basketService.addItemToBasket(
       this.product,
       this.quantity,
       this.childProducts,
-      this.basketProduct
+      // this.basketProduct
     );
   }
 
@@ -206,14 +207,16 @@ export class ProductDetailsComponent implements OnInit {
             const priceGroup = this.mapChildrenProductsPrice(
               this.product.childProducts
             );
-            const nameGroup = this.mapChildrenProductsName(
+            const imgGroup = this.mapChildrenProductsImg(
               this.product.childProducts
             );
 
             this.components = componentGroup;
             this.childComponentsId = idGroup;
             this.childComponentsPrice = priceGroup;
-            this.childComponentsName = nameGroup;
+            this.childComponentsImg = imgGroup;
+            // console.log(this.components)
+            // console.log(idGroup,imgGroup);
           }
         },
         (error) => {

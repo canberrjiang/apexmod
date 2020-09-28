@@ -45,7 +45,7 @@
                   <img src="{{product.pictureUrl || '/assets/images/placeholder.png'}}" alt="{{product.name}}" class="img-fluid" style="max-height: 50px">
                 </div>
               </td>
-              <th class="align-middle"><h5>{{product.name}}</h5></th>
+              <th class="align-middle"><a [routerLink]="['edit', product.id]"><h5> {{product.name}}</h5></a></th>
               <td class="align-middle">{{product.price | currency}}</td>
               <td class="align-middle"><button [routerLink]="['edit', product.id]" class="btn btn-warning">Edit</button></td>
               <td class="align-middle"><button (click)="deleteProduct(product.id)" class="btn btn-danger">Delete</button></td>
