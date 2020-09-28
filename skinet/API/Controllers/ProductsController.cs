@@ -395,11 +395,12 @@ namespace API.Controllers
 
       product.SetMainPhoto(photoId);
 
+
       _unitOfWork.Repository<BaseProduct>().Update(product);
 
       var result = await _unitOfWork.Complete();
 
-      if (result <= 0) return BadRequest(new ApiResponse(400, "Problem adding photo product"));
+      if (result <= 0) return BadRequest(new ApiResponse(400, "Problem setting main photo"));
 
       return _mapper.Map<BaseProduct, BaseProductToReturnDto>(product);
     }

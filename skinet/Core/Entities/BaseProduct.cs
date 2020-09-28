@@ -40,6 +40,7 @@ namespace Core.Entities
 
     public void SetMainPhoto(int id)
     {
+
       var currentMain = _photos.SingleOrDefault(item => item.IsMain);
       foreach (var item in _photos.Where(item => item.IsMain))
       {
@@ -47,6 +48,7 @@ namespace Core.Entities
       }
 
       var photo = _photos.Find(x => x.Id == id);
+      this.PictureUrl = photo.PictureUrl;
       if (photo != null)
       {
         photo.IsMain = true;
