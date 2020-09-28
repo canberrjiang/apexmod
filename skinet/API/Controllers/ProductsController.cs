@@ -16,7 +16,6 @@ using Core.Specifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static System.Net.Mime.MediaTypeNames;
 using static Core.Specifications.AllBaseProductWithTagsAndCategoriesSpecification;
 using static Core.Specifications.BaseProductWithTagsAndCategoriesSpecification;
 using static Core.Specifications.ProductWithTagsAndCategoriesSpecification;
@@ -38,7 +37,7 @@ namespace API.Controllers
       _mapper = mapper;
     }
 
-    // [Cached(600)]
+    [Cached(600)]
     [HttpGet]
     public async Task<ActionResult<Pagination<BaseProductToReturnDto>>> GetProducts(
       [FromQuery] BaseProductsSpecParams productParams)
@@ -46,22 +45,17 @@ namespace API.Controllers
       var email = HttpContext.User.RetrieveEmailFromPrincipal();
       var spec = new BaseProductsWithTagsAndCategoriesSpecification(productParams);
       var countSpec = new BaseProductWithFiltersForCountSpecification(productParams);
-      // if (email == "admin@test.com")
-      // {
-      //   var specForAdmin = new AllBaseProductsWithTagsAndCategoriesSpecification(productParams);
-      //   var countSpecForAdmin = new AllBaseProductWithFiltersForCountSpecification(productParams);
-      // }
-
       var totalItems = await _unitOfWork.Repository<BaseProduct>().CountAsync(countSpec);
       var products = await _unitOfWork.Repository<BaseProduct>().ListAsync(spec);
       var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
       return Ok(new Pagination<BaseProductToReturnDto>(productParams.PageIndex, productParams.PageSize, totalItems, data));
     }
 
+
     [HttpGet("productcategory/{productcategoryid}")]
     public async Task<ActionResult<IReadOnlyList<BaseProductToReturnDto>>> GetProductsByCategory(int productcategoryid)
     {
-      var spec = new BaseProductWithDiscriminatorAndCategory(productcategoryid);
+      var spec = new AllBaseProductWithDiscriminatorAndCategory(productcategoryid);
       var products = await _unitOfWork.Repository<BaseProduct>().ListAsync(spec);
       var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
       return Ok(data);
@@ -85,14 +79,14 @@ namespace API.Controllers
       return Ok(data);
     }
 
-    // [Cached(600)]
+    [Cached(600)]
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
     {
 
-      var spec = new BaseProductsWithTagsAndCategoriesSpecification(id);
+      var spec = new AllBaseProductsWithTagsAndCategoriesSpecification(id);
       var baseProduct = await _unitOfWork.Repository<BaseProduct>().GetEntityWithSpec(spec);
       var result = _mapper.Map<BaseProduct, ProductToReturnDto>(baseProduct);
 
@@ -110,12 +104,25 @@ namespace API.Controllers
     }
 
     [HttpGet("tags")]
-    public async Task<ActionResult<IReadOnlyList<TagToReturnDto>>> GetProductTags()
+    public async Task<ActionResult<IReadOnlyList<TagToReturnDto>>> GetProductTag()
     {
       var result = await _unitOfWork.Repository<Tag>().ListAllAsync();
       var tagToReturn = _mapper.Map<IReadOnlyList<Tag>, IReadOnlyList<TagToReturnDto>>(result);
       return Ok(tagToReturn);
     }
+
+    // Only return tags that attached to products
+    // [HttpGet("tags")]
+    // public async Task<ActionResult<IReadOnlyList<TagToReturnDto>>> GetAdminProductTags()
+    // {
+    //   // var result = await _unitOfWork.Repository<Tag>().ListAllAsync();
+    //   // var tagToReturn = _mapper.Map<IReadOnlyList<Tag>, IReadOnlyList<TagToReturnDto>>(result);
+    //   var spec = new ProductTagWithProductAndTagSpecification();
+    //   var productTags = await _unitOfWork.Repository<ProductTag>().GetEntitiesWithSpec(spec);
+    //   var tags = productTags.Select(x => x.Tag).Distinct().ToList();
+    //   var tagToReturn = _mapper.Map<IReadOnlyList<Tag>, IReadOnlyList<TagToReturnDto>>(tags);
+    //   return Ok(tagToReturn);
+    // }
 
     [HttpGet("categories")]
     public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetProductCategories()
@@ -125,6 +132,19 @@ namespace API.Controllers
       return Ok(categoryToReturn);
     }
 
+    // For Admin to view all products
+    [Authorize(Roles = "Admin")]
+    [HttpGet("admin/products")]
+    public async Task<ActionResult<BaseProductToReturnDto>> GetAdminProducts()
+    {
+      // var email = HttpContext.User.RetrieveEmailFromPrincipal();
+      var spec = new AllBaseProductsWithTagsAndCategoriesSpecification();
+      // var countSpec = new AllBaseProductWithFiltersForCountSpecification(productParams);
+      // var totalItems = await _unitOfWork.Repository<BaseProduct>().CountAsync(countSpec);
+      var products = await _unitOfWork.Repository<BaseProduct>().GetEntitiesWithSpec(spec);
+      var data = _mapper.Map<IReadOnlyList<BaseProduct>, IReadOnlyList<BaseProductToReturnDto>>(products);
+      return Ok(data);
+    }
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
@@ -311,7 +331,7 @@ namespace API.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<BaseProductToReturnDto>> AddProductPhoto(int id, [FromForm] ProductPhotoDto photoDto)
     {
-      var spec = new BaseProductsWithTagsAndCategoriesSpecification(id);
+      var spec = new AllBaseProductsWithTagsAndCategoriesSpecification(id);
       var product = await _unitOfWork.Repository<BaseProduct>().GetEntityWithSpec(spec);
       // Todo - check nullable product.
       if (photoDto.Photo.Length > 0)
@@ -341,7 +361,7 @@ namespace API.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult> DeleteProductPhoto(int id, int photoId)
     {
-      var spec = new BaseProductsWithTagsAndCategoriesSpecification(id);
+      var spec = new AllBaseProductsWithTagsAndCategoriesSpecification(id);
       var product = await _unitOfWork.Repository<BaseProduct>().GetEntityWithSpec(spec);
 
       var photo = product.Photos.SingleOrDefault(x => x.Id == photoId);
@@ -368,7 +388,7 @@ namespace API.Controllers
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<BaseProductToReturnDto>> SetMainPhoto(int id, int photoId)
     {
-      var spec = new BaseProductsWithTagsAndCategoriesSpecification(id);
+      var spec = new AllBaseProductsWithTagsAndCategoriesSpecification(id);
       var product = await _unitOfWork.Repository<BaseProduct>().GetEntityWithSpec(spec);
 
       if (product.Photos.All(x => x.Id != photoId)) return NotFound();

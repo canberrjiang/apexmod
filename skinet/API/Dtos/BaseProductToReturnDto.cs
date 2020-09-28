@@ -7,6 +7,7 @@ namespace API.Dtos
     public int Id { get; set; }
     public string Discriminator { get; set; }
     public string Name { get; set; }
+    public string Information { get; set; }
     public string Description { get; set; }
     public decimal Price { get; set; }
     public string PictureUrl { get; set; }

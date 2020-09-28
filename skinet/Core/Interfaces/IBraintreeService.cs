@@ -7,7 +7,7 @@ namespace Core.Interfaces
   public interface IBraintreeService
   {
     public BraintreeGateway CreateGateway();
-    Task<TransactionRequest> CreateBraintreeOrder(BraintreePurchaseRequest braintreePurchaseRequest);
+    Task<TransactionRequest> CreateBraintreeOrder(BraintreePurchaseRequest braintreePurchaseRequest, string email);
     Task<Core.Entities.OrderAggregate.Order> UpdateOrderPaymentFailed(int orderId);
     Task<Core.Entities.OrderAggregate.Order> UpdateOrderPaymentSucceeded(int orderId);
   }

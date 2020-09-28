@@ -42,7 +42,7 @@ namespace Infrastructure.Data
             {
               var childProductId = basketItem.ChildProducts[i].FirstOrDefault().Value;
               var childProduct = await _unitOfWork.Repository<ChildProduct>().GetByIdAsync(childProductId);
-              basketItem.ProductDescription += childProduct.Name + Environment.NewLine;
+              basketItem.ProductDescription += "- " + childProduct.Name + Environment.NewLine;
             }
           }
         }

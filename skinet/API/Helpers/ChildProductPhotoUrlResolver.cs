@@ -23,7 +23,7 @@ namespace API.Helpers
         return _config["ApiUrl"] + photo.PictureUrl;
       }
 
-      return _config["ApiUrl"] + "images/products/azure-logo.png";
+      return _config["ApiUrl"] + "images/products/placeholder.png";
     }
   }
 }

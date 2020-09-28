@@ -39,7 +39,7 @@ namespace Infrastructure.Services
           {
             var childItemId = subItem.FirstOrDefault().Value;
             var childItem = await _unitOfWork.Repository<BaseProduct>().GetByIdAsync(childItemId);
-            productDescription += childItem.Name + Environment.NewLine;
+            productDescription += "- " + childItem.Name + Environment.NewLine;
             calcPrice += childItem.Price;
           }
           var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Name, productDescription,
@@ -78,8 +78,6 @@ namespace Infrastructure.Services
       //   _unitOfWork.Repository<Order>().Delete(existingOrder);
       //   await _paymentService.CreateOrUpdatePaymentIntent(basket.Id);
       // }
-
-
 
       // create order
       var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal);

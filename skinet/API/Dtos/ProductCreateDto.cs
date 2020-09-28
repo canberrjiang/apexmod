@@ -9,6 +9,7 @@ namespace API.Dtos
     public string Name { get; set; }
     [Required]
     public string Discriminator { get; set; }
+    public string Information { get; set; }
     [Required]
     public string Description { get; set; }
     [Required]

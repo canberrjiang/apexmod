@@ -4,6 +4,7 @@ namespace API.Dtos
   {
     public int Id { get; set; }
     public string Name { get; set; }
+    public string Information { get; set; }
     public string Description { get; set; }
     public string ProductCategory { get; set; }
     public decimal Price { get; set; }

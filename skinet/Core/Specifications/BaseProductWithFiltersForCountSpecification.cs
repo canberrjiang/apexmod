@@ -10,9 +10,8 @@ namespace Core.Specifications
     public BaseProductWithFiltersForCountSpecification(BaseProductsSpecParams baseProductParams)
       : base(x =>
             (string.IsNullOrEmpty(baseProductParams.Search) || x.Name.ToLower().Contains(baseProductParams.Search)) &&
-          (!baseProductParams.ProductTagId.HasValue || x.ProductTag.Where(pt => pt.TagId == baseProductParams.ProductTagId).Count() > 0 &&
+          (!baseProductParams.ProductTagId.HasValue || x.ProductTag.Where(pt => pt.TagId == baseProductParams.ProductTagId).Count() > 0) &&
           (x.IsPublished == true)
-          )
       )
     {
     }

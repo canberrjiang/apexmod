@@ -40,7 +40,16 @@ namespace Core.Specifications
       }
 
       public AllBaseProductsWithTagsAndCategoriesSpecification(int id)
-          : base(x => (x.Id == id) && (x.IsPublished == true))
+          : base(x => (x.Id == id))
+      {
+        AddInclude(x => x.ProductCategory);
+        AddInclude(x => x.ProductTag);
+        AddInclude($"{nameof(BaseProduct.ProductTag)}.{nameof(ProductTag.Tag)}");
+        AddInclude($"{nameof(BaseProduct.Photos)}");
+      }
+
+      public AllBaseProductsWithTagsAndCategoriesSpecification()
+          : base()
       {
         AddInclude(x => x.ProductCategory);
         AddInclude(x => x.ProductTag);
