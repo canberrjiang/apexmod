@@ -48,7 +48,7 @@ namespace Core.Entities
       }
 
       var photo = _photos.Find(x => x.Id == id);
-      this.PictureUrl = photo.PictureUrl;
+
       if (photo != null)
       {
         photo.IsMain = true;

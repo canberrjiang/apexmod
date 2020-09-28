@@ -70,7 +70,7 @@ namespace API.Helpers
       ForMember(d => d.Description, o => o.MapFrom(s => s.ChildProduct.Description)).
       ForMember(d => d.ProductCategory, o => o.MapFrom(s => s.ChildProduct.ProductCategory.Name)).
       ForMember(d => d.Price, o => o.MapFrom(s => s.ChildProduct.Price)).
-      ForMember(d => d.PictureUrl, o => o.MapFrom(s => s.ChildProduct.PictureUrl)).
+      ForMember(d => d.PictureUrl, o => o.MapFrom<ChildProductsToReturnUrlResolver>()).
       ForMember(d => d.IsPublished, o => o.MapFrom(s => s.ChildProduct.IsPublished)).
       ForMember(d => d.IsDefault, o => o.MapFrom(s => s.IsDefault)).ReverseMap();
     }
