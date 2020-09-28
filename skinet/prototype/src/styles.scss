@@ -36,6 +36,7 @@ label.xng-breadcrumb-trail {
 
 .product-tabset > .nav-tabs > li.open .dropdown-menu, .product-tabset > .nav-tabs > li:hover .dropdown-menu {
   margin-top: 0px;
+  z-index: 1;
 }
 
 .product-tabset > .nav-tabs > li.active {
