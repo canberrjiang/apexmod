@@ -15,19 +15,71 @@
 //   width: inherit;
 //   & >p{
 //     width: inherit !important;
-//   } 
+//   }
 //    & img{
 //     width: 100% !important;
 //   }
 // }
 
-
-
 // .description__width{
 //   width: inherit;
 // }
 
+.img-gallery {
+  height: 600px;
 
-.component-main{
-   padding-left: 0px;
- }
+  // Extra large devices (large desktops, 1200px and up)
+  @media (max-width: 1200px) {
+    height: 550px;
+  }
+
+  // Large devices (desktops, 992px and up)
+  @media (max-width: 992px) {
+    height: 500px;
+  }
+
+  @media (max-width: 768px) {
+    height: 430px;
+  }
+
+  @media (max-width: 576px) {
+    height: 450px;
+  }
+
+  // Medium devices (tablets, 768px and up)
+}
+
+.component-main {
+  padding-left: 0px;
+}
+
+.product__title {
+  font-weight: bold;
+}
+
+.price-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.price-box__price {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  & .cart {
+    border-radius: 6px !important;
+    // background: #ffffff;
+    // box-shadow:  5px 5px 10px #666666,
+    //              -5px -5px 10px #ffffff;
+
+    flex-grow: 0; /* default 0 */
+  }
+}

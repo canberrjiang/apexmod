@@ -3,7 +3,8 @@
     <!-- <div class="col-6">
     <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-fluid w-100">
   </div> -->
-    <div class="col-6">
+    <h4 class="col-12 pb-5 product__title">{{ product.name }}</h4>
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6 img-gallery">
       <ngx-gallery
         [options]="galleryOptions"
         [images]="galleryImages"
@@ -11,60 +12,67 @@
       ></ngx-gallery>
     </div>
 
-    <div class="col-6">
-      <h3>{{ product.name }}</h3>
-      <p style="font-size: 2em">{{ product.price | currency }}</p>
-      <div class="d-flex justify-content-start align-items-center">
-        <i
-          (click)="decrementQuantity()"
-          class="fa fa-minus-circle text-warning mr-2"
-          style="cursor: pointer; font-size: 2em"
-        ></i>
-        <span class="font-weight-bold" style="font-size: 1.5em">{{
-          this.quantity
-        }}</span>
-        <i
-          (click)="incrementQuantity()"
-          class="fa fa-plus-circle text-warning mx-2"
-          style="cursor: pointer; font-size: 2em"
-        ></i>
-        <button
-          (click)="addItemToBasket()"
-          class="btn btn-outline-primary btn-lg ml-4"
-        >
-          Add to Cart
-        </button>
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+      <div class="price-box">
+        <div>
+             <p class="price-box__price">{{ product.price | currency }}</p>
+        </div>
+     
+        <!-- <div class="d-flex justify-content-start align-items-center"> -->
+        <div class="btn-group">
+          <i
+            (click)="decrementQuantity()"
+            class="fa fa-minus-circle text-warning mr-2"
+            style="cursor: pointer; font-size: 2em"
+          ></i>
+          <span class="font-weight-bold" style="font-size: 1.5em">{{
+            this.quantity
+          }}</span>
+          <i
+            (click)="incrementQuantity()"
+            class="fa fa-plus-circle text-warning mx-2"
+            style="cursor: pointer; font-size: 2em"
+          ></i>
+          <button
+            (click)="addItemToBasket()"
+            class="btn btn-outline-primary btn-lg ml-4 cart"
+          >
+            Add to Cart
+          </button>
+        </div>
       </div>
     </div>
     <div class="col-12 mt-5">
       <div class="">
-        <h4>Description</h4>
+        <h4 class='product__title'>Description</h4>
         <!-- <div>{{ product.description }}</div> -->
         <div [innerHTML]="product.description" id="description--text"></div>
       </div>
     </div>
 
-    <div class="col-12 mt-5">
-      <h4>Core Components</h4>
+    <div *ngIf="product.productCategory === 'pc'" class="col-12 mt-5">
+      <h4 class='product__title'>Core Components</h4>
+      <hr/>
       <div class="col-12 component-main" *ngFor="let component of components">
         <h4>{{ component.category }}</h4>
         <div class="form-check" *ngFor="let item of component.itemsList">
-          
           <input
             class="form-check-input"
             type="radio"
             name="{{ item.productCategory }}"
             id="{{ item.id }}"
-            value="{{ item.id }}" 
+            value="{{ item.id }}"
             [checked]="item.isDefault"
-            (click)="handleChange(item.productCategory,item.id, item.price, item.name)"
+            (click)="
+              handleChange(item.productCategory, item.id, item.price, item.name)
+            "
           />
           <label class="form-check-label" for="exampleRadios1">
-            {{ item.name }}
+            {{ item.name }} - ${{item.price}}
           </label>
         </div>
 
-        <hr>
+        <hr />
       </div>
     </div>
   </div>
