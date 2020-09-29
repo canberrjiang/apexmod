@@ -51,6 +51,7 @@ namespace Core.Specifications
         // AddInclude($"{nameof(Product.ProductCategory)}.{nameof(ProductCategory)}");
         AddInclude($"{nameof(Product.ChildProducts)}.{nameof(ProductProduct.ChildProduct)}");
         AddInclude($"{nameof(Product.ChildProducts)}.{nameof(ProductProduct.ChildProduct)}.{nameof(ChildProduct.ProductCategory)}");
+        AddInclude($"{nameof(Product.ChildProducts)}.{nameof(ProductProduct.ChildProduct)}.{nameof(ChildProduct.Photos)}");
         AddInclude(x => x.Photos);
       }
     }

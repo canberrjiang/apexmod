@@ -6,17 +6,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace API.Helpers
 {
-  public class BaseProductUrlResolver : IValueResolver<BaseProduct, BaseProductToReturnDto, string>
+  public class ChildProductsToReturnUrlResolver : IValueResolver<ProductProduct, ChildProductsToReturnDto, string>
   {
     private readonly IConfiguration _config;
-    public BaseProductUrlResolver(IConfiguration config)
+    public ChildProductsToReturnUrlResolver(IConfiguration config)
     {
       _config = config;
     }
 
-    public string Resolve(BaseProduct source, BaseProductToReturnDto destination, string destMember, ResolutionContext context)
+    public string Resolve(ProductProduct source, ChildProductsToReturnDto destination, string destMember, ResolutionContext context)
     {
-      var photo = source.Photos.FirstOrDefault(x => x.IsMain);
+      var photo = source.ChildProduct.Photos.FirstOrDefault(x => x.IsMain);
 
       if (photo != null)
       {
