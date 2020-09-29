@@ -27,7 +27,7 @@ export class AdminComponent implements OnInit {
   getProductsByAdmin() {
     this.shopService.getProductsByAdmin().subscribe((response:[]) => {
       this.products = response;
-      console.log(response)
+      // console.log(response)
       // this.totalCount = response.count;
     }, error => {
       // console.log(error);

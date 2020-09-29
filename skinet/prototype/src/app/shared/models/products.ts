@@ -7,7 +7,7 @@ export interface IProduct {
   // productType: string;
   // productGraphic: string;
   // productBrand: string;
-
+  
   // tags:[]
   photos: IPhoto[];
   childProducts:IComponent[];
@@ -15,6 +15,7 @@ export interface IProduct {
   quantity: number;
   tags: any;
   isPublished: boolean;
+  information?:string;
 
 }
 
@@ -28,6 +29,7 @@ export interface IProductToCreate {
   selectedChildProducts : IChildProduct[];
   isPublished: boolean;
   discriminator:string;
+  information:string;
   // productTypeId: number;
   // productGraphicId: number;
   // productBrand: string;
@@ -48,6 +50,7 @@ export class ProductFormValues implements IProductToCreate {
   productCategory ='';
   tags ='';
   discriminator:string;
+  information = '';
   // productBrandId: number;
   // productTypeId: number;
   // productPlatformId: number;

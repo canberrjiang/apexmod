@@ -72,3 +72,13 @@ label.xng-breadcrumb-trail {
     height: auto !important;
   }
 }
+#information--text{
+  width: inherit;
+  & >p{
+    width: inherit !important;
+  } 
+  & img{
+    width: 100% !important;
+    height: auto !important;
+  }
+}

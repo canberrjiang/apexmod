@@ -39,6 +39,7 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.loadProduct();
+
   }
 
   initializeGallery() {
@@ -215,7 +216,7 @@ export class ProductDetailsComponent implements OnInit {
             this.childComponentsId = idGroup;
             this.childComponentsPrice = priceGroup;
             this.childComponentsImg = imgGroup;
-            // console.log(this.components)
+            console.log(this.product)
             // console.log(idGroup,imgGroup);
           }
         },

@@ -20,6 +20,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
   success = false;
   editorConfig;
+  editorConfig02;
 
   //for data table
   @Input() rows = [];
@@ -51,7 +52,6 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   }
 
   deleteProduct(id) {
-
 
     const resultIndex = this.rows.findIndex((item, index, items) => {
       return item.id === id;
@@ -166,6 +166,26 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
         });
       },
     };
+
+
+    this.editorConfig02 = {
+      base_url: '/tinymce', // Root for resources
+      suffix: '.min',
+      height: 500,
+      image_dimensions: false,
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table paste code help wordcount'
+      ],
+      toolbar:
+        'undo redo | formatselect | bold italic backcolor | \
+        alignleft aligncenter alignright alignjustify | \
+        bullist numlist outdent indent | removeformat |'
+    };
+
+
+
     this.setRowsData();
   }
 
