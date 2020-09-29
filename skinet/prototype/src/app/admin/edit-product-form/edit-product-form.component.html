@@ -238,6 +238,34 @@
     </div>
   </div>
 
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="information">Information</label>
+      <editor
+        id="information"
+        name="information"
+        initialValue="{{ product.information }}"
+        [init]="editorConfig02"
+        [(ngModel)]="product.information"
+        [ngClass]="{
+          'is-invalid':
+          information.invalid && (information.dirty || information.touched)
+        }"
+        #information="ngModel"
+        required
+      >
+      </editor>
+      <div
+        *ngIf="
+        information.invalid && (information.dirty || information.touched)
+        "
+        class="invalid-feedback"
+      >
+        <div *ngIf="information.errors.required">information is required</div>
+      </div>
+    </div>
+  </div>
+
   <div *ngIf="!edit" class="form-row">
     <div class="form-group col-md-6">
       <label for="discriminator" class="text-danger">此产品为：</label>
@@ -255,9 +283,8 @@
   </div>
 
   <div *ngIf="edit" class="form-row">
-    <div *ngIf="product.productCategoryId == 1" class="form-group col-md-12">
+    <div *ngIf="product.discriminator == 'Product'" class="form-group col-md-12">
       <h4 for="discriminator" class="text-danger mt-3">添加修改子产品：</h4>
-
       <div>
         <div class="form-row mt-3">
           <div class="form-group col-md-4">
