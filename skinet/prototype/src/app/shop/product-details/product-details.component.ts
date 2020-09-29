@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Directive,
+  Renderer2,
+  HostListener,
+  HostBinding,
+  ElementRef, ViewChild
+} from '@angular/core';
 import { IProduct, IChildrenComponent } from 'src/app/shared/models/products';
 import { ShopService } from '../shop.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,6 +18,30 @@ import {
   NgxGalleryImageSize,
   NgxGalleryOptions,
 } from '@kolkov/ngx-gallery';
+
+// @Directive({
+//   selector: "[ccCardHover]"
+// })
+// class CardHoverDirective {
+//   // @HostBinding('class.card-outline-primary')private ishovering: boolean;
+
+//   constructor(private el: ElementRef,
+//               private renderer: Renderer2) {
+//     // renderer.setElementStyle(el.nativeElement, 'backgroundColor', 'gray');
+//   }
+
+//   @HostListener('mouseover') onMouseOver() {
+//     let part = this.el.nativeElement.querySelector('.preview-container');
+//     this.renderer.setStyle(part, 'display', 'block');
+//     // this.ishovering = true;
+//   }
+
+//   @HostListener('mouseout') onMouseOut() {
+//     let part = this.el.nativeElement.querySelector('.preview-container');
+//     this.renderer.setStyle(part, 'display', 'none');
+//     // this.ishovering = false;
+//   }
+// }
 
 @Component({
   selector: 'app-product-details',
@@ -27,19 +59,62 @@ export class ProductDetailsComponent implements OnInit {
   childComponentsImg: any;
   childProducts: any;
   basketProduct: any;
+  @ViewChild('descriptionComponents')  descriptionComponents: ElementRef;
+  // @ViewChild('previewContainer')  previewContainer: ElementRef;
+
+
+  @HostListener('window:scroll') onScroll(e: Event): void {
+    
+    // console.log(window.pageYOffset,this.descriptionComponents.nativeElement.getBoundingClientRect().top, window.innerHeight);
+    // console.log(this.descriptionComponents.nativeElement.getBoundingClientRect().top);
+
+    let distance = this.descriptionComponents.nativeElement.getBoundingClientRect().top;
+    let part = this.el.nativeElement.querySelector('.preview-container');
+    if (distance <= 0 ) {
+      this.renderer.setStyle(part, 'display', 'block');
+    } else {
+      this.renderer.setStyle(part, 'display', 'none');
+    }
+ }
 
   constructor(
     private shopService: ShopService,
     private activateRoute: ActivatedRoute,
     private bcService: BreadcrumbService,
-    private basketService: BasketService
-  ) {
+    private basketService: BasketService,
+    private el: ElementRef,
+    private renderer: Renderer2
+  )
+  {
     this.bcService.set('@productDetails', '');
+
+    // document.onscroll = function () {
+    //   // var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    //   // var cHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    //   let scrollTop = document.documentElement.scrollTop;
+    //   let cHeight = window.innerHeight || document.documentElement.clientHeight;
+    //   let oDiv = document.getElementById('product-component');
+    //   if (scrollTop > oDiv.offsetTop - cHeight) alert('触发了');
+    // };
   }
+
+  // @HostListener('mouseover') onMouseOver() {
+  //   let part = this.el.nativeElement.querySelector('.preview-container');
+  //   this.renderer.setStyle(part, 'display', 'block');
+  //   // this.ishovering = true;
+  // }
+
+  // @HostListener('mouseout') onMouseOut() {
+  //   let part = this.el.nativeElement.querySelector('.preview-container');
+  //   this.renderer.setStyle(part, 'display', 'none');
+  //   // this.ishovering = false;
+  // }
+  // getYPosition(e: Event): number {
+  //   return (e.target as Element).scrollTop;
+  // }
 
   ngOnInit() {
     this.loadProduct();
-
   }
 
   initializeGallery() {
@@ -49,6 +124,8 @@ export class ProductDetailsComponent implements OnInit {
         height: '100%',
         imagePercent: 100,
         thumbnailsColumns: 4,
+        arrowPrevIcon: 'fa fa-chevron-left',
+        arrowNextIcon: 'fa fa-chevron-right',
         imageAnimation: NgxGalleryAnimation.Fade,
         imageSize: NgxGalleryImageSize.Contain,
         thumbnailSize: NgxGalleryImageSize.Contain,
@@ -174,7 +251,7 @@ export class ProductDetailsComponent implements OnInit {
     this.basketService.addItemToBasket(
       this.product,
       this.quantity,
-      this.childProducts,
+      this.childProducts
       // this.basketProduct
     );
   }
@@ -216,7 +293,7 @@ export class ProductDetailsComponent implements OnInit {
             this.childComponentsId = idGroup;
             this.childComponentsPrice = priceGroup;
             this.childComponentsImg = imgGroup;
-            console.log(this.product)
+            console.log(this.product);
             // console.log(idGroup,imgGroup);
           }
         },

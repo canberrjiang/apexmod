@@ -18,7 +18,7 @@
 
         <h5 class="ml-3 mt-2 filter__title"><strong>Filters</strong></h5>
         <select
-          class="custom-select mb-4 filter__list--option"
+          class="custom-select mb-4 filter__list--option text-capitalize"
           (change)="onTagSelected($event.target.value)"
         >
           <option
@@ -32,7 +32,7 @@
 
         <ul class="list-group my-3 filter__list--li">
           <li
-            class="list-group-item"
+            class="list-group-item text-capitalize"
             style="cursor: pointer"
             *ngFor="let tag of tags"
             [ngClass]="{'active':this.shopParams.producttagid == tag.id }"
