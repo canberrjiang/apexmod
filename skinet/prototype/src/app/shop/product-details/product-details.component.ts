@@ -231,11 +231,19 @@ export class ProductDetailsComponent implements OnInit {
   getImages() {
     const imageUrls = [];
     for (const photo of this.product.photos) {
-      imageUrls.push({
-        small: photo.pictureUrl,
-        medium: photo.pictureUrl,
-        big: photo.pictureUrl,
-      });
+      if (photo.isMain === true) {
+        imageUrls.unshift({
+          small: photo.pictureUrl,
+          medium: photo.pictureUrl,
+          big: photo.pictureUrl,
+        });
+      } else {
+        imageUrls.push({
+          small: photo.pictureUrl,
+          medium: photo.pictureUrl,
+          big: photo.pictureUrl,
+        });
+      }
     }
     return imageUrls;
   }
