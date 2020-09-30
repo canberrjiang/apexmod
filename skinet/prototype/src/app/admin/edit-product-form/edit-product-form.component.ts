@@ -94,7 +94,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
   handleAddChildProduct() {
     // console.log(1, this.pickChildProduct); 
-    if (this.pickChildProduct === "none") {
+    if (this.pickChildProduct === "none" || this.pickChildProduct === undefined ) {
       return
     } else {
           let newChildProduct = this.changeChildProductData(this.pickChildProduct);
