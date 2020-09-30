@@ -26,8 +26,13 @@
 
 .product-item__title{
   font-weight: bold;
+  color: black;
   height: 44px;
   overflow:hidden;
   text-overflow: ellipsis;
 
+}
+
+.btn--view{
+  font-weight: bold;
 }
