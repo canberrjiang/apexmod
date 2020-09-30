@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="row" *ngIf="order">
-        <div class="col-8">
+        <div class="col-12 col-sm-12 col-md-8 mb-3">
             <app-basket-summary
                 [items]="order.orderItems"
                 [isBasket]="false"
@@ -8,11 +8,11 @@
             >
             </app-basket-summary>
 
-            <button *ngIf="needPay" class="btn btn-primary" (click)='linkToPayPage()'>
+            <button *ngIf="needPay" class="btn btn-outline-primary mt-3" (click)='linkToPayPage()'>
                 Pay For the Order.
             </button>
         </div>
-        <div class="col-4">
+        <div class="col-12 col-sm-12 col-md-4">
                 <app-order-totals
                     [shippingPrice]="order.shippingPrice"
                     [subtotal]="order.subtotal"

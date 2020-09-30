@@ -30,12 +30,12 @@
     >
       <nav class="navbar-nav mr-auto text-uppercase mt-1" style="font-size: larger">
 
-        <a class="my-1 mr-2" [routerLink]="['/shop']" routerLinkActive="active"
+        <a class="my-1 mr-4" [routerLink]="['/shop']" routerLinkActive="active"
           >Shop</a
         >
         <a
           *ngIf="isAdmin$ | async"
-          class="my-1 mr-2"
+          class="my-1 mr-4"
           routerLink="/admin"
           routerLinkActive="active"
           >Admin</a

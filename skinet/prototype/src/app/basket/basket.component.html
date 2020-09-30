@@ -1,11 +1,11 @@
-<div class="container mt-2">
+<div class="container-lg mt-2">
   <div *ngIf="(basket$ | async) === null">
       <p>There are no items in your basket</p>
   </div>
 
   <div *ngIf="basket$ | async">
       <div class="pb-5">
-          <div class="container">
+          <div class="container-lg">
               <div class="row">
                   <div class="col-12 py-5 mb-1">
                       <app-basket-summary 
