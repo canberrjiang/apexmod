@@ -16,12 +16,16 @@ namespace API.Helpers
 
     public string Resolve(ProductProduct source, ChildProductsToReturnDto destination, string destMember, ResolutionContext context)
     {
-      var photo = source.ChildProduct.Photos.FirstOrDefault(x => x.IsMain);
-
-      if (photo != null)
+      if (source.ChildProduct != null)
       {
-        return _config["ApiUrl"] + photo.PictureUrl;
+        var photo = source.ChildProduct.Photos.FirstOrDefault(x => x.IsMain);
+
+        if (photo != null)
+        {
+          return _config["ApiUrl"] + photo.PictureUrl;
+        }
       }
+
 
       return _config["ApiUrl"] + "images/products/placeholder.png";
     }
