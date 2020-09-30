@@ -5,7 +5,8 @@ import {
   Renderer2,
   HostListener,
   HostBinding,
-  ElementRef, ViewChild
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { IProduct, IChildrenComponent } from 'src/app/shared/models/products';
 import { ShopService } from '../shop.service';
@@ -59,23 +60,22 @@ export class ProductDetailsComponent implements OnInit {
   childComponentsImg: any;
   childProducts: any;
   basketProduct: any;
-  @ViewChild('descriptionComponents')  descriptionComponents: ElementRef;
+  @ViewChild('descriptionComponents') descriptionComponents: ElementRef;
   // @ViewChild('previewContainer')  previewContainer: ElementRef;
 
-
   @HostListener('window:scroll') onScroll(e: Event): void {
-    
     // console.log(window.pageYOffset,this.descriptionComponents.nativeElement.getBoundingClientRect().top, window.innerHeight);
     // console.log(this.descriptionComponents.nativeElement.getBoundingClientRect().top);
 
-    let distance = this.descriptionComponents.nativeElement.getBoundingClientRect().top;
+    let distance = this.descriptionComponents.nativeElement.getBoundingClientRect()
+      .top;
     let part = this.el.nativeElement.querySelector('.preview-container');
-    if (distance <= 0 ) {
+    if (distance <= 0) {
       this.renderer.setStyle(part, 'display', 'block');
     } else {
       this.renderer.setStyle(part, 'display', 'none');
     }
- }
+  }
 
   constructor(
     private shopService: ShopService,
@@ -84,8 +84,7 @@ export class ProductDetailsComponent implements OnInit {
     private basketService: BasketService,
     private el: ElementRef,
     private renderer: Renderer2
-  )
-  {
+  ) {
     this.bcService.set('@productDetails', '');
 
     // document.onscroll = function () {
@@ -118,21 +117,39 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   initializeGallery() {
-    this.galleryOptions = [
-      {
-        width: '100%',
-        height: '100%',
-        imagePercent: 100,
-        thumbnailsColumns: 4,
-        arrowPrevIcon: 'fa fa-chevron-left',
-        arrowNextIcon: 'fa fa-chevron-right',
-        imageAnimation: NgxGalleryAnimation.Fade,
-        imageSize: NgxGalleryImageSize.Contain,
-        thumbnailSize: NgxGalleryImageSize.Contain,
-        preview: false,
-      },
-    ];
     this.galleryImages = this.getImages();
+    if (this.galleryImages.length === 1) {
+      this.galleryOptions = [
+        {
+          width: '100%',
+          height: '100%',
+          imagePercent: 100,
+          thumbnailsColumns: 4,
+          arrowPrevIcon: 'fa fa-chevron-left',
+          arrowNextIcon: 'fa fa-chevron-right',
+          imageAnimation: NgxGalleryAnimation.Fade,
+          imageSize: NgxGalleryImageSize.Contain,
+          thumbnailSize: NgxGalleryImageSize.Contain,
+          imageArrows: false,
+          preview: false,
+        },
+      ];
+    } else {
+      this.galleryOptions = [
+        {
+          width: '100%',
+          height: '100%',
+          imagePercent: 100,
+          thumbnailsColumns: 4,
+          arrowPrevIcon: 'fa fa-chevron-left',
+          arrowNextIcon: 'fa fa-chevron-right',
+          imageAnimation: NgxGalleryAnimation.Fade,
+          imageSize: NgxGalleryImageSize.Contain,
+          thumbnailSize: NgxGalleryImageSize.Contain,
+          preview: false,
+        },
+      ];
+    }
   }
 
   setPrice(data) {

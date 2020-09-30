@@ -1,6 +1,4 @@
-
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+<nav class="navbar navbar-expand-sm navbar-light bg-light rounded">
   <div class="container-xl">
     <img
       src="/assets/images/apexmod.svg"
@@ -9,18 +7,27 @@
       alt="logo"
       routerLink="/shop"
     />
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarsExample09"
-      aria-controls="navbarsExample09"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-      (click)="isCollapsed = !isCollapsed"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <div>
+      <a routerLink="/basket" class="position-relative basket-icon--mobile">
+        <i class="fa fa-shopping-cart fa-2x mr-4 text-dark"></i>
+        <div *ngIf="quantity$ | async as quantity" class="cart-no1">
+          {{ quantity.quantity }}
+        </div>
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarsExample09"
+        aria-controls="navbarsExample09"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        (click)="isCollapsed = !isCollapsed"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
 
     <div
       class="collapse navbar-collapse"
@@ -28,14 +35,19 @@
       [collapse]="isCollapsed"
       [isAnimated]="true"
     >
-      <nav class="navbar-nav mr-auto text-uppercase mt-1" style="font-size: larger">
-
-        <a class="my-1 mr-4" [routerLink]="['/shop']" routerLinkActive="active"
+      <nav
+        class="navbar-nav mr-auto text-uppercase mt-1"
+        style="font-size: larger"
+      >
+        <a
+          class="my-1 mr-4 nav-link--title"
+          [routerLink]="['/shop']"
+          routerLinkActive="active"
           >Shop</a
         >
         <a
           *ngIf="isAdmin$ | async"
-          class="my-1 mr-4"
+          class="my-1 mr-4 nav-link--title"
           routerLink="/admin"
           routerLinkActive="active"
           >Admin</a
@@ -43,7 +55,10 @@
       </nav>
 
       <div class="d-flex align-items-center my-2 my-md-0">
-        <a routerLink="/basket" class="position-relative">
+        <a
+          routerLink="/basket"
+          class="position-relative basket-icon--desktop mr-2"
+        >
           <i class="fa fa-shopping-cart fa-2x mr-4 text-dark"></i>
           <div *ngIf="quantity$ | async as quantity" class="cart-no">
             {{ quantity.quantity }}
@@ -62,7 +77,7 @@
         </ng-container>
 
         <ng-container *ngIf="currentUser$ | async">
-          <div class="dropdown ml-3 mr-5" dropdown>
+          <div class="dropdown mr-5" dropdown>
             <a class="dropdown-toggle" style="cursor: pointer" dropdownToggle>
               <strong>Welcome {{ (currentUser$ | async).displayName }}</strong>
             </a>

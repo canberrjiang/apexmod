@@ -2,7 +2,7 @@
   <div class="row">
     <section class="col-lg-3 col-md-2 col-sm-2 col-sm-3">
       <ng-container *ngIf="tags">
-        <h5 class="ml-3 mt-4 mb-3 filter__title">Sort</h5>
+        <h5 class="ml-3 mt-4 mb-3 filter__title"><strong>Sort</strong></h5>
         <select
           class="custom-select mb-4"
           (change)="onSortSelected($event.target.value)"
@@ -18,7 +18,7 @@
 
         <h5 class="ml-3 mt-2 filter__title"><strong>Filters</strong></h5>
         <select
-          class="custom-select mb-4 filter__list--option text-capitalize"
+          class="custom-select mb-4 filter__list--option text-uppercase"
           (change)="onTagSelected($event.target.value)"
         >
           <option
@@ -32,7 +32,7 @@
 
         <ul class="list-group my-3 filter__list--li">
           <li
-            class="list-group-item text-capitalize"
+            class="list-group-item text-uppercase"
             style="cursor: pointer"
             *ngFor="let tag of tags"
             [ngClass]="{'active':this.shopParams.producttagid == tag.id }"

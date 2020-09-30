@@ -20,10 +20,41 @@ a {
   }
 }
 
+.nav-link--title{
+  font-size: larger;
+}
+
 
 .logo {
   cursor: pointer;
   &:focus{
     outline: none;
   }
+}
+
+.basket-icon--mobile{
+  bottom:-8px;
+  @media (min-width: 576px) {
+    display: none;
+  }
+}
+
+.basket-icon--desktop{
+
+  @media (max-width: 576px) {
+    display: none;
+  }
+}
+
+.cart-no1 {
+  position: absolute;
+  min-height: 20px;
+  min-width: 24px;
+  border-radius: 50%;
+  font-size: 1em;
+  background: blue;
+  color: white;
+  text-align: center;
+  top: -20px;
+  right: 6px;
 }

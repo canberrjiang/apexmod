@@ -104,12 +104,14 @@
       <hr />
       <div class="col-12 component-main" *ngFor="let component of components">
         <div class="row">
-          <div class="col-12 col-sm-8">
+          <div class="col-9 col-sm-8">
             <div class="category__title">
               <h4 *ngIf="component.category as category" class="text-uppercase">
                 {{ category }}
               </h4>
+
             </div>
+
             <div class="form-check" *ngFor="let item of component.itemsList">
               <input
                 class="form-check-input"
@@ -133,7 +135,7 @@
             </div>
           </div>
 
-          <div *ngIf="component.category as category" class="col-4">
+          <div *ngIf="component.category as category" class="col-3 col-sm-4 component__box">
             <img
               class="component__image"
               src="{{ childComponentsImg[category] }}"

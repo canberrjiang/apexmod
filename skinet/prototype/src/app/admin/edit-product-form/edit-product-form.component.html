@@ -209,7 +209,34 @@
       </div>
     </div>
   </div> -->
-
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="information">Information</label>
+      <editor
+        id="information"
+        name="information"
+        initialValue="{{ product.information }}"
+        [init]="editorConfig02"
+        [(ngModel)]="product.information"
+        [ngClass]="{
+          'is-invalid':
+          information.invalid && (information.dirty || information.touched)
+        }"
+        #information="ngModel"
+        required
+      >
+      </editor>
+      <div
+        *ngIf="
+        information.invalid && (information.dirty || information.touched)
+        "
+        class="invalid-feedback"
+      >
+        <div *ngIf="information.errors.required">information is required</div>
+      </div>
+    </div>
+  </div>
+  
   <div class="form-row">
     <div class="form-group col-md-12">
       <label for="discriminator">Description</label>
@@ -238,33 +265,7 @@
     </div>
   </div>
 
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <label for="information">Information</label>
-      <editor
-        id="information"
-        name="information"
-        initialValue="{{ product.information }}"
-        [init]="editorConfig02"
-        [(ngModel)]="product.information"
-        [ngClass]="{
-          'is-invalid':
-          information.invalid && (information.dirty || information.touched)
-        }"
-        #information="ngModel"
-        required
-      >
-      </editor>
-      <div
-        *ngIf="
-        information.invalid && (information.dirty || information.touched)
-        "
-        class="invalid-feedback"
-      >
-        <div *ngIf="information.errors.required">information is required</div>
-      </div>
-    </div>
-  </div>
+
 
   <div *ngIf="!edit" class="form-row">
     <div class="form-group col-md-6">

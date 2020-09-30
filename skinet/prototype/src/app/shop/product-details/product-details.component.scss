@@ -89,11 +89,28 @@
   height: 100px;
 
   @media (max-width: 575px) {
-    display: none;
+    // display: none;
+    width: 60px;
+    height: 60px;
+  }
+
+  @media (max-width: 410px) {
+    // display: none;
+    width: 50px;
+    height: 50px;
   }
 }
+
+
+.component__box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+
 .category__title{
-  margin: 10px 0px;
+  margin: 0px 0px 0px 10px;
 }
 
 
@@ -121,5 +138,5 @@
   width: 100vw;
   z-index: 1000;
   padding: 5px 0;
-  border-bottom: solid 2px aqua ;
+  // border-bottom: solid 2px aqua ;
 }
