@@ -73,6 +73,7 @@ namespace API.Helpers
       ForMember(d => d.PictureUrl, o => o.MapFrom<ChildProductsToReturnUrlResolver>()).
       ForMember(d => d.IsPublished, o => o.MapFrom(s => s.ChildProduct.IsPublished)).
       ForMember(d => d.IsDefault, o => o.MapFrom(s => s.IsDefault)).ReverseMap();
+      CreateMap<DeliveryMethodToCreate, DeliveryMethod>();
     }
   }
 }

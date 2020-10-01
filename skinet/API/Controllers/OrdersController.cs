@@ -17,8 +17,10 @@ namespace API.Controllers
   {
     private readonly IOrderService _orderService;
     private readonly IMapper _mapper;
-    public OrdersController(IOrderService orderService, IMapper mapper)
+    private readonly IUnitOfWork _unitOfWork;
+    public OrdersController(IOrderService orderService, IMapper mapper, IUnitOfWork unitOfWork)
     {
+      _unitOfWork = unitOfWork;
       _mapper = mapper;
       _orderService = orderService;
     }
@@ -43,6 +45,14 @@ namespace API.Controllers
     {
       var orders = await _orderService.GetAllOrders();
       return Ok(_mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderToReturnDto>>(orders));
+    }
+
+    [HttpGet("all/{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<OrderToReturnDto>> GetOrderById(int id)
+    {
+      var orders = await _orderService.GetOrderByIdAsync(id);
+      return Ok(_mapper.Map<Order, OrderToReturnDto>(orders));
     }
 
     [HttpGet]
@@ -75,7 +85,22 @@ namespace API.Controllers
       return Ok(deliveryMethods);
     }
 
+    [HttpPut("deliveryMethods/{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<DeliveryMethod>> UpdateDeliveryMethods(int id, DeliveryMethodToCreate deliveryMethodToUpdate)
+    {
+      var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(id);
+      _mapper.Map(deliveryMethodToUpdate, deliveryMethod);
+      _unitOfWork.Repository<DeliveryMethod>().Update(deliveryMethod);
+      var result = await _unitOfWork.Complete();
+
+      if (result <= 0) return BadRequest(new ApiResponse(400, "Problem updating delivery method"));
+
+      return Ok(deliveryMethod);
+    }
+
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Order>> DeleteOrder(int id)
     {
       var email = HttpContext.User.RetrieveEmailFromPrincipal();
