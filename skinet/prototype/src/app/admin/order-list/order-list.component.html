@@ -1,28 +1,42 @@
-<header class="h2 pt-1">Order List</header>
 <div class="container mt-5">
   <div class="row">
+    <div class="col-12 mb-4">
+      <button routerLink="/admin" class="btn btn-outline-primary float-left">
+        Back To Admin Page
+      </button>
+    </div>
+
     <div class="col-12">
-      <table class="table table-hover" style="cursor: pointer;">
-        <thead class="thead-light">
-        <tr>
-          <th>Order</th>
-          <th>Buyer</th>
-          <th>Date</th>
-          <th>Total</th>
-          <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- <tr *ngFor="let order of orders" routerLink="/adminorder/{{order.id}}"> -->
-        <tr *ngFor="let order of orders" [routerLink]="['adminorder',order.id ]">
-          <th># {{order.id}}</th>
-          <th>{{order.buyerEmail}}</th>
-          <td>{{order.orderDate | date: 'medium'}}</td>
-          <td>{{order.total | currency}}</td>
-          <td>{{order.status}}</td>
-        </tr>
-        </tbody>
-      </table>
+      <header class="h2 pt-1 col-12">Order List</header>
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-hover" style="cursor: pointer">
+            <thead class="thead-light">
+              <tr>
+                <th>Order</th>
+                <th>Buyer</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr *ngFor="let order of orders" routerLink="/adminorder/{{order.id}}"> -->
+              <!-- <tr *ngFor="let order of orders" routerLink="/admin/adminorders/{{ order.id }}" [routerLink]="['/',order.id ]"> -->
+              <tr
+                *ngFor="let order of orders"
+                routerLink="/admin/adminorders/{{ order.id }}"
+              >
+                <th># {{ order.id }}</th>
+                <th>{{ order.buyerEmail }}</th>
+                <td>{{ order.orderDate | date: "medium" }}</td>
+                <td>{{ order.total | currency }}</td>
+                <td>{{ order.status }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
