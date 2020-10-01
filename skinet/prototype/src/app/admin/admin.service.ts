@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {ProductFormValues, ComponentFormValues} from '../shared/models/products';
+import { IDeliveryMethodToUpdate } from "../shared/models/deliveryMethod";
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
@@ -68,6 +69,14 @@ export class AdminService {
 
   getOrderDetailedByAdmin(id: number) {
     return this.http.get(this.baseUrl + 'orders/all/' + id);
+  }
+
+  getDeliveryMethod4(){
+    return this.http.get(this.baseUrl + 'orders/deliverymethods/4')
+  }
+
+  updateDeliveryMethod4(deliveryMethod:IDeliveryMethodToUpdate){
+    return this.http.put(this.baseUrl + 'orders/deliverymethods/4', deliveryMethod)
   }
 
 

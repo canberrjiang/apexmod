@@ -1,0 +1,109 @@
+
+<section class="product-edit mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mb-4">
+        <button routerLink="/admin" class="btn btn-outline-primary float-left">
+          Back To Admin Page
+        </button>
+      </div>
+      <div class="col-12">
+        <div class="row">
+          <div class="col-lg-8">
+            <form #deliveryMethodForm="ngForm" (ngSubmit)="onSubmit(deliveryMethodForm.valid && deliveryMethodForm.value)">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="name">Shot Name</label>
+                  <input
+                    [ngClass]="{'is-invalid': shortName.invalid && (shortName.dirty || shortName.touched)}"
+                    required
+                    type="text"
+                    class="form-control"
+                    id="shortName"
+                    placeholder="Product Name"
+                    name="shortName"
+                    #shortName="ngModel"
+                    [(ngModel)]="deliveryMethod.shortName"
+                  >
+                  <div *ngIf="shortName.invalid && (shortName.dirty || shortName.touched)" class="invalid-feedback">
+                    <div *ngIf="shortName.errors.required">
+                      Delivery Method ShortName is required
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="price">Price</label>
+                  <input
+                    [ngClass]="{'is-invalid': price.invalid && (price.dirty || price.touched)}"
+                    required
+                    type="text"
+                    class="form-control"
+                    id="price"
+                    placeholder="Price"
+                    currencyMask
+                    name="price"
+                    #price="ngModel"
+                    [ngModel]="deliveryMethod.price"
+                  >
+                  <div *ngIf="price.invalid && (price.dirty || price.touched)" class="invalid-feedback">
+                    <div *ngIf="price.errors.required">
+                      DeliveryMethod price is required
+                    </div>
+                    <div *ngIf="price.errors.pattern">
+                      DeliveryMethod price needs to be decimal value
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="name">Delivery Time</label>
+                  <input
+                    [ngClass]="{'is-invalid': deliveryTime.invalid && (deliveryTime.dirty || deliveryTime.touched)}"
+                    required
+                    type="text"
+                    class="form-control"
+                    id="deliveryTime"
+                    placeholder="deliveryTime"
+                    name="deliveryTime"
+                    #deliveryTime="ngModel"
+                    [(ngModel)]="deliveryMethod.deliveryTime"
+                  >
+                  <div *ngIf="deliveryTime.invalid && (deliveryTime.dirty || deliveryTime.touched)" class="invalid-feedback">
+                    <div *ngIf="deliveryTime.errors.required">
+                      Delivery Time is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="description">Description</label>
+                  <textarea
+                    [ngClass]="{'is-invalid': description.invalid && (description.dirty || description.touched)}"
+                    required
+                    #description="ngModel"
+                    class="form-control"
+                    id="description"
+                    [(ngModel)]="deliveryMethod.description"
+                    name="description"
+                    rows="3"></textarea>
+                  <div *ngIf="description.invalid && (description.dirty || description.touched)" class="invalid-feedback">
+                    <div *ngIf="description.errors.required">
+                      Product price is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <button [disabled]="!deliveryMethodForm.valid" type="submit" class="btn btn-primary my-3 float-right">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -9,10 +9,11 @@ import { EditProductPhotosComponent } from './edit-product-photos/edit-product-p
 import { TinyEditorComponent } from './tiny-editor/tiny-editor.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailAdminComponent } from './order-detail-admin/order-detail-admin.component';
+import { DeliveryMethodComponent } from './delivery-method/delivery-method.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, EditProductComponent, EditProductFormComponent, EditProductPhotosComponent,TinyEditorComponent, OrderListComponent, OrderDetailAdminComponent],
+  declarations: [AdminComponent, EditProductComponent, EditProductFormComponent, EditProductPhotosComponent,TinyEditorComponent, OrderListComponent, OrderDetailAdminComponent, DeliveryMethodComponent],
   imports: [
     CommonModule,
     SharedModule,
