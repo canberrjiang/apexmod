@@ -112,10 +112,21 @@
           ></app-pager> -->
               </div>
             </tab>
-            <tab heading="Order List">
-              <app-order-list>
+            <tab heading="Order & Delivery">
 
-              </app-order-list>
+
+              <div class="list-group">
+                <a [routerLink]="['adminorders']" class="list-group-item list-group-item-action link-list link-list--border">
+                  View All Order
+                </a>
+                <a href="#" class="list-group-item list-group-item-action link-list">
+                  Change Delivery Methods Information
+                </a>
+              </div>
+
+              <!-- <app-order-list>
+
+              </app-order-list> -->
             </tab>
           </tabset>
         </div>
