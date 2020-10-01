@@ -22,3 +22,9 @@
   border-bottom: 1px solid #4b4a4a81;
 }
 
+.order__name{
+  text-decoration: none;
+  &:hover{
+    text-decoration: underline;
+  }
+}

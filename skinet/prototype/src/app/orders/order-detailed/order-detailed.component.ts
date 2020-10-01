@@ -48,4 +48,8 @@ export class OrderDetailedComponent implements OnInit {
     const navigationExtras: NavigationExtras = { state: this.order };
     this.router.navigate(['checkout/pay'], navigationExtras);
   }
+
+  print(){
+    window.print()
+  }
 }
