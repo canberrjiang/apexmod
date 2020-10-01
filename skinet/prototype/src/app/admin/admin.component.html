@@ -28,10 +28,14 @@
               </th>
               <th scope="col">
                 <div class="p-2 px-3 text-uppercase">Price</div>
+              </th>  
+              <th scope="col">
+                <div class="p-2 px-3 text-uppercase">View</div>
               </th>
               <th scope="col">
                 <div class="p-2 px-3 text-uppercase">Edit</div>
               </th>
+
               <th scope="col">
                 <div class="p-2 px-3 text-uppercase">Delete</div>
               </th>
@@ -47,6 +51,8 @@
               </td>
               <th class="align-middle"><a [routerLink]="['edit', product.id]"><h5> {{product.name}}</h5></a></th>
               <td class="align-middle">{{product.price | currency}}</td>
+
+              <td class="align-middle"><button routerLink="/shop/{{ product.id }}" class="btn btn-success">PreView</button></td>
               <td class="align-middle"><button [routerLink]="['edit', product.id]" class="btn btn-warning">Edit</button></td>
               <td class="align-middle"><button (click)="deleteProduct(product.id)" class="btn btn-danger">Delete</button></td>
             </tr>
