@@ -62,5 +62,13 @@ export class AdminService {
     return this.http.delete(this.baseUrl + 'productcomponent/' + componentId + '/componentphoto/' + photoId);
   }
 
+  getOrdersForAdmin(){
+    return this.http.get(this.baseUrl + 'orders/all');
+  }
+
+  getOrderDetailedByAdmin(id: number) {
+    return this.http.get(this.baseUrl + 'orders/all/' + id);
+  }
+
 
 }
