@@ -41,7 +41,7 @@
 
     <div class="btn-groups">
       <ng-container
-        *ngIf="product.productCategory === 'pc'; else other_content"
+        *ngIf="product.discriminator === 'Product'; else other_content"
       >
         <button
           routerLink="/shop/{{ product.id }}"

@@ -300,7 +300,7 @@ export class ProductDetailsComponent implements OnInit {
           this.bcService.set('@productDetails', product.name);
           this.initializeGallery();
 
-          if (this.product.productCategory === 'pc') {
+          if (this.product.discriminator === 'Product') {
             const componentGroup = this.mapChildrenProductsForRender(
               this.product.childProducts
             );

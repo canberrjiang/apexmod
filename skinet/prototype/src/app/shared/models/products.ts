@@ -16,6 +16,8 @@ export interface IProduct {
   tags: any;
   isPublished: boolean;
   information?:string;
+  discriminator:string;
+
 
 }
 
