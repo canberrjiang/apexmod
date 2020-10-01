@@ -97,6 +97,11 @@ namespace Infrastructure.Services
       return await _unitOfWork.Repository<DeliveryMethod>().ListAllAsync();
     }
 
+    public async Task<DeliveryMethod> GetDeliveryMethodByIdAsync(int id)
+    {
+      return await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(id);
+    }
+
     public async Task<Order> GetOrderByIdAsync(int id, string buyerEmail)
     {
       var spec = new OrdersWithItemsAndOrderingSpecification(id, buyerEmail);

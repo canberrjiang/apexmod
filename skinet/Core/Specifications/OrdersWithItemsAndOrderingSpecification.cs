@@ -32,6 +32,7 @@ namespace Core.Specifications
     {
       AddInclude(o => o.OrderItems);
       AddInclude(o => o.DeliveryMethod);
+      AddOrderByDescending(o => o.OrderDate);
     }
   }
 }

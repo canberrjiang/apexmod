@@ -85,6 +85,15 @@ namespace API.Controllers
       return Ok(deliveryMethods);
     }
 
+    [HttpGet("deliveryMethods/{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<DeliveryMethod>> GetDeliveryMethodById(int id)
+    {
+      var deliveryMethods = await _orderService.GetDeliveryMethodByIdAsync(id);
+
+      return Ok(deliveryMethods);
+    }
+
     [HttpPut("deliveryMethods/{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<DeliveryMethod>> UpdateDeliveryMethods(int id, DeliveryMethodToCreate deliveryMethodToUpdate)
