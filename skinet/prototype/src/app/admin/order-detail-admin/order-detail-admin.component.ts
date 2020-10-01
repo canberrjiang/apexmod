@@ -35,8 +35,10 @@ export class OrderDetailAdminComponent implements OnInit {
         // console.log(error);
       }
     );
+  }
 
-
+  print(){
+    window.print()
   }
 
 }

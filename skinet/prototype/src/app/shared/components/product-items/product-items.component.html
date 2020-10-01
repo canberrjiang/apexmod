@@ -1,0 +1,52 @@
+
+
+<div class="card h-100 shadow-sm product-card">
+  <div class="image position-relative img-box" style="cursor: pointer">
+    <img
+      src="{{ product.pictureUrl }}"
+      alt="{{ product.name }}"
+      routerLink="/shop/{{ product.id }}"
+      class="img-fluid bg-Light "
+    />
+
+  </div>
+
+  <div class="card-body ">
+    <a routerLink="/shop/{{ product.id }}" class="">
+      <h5 class="card-title product-item__title">{{ product.name }}</h5>
+    </a>
+    <p class="card-text">{{ product.price | currency }}</p>
+
+    <div class="btn-groups">
+      <ng-container
+        *ngIf="product.discriminator === 'Product'; else other_content"
+      >
+        <button
+          routerLink="/shop/{{ product.id }}"
+          type="button"
+          class="btn btn-success mr-2 btn--view"
+        >
+          Configure
+        </button>
+      </ng-container>
+      <ng-template #other_content>
+        <button
+          (click)="addItemToBasket()"
+          type="button"
+          class="btn btn-success fa fa-shopping-cart mr-2"
+        ></button>
+
+      <button
+        routerLink="/shop/{{ product.id }}"
+        type="button"
+        class="btn btn-primary btn--view"
+      >
+        View
+      </button>
+
+      </ng-template>
+
+
+    </div>
+  </div>
+</div>

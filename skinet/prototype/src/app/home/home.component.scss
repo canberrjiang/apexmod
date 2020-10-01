@@ -4,6 +4,34 @@
 
 img {
   object-fit: cover;
-  height: 600px;
+  // height: 600px;
   width: 100%;
+}
+
+.product-groups--home {
+  display: flex;
+  flex-wrap: wrap;
+  .product {
+    width: 24.1%;
+    margin-right: 5px;
+  }
+  @media (max-width: 992px) {
+    .product {
+      width: 32.1%;
+      margin-right: 5px;
+    }
+  }
+  @media (max-width: 768px) {
+    .product {
+      width: 48.5%;
+      margin-right: 5px;
+    }
+  }
+  @media (max-width: 455px) {
+    .product {
+      width: 99.5%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
 }

@@ -1,17 +1,50 @@
-<carousel>
-  <slide>
-      <img src="assets/images/hero1.jpg" alt="first slide" style="display: block; width: 100%;">
-  </slide>
-  <slide>
-      <img src="assets/images/hero2.jpg" alt="first slide" style="display: block; width: 100%;">
-  </slide>
-  <slide>
-      <img src="assets/images/hero3.jpg" alt="first slide" style="display: block; width: 100%;">
-  </slide>
-</carousel>
-<section class="featured">
-  <div class="d-flex justify-content-center pt-4">
-      <h1>Welcome to the Shop!</h1>
-  </div>
-</section>
+<div class="container-lg mt-3 shop-page">
+  <div class="row">
+    <div class="col-12">
+      <carousel>
+        <slide>
+          <img
+            src="assets/images/001.jpg"
+            alt="first slide"
+            style="display: block; width: 100%"
+          />
+        </slide>
+        <slide>
+          <img
+            src="assets/images/002.jpg"
+            alt="first slide"
+            style="display: block; width: 100%"
+          />
+        </slide>
+        <slide>
+          <img
+            src="assets/images/003.jpg"
+            alt="first slide"
+            style="display: block; width: 100%"
+          />
+        </slide>
+        <slide>
+          <img
+            src="assets/images/004.jpg"
+            alt="first slide"
+            style="display: block; width: 100%"
+          />
+        </slide>
+      </carousel>
+      <section class="pt-3 pb-5">
+        <div class="d-flex justify-content-center pt-4">
+          <h1 style="font-weight: bold; text-align: center">Welcome to Apex Mod!</h1>
+        </div>
+      </section>
+    </div>
 
+    <section class="col-12">
+      <div class="row product-groups--home">
+        <div class="mb-4 product" *ngFor="let item of products">
+          <app-product-items [product]="item"></app-product-items>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
