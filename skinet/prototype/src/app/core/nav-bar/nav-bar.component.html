@@ -5,7 +5,7 @@
       style="max-height: 55px"
       class="logo mr-5"
       alt="logo"
-      routerLink="/shop"
+      routerLink="/"
     />
     <div>
       <a routerLink="/basket" class="position-relative basket-icon--mobile">
@@ -39,6 +39,8 @@
         class="navbar-nav mr-auto text-uppercase mt-1"
         style="font-size: larger"
       >
+      <a class="my-1 mr-4 nav-link--title" [routerLink]="['/']" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}" >Home</a>
         <a
           class="my-1 mr-4 nav-link--title"
           [routerLink]="['/shop']"
