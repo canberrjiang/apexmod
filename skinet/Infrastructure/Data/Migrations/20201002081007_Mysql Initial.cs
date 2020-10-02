@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Data.Migrations
 {
-    public partial class MySqlInitial : Migration
+    public partial class MysqlInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,6 +64,7 @@ namespace Infrastructure.Migrations
                     ShipToAddress_City = table.Column<string>(nullable: true),
                     ShipToAddress_State = table.Column<string>(nullable: true),
                     ShipToAddress_Zipcode = table.Column<string>(nullable: true),
+                    ShipToAddress_Phone = table.Column<string>(nullable: true),
                     DeliveryMethodId = table.Column<int>(nullable: true),
                     Subtotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<string>(nullable: false)

@@ -21,5 +21,7 @@ namespace API.Dtos
 
     [Required]
     public string Zipcode { get; set; }
+    [Required]
+    public string Phone { get; set; }
   }
 }
