@@ -12,9 +12,9 @@ const routes: Routes = [
   { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
   // { path: '', component: ShopComponent, data: { breadcrumb: 'Home' } },
   {
-    path: 'test-error',
+    path: 'about',
     component: TestErrorComponent,
-    data: { breadcrumb: 'Test Errors' },
+    data: { breadcrumb: 'About Us' },
   },
   {
     path: 'server-error',
