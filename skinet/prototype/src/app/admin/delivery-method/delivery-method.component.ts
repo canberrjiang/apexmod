@@ -11,6 +11,7 @@ import { AdminService } from '../admin.service';
 export class DeliveryMethodComponent implements OnInit {
   deliveryMethod: IDeliveryMethodToUpdate;
   deliveryFormValues: DeliveryMethodFormValues;
+  success = false;
 
   constructor(
     private adminService: AdminService
@@ -35,7 +36,12 @@ export class DeliveryMethodComponent implements OnInit {
       // const updatedProduct = {...this.product, ...product, price: +product.price};
       this.adminService.updateDeliveryMethod4(deliveryMethod).subscribe((response: any) => {
         // console.log('success!')
+        this.success = true;
       });
+  }
+
+  closeAlert() {
+    this.success = false;
   }
 
 
