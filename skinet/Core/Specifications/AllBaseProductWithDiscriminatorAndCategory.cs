@@ -20,6 +20,7 @@ namespace Core.Specifications
       )
     {
       AddInclude(x => x.ProductCategory);
+      AddInclude(x => x.Photos);
     }
   }
 }
