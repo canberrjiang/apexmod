@@ -36,6 +36,9 @@ namespace Infrastructure.Identity.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("Phone")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("State")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 

@@ -50,7 +50,8 @@ namespace Infrastructure.Services
             StreetAddress = order.ShipToAddress.Street,
             Locality = order.ShipToAddress.City,
             Region = order.ShipToAddress.State,
-            PostalCode = order.ShipToAddress.Zipcode
+            PostalCode = order.ShipToAddress.Zipcode,
+            PhoneNumber = order.ShipToAddress.Phone
           },
           Customer = new CustomerRequest
           {

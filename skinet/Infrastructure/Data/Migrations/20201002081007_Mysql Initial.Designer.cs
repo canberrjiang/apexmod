@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20200920065153_MySql Initial")]
-    partial class MySqlInitial
+    [Migration("20201002081007_Mysql Initial")]
+    partial class MysqlInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -278,6 +278,9 @@ namespace Infrastructure.Migrations
                                 .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<string>("LastName")
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                            b1.Property<string>("Phone")
                                 .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<string>("State")

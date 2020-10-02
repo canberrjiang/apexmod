@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
     partial class StoreContextModelSnapshot : ModelSnapshot
@@ -276,6 +276,9 @@ namespace Infrastructure.Migrations
                                 .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<string>("LastName")
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                            b1.Property<string>("Phone")
                                 .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                             b1.Property<string>("State")
