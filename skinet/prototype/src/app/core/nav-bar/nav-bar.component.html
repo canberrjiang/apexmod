@@ -48,6 +48,12 @@
           >Shop</a
         >
         <a
+          class="my-1 mr-4 nav-link--title"
+          [routerLink]="['/about']"
+          routerLinkActive="active"
+          >About-Us</a
+        >
+        <a
           *ngIf="isAdmin$ | async"
           class="my-1 mr-4 nav-link--title"
           routerLink="/admin"

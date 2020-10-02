@@ -11,13 +11,13 @@
 
   </div>
 
-  <div class="card-body ">
+  <div class="card-body">
     <a routerLink="/shop/{{ product.id }}" class="">
       <h5 class="card-title product-item__title">{{ product.name }}</h5>
     </a>
     <p class="card-text">{{ product.price | currency }}</p>
 
-    <div class="btn-groups">
+    <!-- <div class="btn-groups">
       <ng-container
         *ngIf="product.discriminator === 'Product'; else other_content"
       >
@@ -47,6 +47,6 @@
       </ng-template>
 
 
-    </div>
+    </div> -->
   </div>
 </div>
