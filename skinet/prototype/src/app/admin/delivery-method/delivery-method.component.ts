@@ -25,16 +25,16 @@ export class DeliveryMethodComponent implements OnInit {
   loadDeliveryMethod(){
     this.adminService.getDeliveryMethod4().subscribe((response:any)=>{
       this.deliveryMethod = {...response};
-      console.log(this.deliveryMethod)
+      // console.log(this.deliveryMethod)
     })
   }
 
 
   onSubmit(deliveryMethod: IDeliveryMethodToUpdate) {
-      console.log(deliveryMethod);
+      // console.log(deliveryMethod);
       // const updatedProduct = {...this.product, ...product, price: +product.price};
       this.adminService.updateDeliveryMethod4(deliveryMethod).subscribe((response: any) => {
-        console.log('success!')
+        // console.log('success!')
       });
   }
 

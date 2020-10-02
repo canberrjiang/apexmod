@@ -318,7 +318,7 @@ export class ProductDetailsComponent implements OnInit {
             this.childComponentsId = idGroup;
             this.childComponentsPrice = priceGroup;
             this.childComponentsImg = imgGroup;
-            console.log(this.product);
+            // console.log(this.product);
             // console.log(idGroup,imgGroup);
           }
         },
