@@ -37,8 +37,12 @@
       >{{ label }} is required</span
     >
     <span *ngIf="controlDir.control.errors?.pattern"
-      >Invalid email address</span
-    >
+      >Invalid {{ label }}.
+      <span *ngIf="type === 'password'"
+        >Password must have 1 Uppercase, 1 Lowercase, 1 number, 1
+        non-alphanumeric and 6-20 characters</span
+      >
+    </span>
   </div>
 
   <div
