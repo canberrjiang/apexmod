@@ -1,34 +1,70 @@
 [
   {
     "Id": 1,
-    "Name": "amd"
+    "Name": "Featured Products"
   },
   {
     "Id": 2,
-    "Name": "intel"
+    "Name": "Gaming PC - Custom Water Cooling"
   },
   {
     "Id": 3,
-    "Name": "pc"
+    "Name": "Gaming PC - All In One Water Cooling"
   },
   {
     "Id": 4,
-    "Name": "monitor"
+    "Name": "Gaming PC - Air Cooling"
   },
   {
     "Id": 5,
-    "Name": "cpu"
-  },
-  {
-    "Id": 6,
-    "Name": "gpu"
+    "Name": "CPU"
   },
   {
     "Id": 7,
-    "Name": "cooling"
+    "Name": "Graphic Cards"
   },
   {
     "Id": 8,
-    "Name": "case"
+    "Name": "Memory"
+  },
+  {
+    "Id": 9,
+    "Name": "Case"
+  },
+  {
+    "Id": 10,
+    "Name": "Motherboard"
+  },
+  {
+    "Id": 11,
+    "Name": "Monitor"
+  },
+  {
+    "Id": 12,
+    "Name": "SSD"
+  },
+  {
+    "Id": 13,
+    "Name": "HDD"
+  },
+  {
+    "Id": 14,
+    "Name": "Power Supply"
+  },
+  {
+    "Id": 15,
+    "Name": "CPU Cooler"
+  },
+  {
+    "Id": 16,
+    "Name": "Fans"
+  },
+  {
+    "Id": 17,
+    "Name": "Custom Cooling Parts"
+  },
+  {
+    "Id": 18,
+    "Name": "Services"
   }
 ]

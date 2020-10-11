@@ -92,3 +92,20 @@ label.xng-breadcrumb-trail {
   width: 25px;
   height: 25px;
 }
+
+// fixing that product images on shop page does not take 100% width.
+.img-fluid {
+  width: 100%;
+}
+
+// Admin page - set word-break for long product title
+.admin-list__product-title {
+  max-width: 540px;
+  word-break: break-all;
+}
+
+// Admin page - set max width
+.admin-list__product-image {
+  max-width: 80px;
+  overflow: hidden;
+}

@@ -54,7 +54,7 @@ namespace API
         {
           opt.AddPolicy("CorsPolicy", policy =>
           {
-            policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://www.apexmod.com.au", "https://www.apexmod.com.au", "https://localhost:4200", "https://apexmod.com.au", "http://apexmod.com.au");
+            policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://www.toplayer.com.au", "https://toplayer.com.au", "https://localhost:4200");
           });
         }
       );

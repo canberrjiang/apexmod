@@ -44,7 +44,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private adminService: AdminService,
     private router: Router
-  ) {}
+  ) { }
 
   setRowsData() {
     this.rows = this.product.childProducts;
@@ -81,7 +81,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   RenderChildProduct() {
     // console.log(this.pickCategoryId);
     this.childProductsGroupByCate = [];
-    this.pickChildProduct ='none';
+    this.pickChildProduct = 'none';
     this.adminService
       .getChildProductByCategory(this.pickCategoryId)
       .subscribe((response: []) => {
@@ -94,14 +94,14 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
   handleAddChildProduct() {
     // console.log(1, this.pickChildProduct); 
-    if (this.pickChildProduct === "none" || this.pickChildProduct === undefined ) {
+    if (this.pickChildProduct === "none" || this.pickChildProduct === undefined) {
       return
     } else {
-          let newChildProduct = this.changeChildProductData(this.pickChildProduct);
-    // console.log(2, newChildProduct); 
-    let rows = [...this.rows, newChildProduct];
-    this.rows = rows;
-    this.updateChildProductUpdateFormat();
+      let newChildProduct = this.changeChildProductData(this.pickChildProduct);
+      // console.log(2, newChildProduct); 
+      let rows = [...this.rows, newChildProduct];
+      this.rows = rows;
+      this.updateChildProductUpdateFormat();
     }
 
   }
@@ -161,7 +161,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
         const file = blobInfo.blob();
         self.adminService.uploadRichImages(formData).subscribe((response) => {
 
-          let url = 'https://www.apexmod.com.au/Content/' + response;
+          let url = 'https://www.toplayer.com.au/Content/' + response;
           success(url);
         });
       },
@@ -189,7 +189,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     this.setRowsData();
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   handleChangeTagIds(id) {
 

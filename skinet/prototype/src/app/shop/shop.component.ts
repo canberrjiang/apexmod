@@ -46,13 +46,13 @@ export class ShopComponent implements OnInit {
 
   getTags() {
     this.shopService.getTags().subscribe(response => {
-      this.tags = [{ id: 0, name: 'All' }, ...response];
+      this.tags = [...response];
     }, error => {
       // console.log(error);
     });
   }
 
-    onTagSelected(tagId: number) {
+  onTagSelected(tagId: number) {
     const params = this.shopService.getShopParams();
     params.producttagid = tagId;
     params.pageNumber = 1;

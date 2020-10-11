@@ -1,14 +1,10 @@
 <div class="container">
   <div class="row product-container" *ngIf="product">
-    
-    <div class="preview-container" [style.display]="'none'" >
+
+    <div class="preview-container" [style.display]="'none'">
       <div class="container preview-box">
         <div class="col-12 d-flex justify-content-around">
-          <img
-            class="component__image"
-            src="{{ product.pictureUrl }}"
-            alt="{{ product.name }}"
-          />
+          <img class="component__image" src="{{ product.pictureUrl }}" alt="{{ product.name }}" />
 
           <div class="price-box">
             <div>
@@ -16,23 +12,14 @@
             </div>
 
             <div class="btn-group">
-              <i
-                (click)="decrementQuantity()"
-                class="fa fa-minus-circle text-warning mr-2"
-                style="cursor: pointer; font-size: 2em"
-              ></i>
+              <i (click)="decrementQuantity()" class="fa fa-minus-circle text-warning mr-2"
+                style="cursor: pointer; font-size: 2em"></i>
               <span class="font-weight-bold" style="font-size: 1.5em">{{
                 this.quantity
               }}</span>
-              <i
-                (click)="incrementQuantity()"
-                class="fa fa-plus-circle text-warning mx-2"
-                style="cursor: pointer; font-size: 2em"
-              ></i>
-              <button
-                (click)="addItemToBasket()"
-                class="btn btn-outline-primary btn-lg ml-4 cart"
-              >
+              <i (click)="incrementQuantity()" class="fa fa-plus-circle text-warning mx-2"
+                style="cursor: pointer; font-size: 2em"></i>
+              <button (click)="addItemToBasket()" class="btn btn-outline-primary btn-lg ml-4 cart">
                 Add to Cart
               </button>
             </div>
@@ -41,47 +28,34 @@
       </div>
     </div>
 
-    <h2 class="col-12 py-5 product__title text-uppercase" >
+    <h2 class="col-12 py-5 product__title text-uppercase">
       {{ product.name }}
     </h2>
 
     <div class="col-12 col-sm-12 col-md-6 col-lg-6 img-gallery">
-      <ngx-gallery
-        [options]="galleryOptions"
-        [images]="galleryImages"
-        style="display: inline-block;"
-      ></ngx-gallery>
+      <ngx-gallery [options]="galleryOptions" [images]="galleryImages" style="display: inline-block;"></ngx-gallery>
     </div>
 
-    <div class="col-12 col-sm-12 col-md-6 col-lg-6 pt-3" >
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6 pt-3">
       <div class="price-box">
         <div>
           <p class="price-box__price">{{ product.price | currency }}</p>
         </div>
 
         <div class="btn-group">
-          <i
-            (click)="decrementQuantity()"
-            class="fa fa-minus-circle text-warning mr-2"
-            style="cursor: pointer; font-size: 2em"
-          ></i>
+          <i (click)="decrementQuantity()" class="fa fa-minus-circle text-warning mr-2"
+            style="cursor: pointer; font-size: 2em"></i>
           <span class="font-weight-bold" style="font-size: 1.5em">{{
             this.quantity
           }}</span>
-          <i
-            (click)="incrementQuantity()"
-            class="fa fa-plus-circle text-warning mx-2"
-            style="cursor: pointer; font-size: 2em"
-          ></i>
-          <button
-            (click)="addItemToBasket()"
-            class="btn btn-outline-primary btn-lg ml-4 cart"
-          >
+          <i (click)="incrementQuantity()" class="fa fa-plus-circle text-warning mx-2"
+            style="cursor: pointer; font-size: 2em"></i>
+          <button (click)="addItemToBasket()" class="btn btn-outline-primary btn-lg ml-4 cart">
             Add to Cart
           </button>
         </div>
         <div class="pt-5">
-          <div [innerHTML]="product.information" id="description--text"></div>
+          <div [innerHTML]="product.information | Html" id="description--text"></div>
         </div>
       </div>
     </div>
@@ -90,16 +64,11 @@
     <div class="col-12 pt-5" id="product-description" #descriptionComponents>
       <div>
         <h3 class="product__title text-uppercase">Description</h3>
-        <div [innerHTML]="product.description" id="description--text"></div>
+        <div [innerHTML]="product.description | Html" id="description--text"></div>
       </div>
     </div>
 
-    <div
-      *ngIf="product.discriminator === 'Product'"
-      class="col-12 mt-5"
-      id="product-component"
-      #coreComponents
-    >
+    <div *ngIf="product.discriminator === 'Product'" class="col-12 mt-5" id="product-component" #coreComponents>
       <h3 class="product__title text-uppercase">Core Components</h3>
       <hr />
       <div class="col-12 component-main" *ngFor="let component of components">
@@ -113,22 +82,15 @@
             </div>
 
             <div class="form-check" *ngFor="let item of component.itemsList">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="{{ item.productCategory }}"
-                id="{{ item.id }}"
-                value="{{ item.id }}"
-                [checked]="item.isDefault"
-                (click)="
+              <input class="form-check-input" type="radio" name="{{ item.productCategory }}" id="{{ item.id }}"
+                value="{{ item.id }}" [checked]="item.isDefault" (click)="
                   handleChange(
                     item.productCategory,
                     item.id,
                     item.price,
                     item.pictureUrl
                   )
-                "
-              />
+                " />
               <label class="form-check-label" for="exampleRadios1">
                 {{ item.name }} - ${{ item.price }}
               </label>
@@ -136,11 +98,7 @@
           </div>
 
           <div *ngIf="component.category as category" class="col-3 col-sm-4 component__box">
-            <img
-              class="component__image"
-              src="{{ childComponentsImg[category] }}"
-              alt=""
-            />
+            <img class="component__image" src="{{ childComponentsImg[category] }}" alt="" />
           </div>
         </div>
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AsyncValidatorFn } from '@angular/forms';
 import { AccountService } from '../account.service';
-import { Router ,ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { timer, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   errors: string[];
   returnUrl: string;
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router,private activatedRoute: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.createRegisterForm();
@@ -60,4 +60,22 @@ export class RegisterComponent implements OnInit {
     };
   }
 
+  confirmPasswordValidator(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {
+        return;
+      }
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ confirmPasswordValidator: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    }
+  }
+
+  get f() {
+    return this.registerForm.controls;
+  }
 }
