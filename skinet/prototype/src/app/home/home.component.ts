@@ -16,12 +16,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPcProduct().subscribe((response:any) => {
-      this.products = response;
+      this.products = response.data;
     })
   }
 
   getPcProduct(){
-    return this.http.get(this.baseUrl + 'products/productcategory/1')
+    return this.http.get(this.baseUrl + 'products?producttagid=3')
   }
 
 }

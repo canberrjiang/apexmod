@@ -9,7 +9,8 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 export class TextInputComponent implements OnInit, ControlValueAccessor {
 
   @ViewChild('input', {static: true}) input: ElementRef;
-  @Input() type = 'text';
+  // @Input() type = 'text';
+  @Input() type :string;
   @Input() label: string;
 
   constructor(@Self() public controlDir: NgControl ) {

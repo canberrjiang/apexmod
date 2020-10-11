@@ -11,12 +11,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-   returnUrl: string;
+  returnUrl: string;
  
   public reactiveForm: FormGroup = new FormGroup({
     recaptchaReactive: new FormControl(null, Validators.required),
     email: new FormControl('', [Validators.required,Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]),
-    password: new FormControl('', Validators.required)
+    password: new FormControl('', [Validators.required,Validators.pattern(`^(?=.*[a-z])(?=.*[A-Z])((?=.*\\d)|(?=.*[!@#$%^&*()'"]))[A-Za-z\\d!@#$%^&*()'"](?!\\s).{5,21}$`)])
 });
 
   constructor(private accountService : AccountService, private router: Router, private activatedRoute: ActivatedRoute) { }
