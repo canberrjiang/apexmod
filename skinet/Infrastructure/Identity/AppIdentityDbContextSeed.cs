@@ -16,21 +16,6 @@ namespace Infrastructure.Identity
                 {
                     new AppUser
                     {
-                        DisplayName = "Bob",
-                        Email = "bob@test.com",
-                        UserName = "bob@test.com",
-                        Address = new Address
-                        {
-                            FirstName = "Bob",
-                            LastName = "Bobbity",
-                            Street = "10 The Street",
-                            City = "New York",
-                            State = "NY",
-                            Zipcode = "90210"
-                        }
-                    },
-                    new AppUser
-                    {
                         DisplayName = "Admin",
                         Email = "admin@test.com",
                         UserName = "admin@test.com"
@@ -50,7 +35,7 @@ namespace Infrastructure.Identity
 
         foreach (var user in users)
         {
-          await userManager.CreateAsync(user, "Pa$$w0rd");
+          await userManager.CreateAsync(user, "Pa$$w0rd!!");
           await userManager.AddToRoleAsync(user, "Member");
           if (user.Email == "admin@test.com") await userManager.AddToRoleAsync(user, "Admin");
         }

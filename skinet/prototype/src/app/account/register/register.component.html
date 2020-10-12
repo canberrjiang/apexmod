@@ -12,10 +12,9 @@
       </app-text-input>
       <div *ngIf="f.confirmPassword.touched && f.confirmPassword.invalid" class="alert alert-danger">
         <div *ngIf="f.confirmPassword.errors.required">Password is required.</div>
-        <div *ngIf="f.confirmPassword.errors.confirmPasswordValidator">Password does not match.
+        <div *ngIf="f.confirmPassword.errors.confirmPasswordValidator">Passwords do not match
         </div>
       </div>
-
       <re-captcha formControlName="recaptchaReactive"></re-captcha>
 
       <ul class="text-danger list-unstyled" *ngIf="errors">
