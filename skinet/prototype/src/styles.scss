@@ -109,3 +109,8 @@ label.xng-breadcrumb-trail {
   max-width: 80px;
   overflow: hidden;
 }
+
+.main-container{
+  background-color: white;
+  min-height: calc(100vh - 255px);
+}

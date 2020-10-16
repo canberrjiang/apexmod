@@ -1,4 +1,4 @@
-<div *ngIf="order" class="container-lg mt-5">
+<div *ngIf="order" class="container-lg pt-5 main-container">
   <h2 class="mx-2">Order Number: {{ order && order.id }}</h2>
 
   <div class="mt-4 mx-2">
@@ -37,7 +37,7 @@
   </div>
 </div>
 
-<div *ngIf="!order" class="container mt-5">
+<div *ngIf="!order" class="container pt-5 main-container">
   <div><i class="fa fa-ban fa-5x" style="color: red;"></i></div>
   <h2>OOP!, Order Not Found!!!</h2>
   <p class="mb-4">Please check the order, or created a new one!</p>
