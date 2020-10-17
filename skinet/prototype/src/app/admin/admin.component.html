@@ -8,10 +8,7 @@
 
               <div class="d-flex justify-content-between my-3">
                 <header class="h2">Product List</header>
-                <button
-                  [routerLink]="['/admin/create']"
-                  class="btn btn-outline-success"
-                >
+                <button [routerLink]="['/admin/create']" class="btn btn-outline-success">
                   Create new product
                 </button>
               </div>
@@ -54,48 +51,34 @@
                     <tr *ngFor="let product of products">
                       <td class="align-middle">{{ product.id }}</td>
                       <td>
-                        <div class="p-2">
-                          <img
-                            src="{{
+                        <div class="admin-list__product-image p-2">
+                          <img src="{{
                               product.pictureUrl ||
                                 '/assets/images/placeholder.png'
-                            }}"
-                            alt="{{ product.name }}"
-                            class="img-fluid"
-                            style="max-height: 50px"
-                          />
+                            }}" alt="{{ product.name }}" class="img-fluid" style="max-height: 50px" />
                         </div>
                       </td>
-                      <th class="align-middle">
-                        <a [routerLink]="['edit', product.id]"
-                          ><h5>{{ product.name }}</h5></a
-                        >
+                      <th class="admin-list__product-title align-middle">
+                        <a [routerLink]="['edit', product.id]">
+                          <h5>{{ product.name }}</h5>
+                        </a>
                       </th>
                       <td class="align-middle">
                         {{ product.price | currency }}
                       </td>
 
                       <td class="align-middle">
-                        <button
-                          routerLink="/shop/{{ product.id }}"
-                          class="btn btn-success"
-                        >
+                        <button routerLink="/shop/{{ product.id }}" class="btn btn-success">
                           PreView
                         </button>
                       </td>
                       <td class="align-middle">
-                        <button
-                          [routerLink]="['edit', product.id]"
-                          class="btn btn-warning"
-                        >
+                        <button [routerLink]="['edit', product.id]" class="btn btn-warning">
                           Edit
                         </button>
                       </td>
                       <td class="align-middle">
-                        <button
-                          (click)="deleteProduct(product.id)"
-                          class="btn btn-danger"
-                        >
+                        <button (click)="deleteProduct(product.id)" class="btn btn-danger">
                           Delete
                         </button>
                       </td>
@@ -116,7 +99,8 @@
 
 
               <div class="list-group">
-                <a [routerLink]="['adminorders']" class="list-group-item list-group-item-action link-list link-list--border">
+                <a [routerLink]="['adminorders']"
+                  class="list-group-item list-group-item-action link-list link-list--border">
                   View All Order
                 </a>
                 <a [routerLink]="['deliveryinfo']" class="list-group-item list-group-item-action link-list">
