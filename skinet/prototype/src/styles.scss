@@ -35,8 +35,9 @@ label.xng-breadcrumb-trail {
 }
 
 .product-tabset > .nav-tabs > li.open .dropdown-menu, .product-tabset > .nav-tabs > li:hover .dropdown-menu {
+
   margin-top: 0px;
-  z-index: 1;
+  z-index: 100;
 }
 
 .product-tabset > .nav-tabs > li.active {
@@ -108,4 +109,14 @@ label.xng-breadcrumb-trail {
 .admin-list__product-image {
   max-width: 80px;
   overflow: hidden;
+}
+
+.main-container{
+  background-color: white;
+  min-height: calc(100vh - 255px);
+}
+
+#navbars-apex .dropdown-menu{
+  right: -16px !important;
+  z-index: 100;
 }

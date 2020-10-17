@@ -7,13 +7,17 @@
       alt="logo"
       routerLink="/"
     />
-    <div>
+    <div> 
+      <a routerLink="/shop" class="position-relative basket-icon--mobile shop-page-icon">
+        <i class="fa fa-shopping-bag fa-2x mr-4 text-dark"></i>
+      </a>
       <a routerLink="/basket" class="position-relative basket-icon--mobile">
         <i class="fa fa-shopping-cart fa-2x mr-4 text-dark"></i>
         <div *ngIf="quantity$ | async as quantity" class="cart-no1">
           {{ quantity.quantity }}
         </div>
       </a>
+
 
       <button
         class="navbar-toggler"
@@ -91,7 +95,7 @@
             </a>
             <div
               class="dropdown-menu dropdown-menu-right"
-              style="cursor: pointer"
+              style="cursor: pointer;"
               *dropdownMenu
             >
               <a

@@ -60,9 +60,10 @@ export class ProductDetailsComponent implements OnInit {
   childComponentsImg: any;
   childProducts: any;
   basketProduct: any;
+  defaultCategory = ["CPU","Motherboard","Graphic Cards", "Memory","SSD","HDD","Power Supply","CPU Cooler","Case","Fans","Custom Cooling Parts"];
+
   @ViewChild('descriptionComponents') descriptionComponents: ElementRef;
   // @ViewChild('previewContainer')  previewContainer: ElementRef;
-
   @HostListener('window:scroll') onScroll(e: Event): void {
     // console.log(window.pageYOffset,this.descriptionComponents.nativeElement.getBoundingClientRect().top, window.innerHeight);
     // console.log(this.descriptionComponents.nativeElement.getBoundingClientRect().top);
@@ -206,28 +207,48 @@ export class ProductDetailsComponent implements OnInit {
     return priceGroup;
   }
 
+  // mapChildrenProductsForRender(arr) {
+  //   let components = [];
+  //   arr.forEach((items, i) => {
+  //     let index = -1;
+  //     let alreadyExists = components.some((newItem, j) => {
+  //       if (items.productCategory === newItem.category) {
+  //         index = j;
+  //         return true;
+  //       }
+  //     });
+  //     if (!alreadyExists) {
+  //       components.push({
+  //         category: items.productCategory,
+  //         itemsList: [items],
+  //       });
+  //     } else {
+  //       components[index].itemsList.push(items);
+  //     }
+  //   });
+  //   return components;
+  // }
+
   mapChildrenProductsForRender(arr) {
     let components = [];
+    this.defaultCategory.map((ele)=>{
+      components.push({
+        category: ele,
+        itemsList: [],
+      })
+    })
     arr.forEach((items, i) => {
-      let index = -1;
-      let alreadyExists = components.some((newItem, j) => {
-        if (items.productCategory === newItem.category) {
-          index = j;
-          return true;
-        }
+      let index=  components.findIndex((newItem, j) => {
+         return items.productCategory === newItem.category
       });
-      if (!alreadyExists) {
-        components.push({
-          category: items.productCategory,
-          itemsList: [items],
-        });
-      } else {
-        components[index].itemsList.push(items);
-      }
+      components[index].itemsList.push(items);
+      components[index].itemsList.sort((a, b) => {
+        return a.price - b.price;
+      })
     });
     return components;
   }
-
+  
   getImages() {
     const imageUrls = [];
     for (const photo of this.product.photos) {

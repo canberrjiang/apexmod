@@ -6,6 +6,10 @@
 
 
 .content-wrap {
-  padding-bottom: 6rem;    /* Footer height */
+  // padding-bottom: 6rem;    /* Footer height */
   padding-bottom: 4rem;
+  background-color: black;
+  background-image: url(https://img.pccasegear.com/tr:n-pr/skyscraper_left_new.jpg);
+  background-repeat: repeat-x;
+  min-height: calc(100vh - 191px);
 }

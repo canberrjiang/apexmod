@@ -67,7 +67,8 @@ import { HtmlPipe } from './shared.pipe';
     EditorModule,
     NgxDatatableModule,
     CollapseModule,
-    ProductItemsComponent
+    ProductItemsComponent,
+    HtmlPipe
   ],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }

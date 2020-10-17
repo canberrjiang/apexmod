@@ -1,4 +1,4 @@
-<section class="admin-page" *ngIf="products">
+<section class="admin-page main-container" *ngIf="products">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -51,8 +51,14 @@
                     <tr *ngFor="let product of products">
                       <td class="align-middle">{{ product.id }}</td>
                       <td>
+<<<<<<< HEAD
                         <div class="admin-list__product-image p-2">
                           <img src="{{
+=======
+                        <div class="p-2 admin-list__product-image">
+                          <img
+                            src="{{
+>>>>>>> 2f2c0f3eb7cbec581c05a8f8360d6b47d810af72
                               product.pictureUrl ||
                                 '/assets/images/placeholder.png'
                             }}" alt="{{ product.name }}" class="img-fluid" style="max-height: 50px" />
