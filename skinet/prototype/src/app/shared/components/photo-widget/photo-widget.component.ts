@@ -21,10 +21,15 @@ export class PhotoWidgetComponent implements OnInit {
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
+    // console.log(1, event);
   }
 
   imageCropped(event: ImageCroppedEvent) {
+    // console.log(1, this.imageChangedEvent);
+    // console.log(this.files);
     this.croppedImage = event.base64;
+    // console.log(2, event);
+    // console.log(3, this.croppedImage)
   }
 
   onSelect(event) {
