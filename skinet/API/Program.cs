@@ -47,7 +47,11 @@ namespace API
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
-              webBuilder.UseStartup<Startup>();
+              webBuilder.UseStartup<Startup>().UseKestrel(options =>
+              {
+                // Increase Kestrel Default Max Request Size to 1G.
+                options.Limits.MaxRequestBodySize = 1073741824;
+              });
             });
   }
 }
