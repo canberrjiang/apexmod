@@ -100,6 +100,16 @@ export class ShopService {
     return this.http.get<IProduct>(this.baseUrl + 'products/' + id);
   }
 
+  getProductByAdmin(id: number) {
+    //caching, data not match
+    // const product = this.products.find(p => p.id === id);
+    // if (product) {
+    //   return of(product);
+    // }
+    return this.http.get<IProduct>(this.baseUrl + 'products/admin/' + id);
+  }
+
+
   getCategories() {
     if (this.categories.length > 0) {
       return of(this.categories);
