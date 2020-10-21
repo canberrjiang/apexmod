@@ -59,7 +59,7 @@ export class EditProductComponent implements OnInit {
 
   loadProduct() {
     this.shopService
-      .getProduct(+this.route.snapshot.paramMap.get('id'))
+      .getProductByAdmin(+this.route.snapshot.paramMap.get('id'))
       .subscribe((response: any) => {
         const productCategoryId =
           this.categories &&
