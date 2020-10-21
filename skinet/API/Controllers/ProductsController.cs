@@ -86,8 +86,9 @@ namespace API.Controllers
     public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
     {
 
-      var spec = new AllBaseProductsWithTagsAndCategoriesSpecification(id);
+      var spec = new BaseProductsWithTagsAndCategoriesSpecification(id);
       var baseProduct = await _unitOfWork.Repository<BaseProduct>().GetEntityWithSpec(spec);
+      if (baseProduct == null) return NotFound(new ApiResponse(404));
       var result = _mapper.Map<BaseProduct, ProductToReturnDto>(baseProduct);
 
       if (baseProduct.Discriminator == "Product")
@@ -99,7 +100,32 @@ namespace API.Controllers
       }
 
 
+
+      return result;
+    }
+
+    [HttpGet("admin/{id}")]
+    [Authorize(Roles = "Admin")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ProductToReturnDto>> GetAdminProduct(int id)
+    {
+
+      var spec = new AllBaseProductsWithTagsAndCategoriesSpecification(id);
+      var baseProduct = await _unitOfWork.Repository<BaseProduct>().GetEntityWithSpec(spec);
       if (baseProduct == null) return NotFound(new ApiResponse(404));
+      var result = _mapper.Map<BaseProduct, ProductToReturnDto>(baseProduct);
+
+      if (baseProduct.Discriminator == "Product")
+      {
+        var productSpec = new ProductsWithTagAndCategorySpecification(id);
+        var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(productSpec);
+        if (product == null) return NotFound(new ApiResponse(404));
+        result = _mapper.Map<Product, ProductToReturnDto>(product);
+      }
+
+
+
       return result;
     }
 
