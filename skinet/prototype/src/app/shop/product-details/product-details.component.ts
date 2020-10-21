@@ -114,7 +114,12 @@ export class ProductDetailsComponent implements OnInit {
   // }
 
   ngOnInit() {
-    this.loadProduct();
+    // this.loadProduct();
+    if(this.activateRoute.snapshot.url[0].path === 'products'){
+      this.loadProductByAdmin();
+    }else{
+      this.loadProductByAdmin();
+    }
   }
 
   initializeGallery() {
@@ -340,6 +345,45 @@ export class ProductDetailsComponent implements OnInit {
             this.childComponentsPrice = priceGroup;
             this.childComponentsImg = imgGroup;
             // console.log(this.product);
+            // console.log(idGroup,imgGroup);
+          }
+        },
+        (error) => {
+          // console.log(error);
+        }
+      );
+  }
+
+
+  loadProductByAdmin() {
+    this.shopService
+      .getProductByAdmin(+this.activateRoute.snapshot.paramMap.get('id'))
+      .subscribe(
+        (product) => {
+          this.product = product;
+          console.log('imagecheck3',this.product);
+          this.bcService.set('@productDetails', product.name);
+          this.initializeGallery();
+
+          if (this.product.discriminator === 'Product') {
+            const componentGroup = this.mapChildrenProductsForRender(
+              this.product.childProducts
+            );
+            const idGroup = this.mapChildrenProductsId(
+              this.product.childProducts
+            );
+            const priceGroup = this.mapChildrenProductsPrice(
+              this.product.childProducts
+            );
+            const imgGroup = this.mapChildrenProductsImg(
+              this.product.childProducts
+            );
+
+            this.components = componentGroup;
+            this.childComponentsId = idGroup;
+            this.childComponentsPrice = priceGroup;
+            this.childComponentsImg = imgGroup;
+            // console.log(this.components);
             // console.log(idGroup,imgGroup);
           }
         },

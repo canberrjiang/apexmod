@@ -76,7 +76,7 @@
 
                       <td class="align-middle">
                         <button
-                          routerLink="/shop/{{ product.id }}"
+                        [routerLink]="['products', product.id]"
                           class="btn btn-success"
                         >
                           Preview
