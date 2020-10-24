@@ -118,7 +118,7 @@ export class ProductDetailsComponent implements OnInit {
     if(this.activateRoute.snapshot.url[0].path === 'products'){
       this.loadProductByAdmin();
     }else{
-      this.loadProductByAdmin();
+      this.loadProduct();
     }
   }
 
@@ -190,7 +190,7 @@ export class ProductDetailsComponent implements OnInit {
   mapChildrenProductsPrice(arr) {
     let priceGroup = {};
     arr.forEach((items, index) => {
-      let products = priceGroup[items.productCategory] || [];
+      let products = priceGroup[items.productCategory];
       if (items.isDefault) {
         products = items.price;
       }
