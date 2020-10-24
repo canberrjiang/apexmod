@@ -190,7 +190,7 @@ export class ProductDetailsComponent implements OnInit {
   mapChildrenProductsPrice(arr) {
     let priceGroup = {};
     arr.forEach((items, index) => {
-      let products = priceGroup[items.productCategory];
+      let products = priceGroup[items.productCategory] || 0;
       if (items.isDefault) {
         products = items.price;
       }
