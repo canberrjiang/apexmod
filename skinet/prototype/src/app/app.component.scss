@@ -7,9 +7,38 @@
 
 .content-wrap {
   // padding-bottom: 6rem;    /* Footer height */
-  padding-bottom: 4rem;
-  background-color: black;
-  background-image: url(https://img.pccasegear.com/tr:n-pr/skyscraper_left_new.jpg);
-  background-repeat: repeat-x;
+  padding-bottom: 3rem;
+  // background-color: black;
+  // background-image: url(https://img.pccasegear.com/tr:n-pr/skyscraper_left_new.jpg);
+  // background-repeat: repeat-x;
   min-height: calc(100vh - 191px);
+  position: relative;
+  &::before {
+    content: "";
+    width: 60%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -2;
+    background-color: black;
+    background-size: contain;
+    background-image: url("../assets/images/bg_left.jpg");
+    background-repeat: no-repeat;
+  }
+  &::after {
+    content: "";
+    width: 60%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -2;
+    background-image: url("../assets/images/bg_left.jpg");
+    background-size: contain;
+    background-color: black;
+    background-position: right 0;
+    background-repeat: no-repeat;
+  }
+
 }

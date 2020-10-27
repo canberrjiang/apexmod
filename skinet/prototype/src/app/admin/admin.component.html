@@ -26,26 +26,28 @@
                   <thead>
                     <tr>
                       <th scope="col">
-                        <div class="p-2">Id</div>
+                        <div class="p-1">Id</div>
                       </th>
                       <th scope="col">
-                        <div class="p-2 text-uppercase">Product</div>
+                        <div class="p-1 text-uppercase">Product</div>
                       </th>
                       <th scope="col">
-                        <div class="py-2 text-uppercase">Name</div>
+                        <div class="py-1 text-uppercase">Name</div>
                       </th>
                       <th scope="col">
-                        <div class="p-2 px-3 text-uppercase">Price</div>
+                        <div class="p-1 text-uppercase">Price</div>
                       </th>
                       <th scope="col">
-                        <div class="p-2 px-3 text-uppercase">View</div>
+                        <div class="p-2 text-uppercase">View</div>
                       </th>
                       <th scope="col">
-                        <div class="p-2 px-3 text-uppercase">Edit</div>
+                        <div class="p-2 text-uppercase">Edit</div>
                       </th>
-
                       <th scope="col">
-                        <div class="p-2 px-3 text-uppercase">Delete</div>
+                        <div class="p-2 text-uppercase">Delete</div>
+                      </th>
+                      <th scope="col">
+                        <div class="p-2 text-uppercase">Publish</div>
                       </th>
                     </tr>
                   </thead>
@@ -97,6 +99,9 @@
                         >
                           Delete
                         </button>
+                      </td>
+                      <td class="align-middle" style="text-transform: capitalize;">
+                        {{ product.isPublished}}
                       </td>
                     </tr>
                   </tbody>

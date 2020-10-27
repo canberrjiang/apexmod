@@ -257,4 +257,9 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   closeAlert() {
     this.success = false;
   }
+  getRowClass(row) {
+    return {
+      'default-true': row.isDefault === true
+    };
+  }
 }

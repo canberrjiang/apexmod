@@ -113,10 +113,14 @@ label.xng-breadcrumb-trail {
 
 .main-container{
   background-color: white;
-  min-height: calc(100vh - 255px);
+  min-height: calc(100vh - 240px);
 }
 
 #navbars-apex .dropdown-menu{
   right: -16px !important;
   z-index: 100;
+}
+
+.default-true{
+  background: pink;
 }

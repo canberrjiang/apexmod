@@ -178,7 +178,7 @@ export class ProductDetailsComponent implements OnInit {
   mapChildrenProductsId(arr) {
     let components = {};
     arr.forEach((items, index) => {
-      let products = components[items.productCategory] || [];
+      let products = components[items.productCategory] || '';
       if (items.isDefault) {
         products = items.id;
       }
@@ -203,7 +203,7 @@ export class ProductDetailsComponent implements OnInit {
   mapChildrenProductsImg(arr) {
     let priceGroup = {};
     arr.forEach((items, index) => {
-      let products = priceGroup[items.productCategory] || [];
+      let products = priceGroup[items.productCategory] || '';
       if (items.isDefault) {
         products = items.pictureUrl;
       }
