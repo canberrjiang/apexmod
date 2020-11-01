@@ -1,61 +1,37 @@
 <div class="form-label-group">
-  <input
-    [ngClass]="
+  <input [ngClass]="
       controlDir && controlDir.control && controlDir.control.touched
         ? !controlDir.control.valid
           ? 'is-invalid'
           : 'is-valid'
         : null
-    "
-    [type]="type"
-    (input)="onChange($event.target.value)"
-    (blur)="onTouched()"
-    id="{{ label }}"
-    #input
-    class="form-control"
-    placeholder="{{ label }}"
-  />
-  <div
-    *ngIf="
+    " [type]="type" (input)="onChange($event.target.value)" (blur)="onTouched()" id="{{ label }}" #input
+    class="form-control" placeholder="{{ label }}" />
+  <div *ngIf="
       controlDir &&
       controlDir.control &&
       controlDir.control.status === 'PENDING'
-    "
-    class="fa fa-spinner fa-spin loader"
-  ></div>
+    " class="fa fa-spinner fa-spin loader"></div>
   <label for="{{ label }}">{{ label }}</label>
-  <div
-    class="invalid-feedback"
-    *ngIf="
+  <div class="invalid-feedback" *ngIf="
       controlDir &&
       controlDir.control &&
       !controlDir.control.valid &&
       controlDir.control.touched
-    "
-  >
-    <span *ngIf="controlDir.control.errors?.required"
-      >{{ label }} is required</span
-    >
-    <span *ngIf="controlDir.control.errors?.pattern"
-      >Invalid {{ label }}.
-      <span *ngIf="type === 'password'"
-        >Password must have 1 Uppercase, 1 Lowercase, 1 number, 1
-        non-alphanumeric and 6-20 characters</span
-      >
+    ">
+    <span *ngIf="controlDir.control.errors?.required">{{ label }} is required</span>
+    <span *ngIf="controlDir.control.errors?.pattern">Invalid {{ label }}.
+      <span *ngIf="type === 'password'">Password must have 1 Uppercase, 1 Lowercase, 1 number, 1
+        non-alphanumeric, no whitespace and between 8-15 characters</span>
     </span>
   </div>
 
-  <div
-    class="invalid-feedback d-block"
-    *ngIf="
+  <div class="invalid-feedback d-block" *ngIf="
       controlDir &&
       controlDir.control &&
       !controlDir.control.valid &&
       controlDir.control.dirty
-    "
-  >
-    <span *ngIf="controlDir.control.errors?.emailExists"
-      >Email address is in use</span
-    >
+    ">
+    <span *ngIf="controlDir.control.errors?.emailExists">Email address is in use</span>
   </div>
 </div>

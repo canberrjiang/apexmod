@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
         [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')],
         [this.validateEmailNotTaken()]
       ],
-      password: [null, [Validators.required, Validators.pattern(`^(?=(.*[a-zA-Z].*){2,})(?=.*\\d.*)(?=.*\\W.*)[a-zA-Z0-9\\S]{8,15}$`)]],
+      password: [null, [Validators.required, Validators.pattern(`^(?=(.*[a-z].*){1,})(?=(.*[A-Z].*){1,})(?=.*\\d.*)(?=.*\\W.*)[a-zA-Z0-9\\S]{8,15}$`)]],
       confirmPassword: [null, [Validators.required]],
     }, {
       validator: this.confirmPasswordValidator('password', 'confirmPassword')
