@@ -1,0 +1,10 @@
+<div class="container pt-5 main-container">
+  <div><i class="fa fa-ban fa-5x" style="color: red"></i></div>
+  <h2>OOP!, Order Not Found!!!</h2>
+
+  <p class="mb-4">Please try to created a new one!</p>
+
+  <button *ngIf="!order" routerLink="/orders" class="btn btn-outline-success">
+    View your order
+  </button>
+</div>

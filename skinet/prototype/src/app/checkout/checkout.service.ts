@@ -17,15 +17,15 @@ export class CheckoutService {
     return this.http.post(this.baseUrl + 'orders', order);
   }
 
-  getPayPalToken() {
-    return this.http.get(this.baseUrl + 'braintree', {
-      responseType: 'text',
-    });
-  }
+  // getPayPalToken() {
+  //   return this.http.get(this.baseUrl + 'braintree', {
+  //     responseType: 'text',
+  //   });
+  // }
 
-  handlePayPalPayment(nonce) {
-    return this.http.post(this.baseUrl + 'braintree', nonce);
-  }
+  // handlePayPalPayment(nonce) {
+  //   return this.http.post(this.baseUrl + 'braintree', nonce);
+  // }
 
   getDeliveryMethods() {
     return this.http.get(this.baseUrl + 'orders/deliveryMethods').pipe(

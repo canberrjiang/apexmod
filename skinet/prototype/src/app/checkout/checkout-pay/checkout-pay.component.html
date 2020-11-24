@@ -1,4 +1,4 @@
-<div *ngIf="order" class="container-lg pt-5 main-container">
+<div class="container-lg pt-5 main-container" [hidden]="!show">
   <h2 class="mx-2">Order Number: {{ order && order.id }}</h2>
 
   <div class="mt-4 mx-2">
@@ -7,9 +7,9 @@
         <div class="tab-panel">
           <tabset class="product-tabset">
             <tab heading="PayPal">
-              <div id="dropin-container"></div>
-              <div #paypal></div>
+              <!-- <div id="dropin-container"></div> -->
               <!-- <button class="btn btn-outline-danger" id="submit-button" (click)="pay()"><strong>Confirm and Pay.</strong></button>     -->
+              <div #paypal></div>
             </tab>
             <!-- <tab heading="WeChat Pay">
               <img
@@ -38,7 +38,7 @@
   </div>
 </div>
 
-<div *ngIf="!order" class="container pt-5 main-container">
+<div class="container pt-5 main-container" [hidden]="!show">
   <div><i class="fa fa-ban fa-5x" style="color: red"></i></div>
   <h2>OOP!, Order Not Found!!!</h2>
   <p class="mb-4">Please check the order, or created a new one!</p>
