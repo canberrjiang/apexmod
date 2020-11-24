@@ -39,6 +39,7 @@ export class CheckoutPayComponent implements OnInit, AfterViewInit {
     const state = navigation && navigation.extras && navigation.extras.state;
     if (state) {
       this.order = state as IOrder;
+      this.show = false;
     }
 
     // this.getPayPalToken();
