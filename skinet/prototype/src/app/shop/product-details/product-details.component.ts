@@ -375,7 +375,7 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe(
         (product) => {
           this.product = product;
-          console.log('imagecheck3', this.product);
+          // console.log('imagecheck3', this.product);
           this.bcService.set('@productDetails', product.name);
           this.initializeGallery();
 
