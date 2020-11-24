@@ -4,8 +4,11 @@ import { HomeComponent } from './home/home.component';
 import { TestErrorComponent } from './core/test-error/test-error.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
-import { AuthGuard } from "./core/guards/auth.guard";
-import { AdminGuard } from "./core/guards/admin.guard";
+import { PrivacyComponent } from './core/privacy/privacy.component';
+import { TermsConditionComponent } from './core/terms-condition/terms-condition.component';
+
+import { AuthGuard } from './core/guards/auth.guard';
+import { AdminGuard } from './core/guards/admin.guard';
 import { ShopComponent } from './shop/shop.component';
 
 const routes: Routes = [
@@ -20,6 +23,16 @@ const routes: Routes = [
     path: 'server-error',
     component: ServerErrorComponent,
     data: { breadcrumb: 'Server Error' },
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent,
+    data: { breadcrumb: 'Privacy' },
+  },
+  {
+    path: 'terms-condition',
+    component: TermsConditionComponent,
+    data: { breadcrumb: 'Terms & Conditions' },
   },
   {
     path: 'not-found',
@@ -48,8 +61,9 @@ const routes: Routes = [
   {
     path: 'orders',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./orders/orders.module')
-      .then(mod => mod.OrdersModule), data: { breadcrumb: 'Orders' }
+    loadChildren: () =>
+      import('./orders/orders.module').then((mod) => mod.OrdersModule),
+    data: { breadcrumb: 'Orders' },
   },
   {
     path: 'account',
@@ -60,10 +74,11 @@ const routes: Routes = [
   {
     path: 'admin',
     canActivate: [AuthGuard, AdminGuard],
-    loadChildren: () => import('./admin/admin.module')
-      .then(mod => mod.AdminModule), data: { breadcrumb: 'Admin' }
+    loadChildren: () =>
+      import('./admin/admin.module').then((mod) => mod.AdminModule),
+    data: { breadcrumb: 'Admin' },
   },
-  { path: '**', redirectTo: 'not-found', pathMatch: 'full' }
+  { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];
 
 @NgModule({

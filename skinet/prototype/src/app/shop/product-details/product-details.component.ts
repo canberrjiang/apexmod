@@ -60,7 +60,22 @@ export class ProductDetailsComponent implements OnInit {
   childComponentsImg: any;
   childProducts: any;
   basketProduct: any;
-  defaultCategory = ["CPU","Motherboard","Graphic Cards", "Memory","SSD","HDD","Power Supply","CPU Cooler","Case","Fans","Custom Cooling Parts"];
+  defaultCategory = [
+    'CPU',
+    'Motherboard',
+    'Graphic Cards',
+    'Memory',
+    'SSD',
+    'HDD',
+    'Power Supply',
+    'CPU Cooler',
+    'Case',
+    'Fans',
+    'Custom Cooling Parts',
+    'Services',
+    'Monitor',
+    'Sale',
+  ];
 
   @ViewChild('descriptionComponents') descriptionComponents: ElementRef;
   // @ViewChild('previewContainer')  previewContainer: ElementRef;
@@ -115,9 +130,9 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit() {
     // this.loadProduct();
-    if(this.activateRoute.snapshot.url[0].path === 'products'){
+    if (this.activateRoute.snapshot.url[0].path === 'products') {
       this.loadProductByAdmin();
-    }else{
+    } else {
       this.loadProduct();
     }
   }
@@ -236,24 +251,24 @@ export class ProductDetailsComponent implements OnInit {
 
   mapChildrenProductsForRender(arr) {
     let components = [];
-    this.defaultCategory.map((ele)=>{
+    this.defaultCategory.map((ele) => {
       components.push({
         category: ele,
         itemsList: [],
-      })
-    })
+      });
+    });
     arr.forEach((items, i) => {
-      let index=  components.findIndex((newItem, j) => {
-         return items.productCategory === newItem.category
+      let index = components.findIndex((newItem, j) => {
+        return items.productCategory === newItem.category;
       });
       components[index].itemsList.push(items);
       components[index].itemsList.sort((a, b) => {
         return a.price - b.price;
-      })
+      });
     });
     return components;
   }
-  
+
   getImages() {
     const imageUrls = [];
     for (const photo of this.product.photos) {
@@ -354,14 +369,13 @@ export class ProductDetailsComponent implements OnInit {
       );
   }
 
-
   loadProductByAdmin() {
     this.shopService
       .getProductByAdmin(+this.activateRoute.snapshot.paramMap.get('id'))
       .subscribe(
         (product) => {
           this.product = product;
-          console.log('imagecheck3',this.product);
+          console.log('imagecheck3', this.product);
           this.bcService.set('@productDetails', product.name);
           this.initializeGallery();
 

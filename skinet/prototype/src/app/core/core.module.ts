@@ -10,9 +10,11 @@ import { SectionHeaderComponent } from './section-header/section-header.componen
 import {BreadcrumbModule} from 'xng-breadcrumb';
 import { SharedModule } from '../shared/shared.module';
 import { FooterComponent } from './footer/footer.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TermsConditionComponent } from './terms-condition/terms-condition.component';
 
 @NgModule({
-  declarations: [NavBarComponent, TestErrorComponent, NotFoundComponent, ServerErrorComponent, SectionHeaderComponent, FooterComponent],
+  declarations: [NavBarComponent, TestErrorComponent, NotFoundComponent, ServerErrorComponent, SectionHeaderComponent, FooterComponent, PrivacyComponent, TermsConditionComponent],
   imports: [
     CommonModule,
     RouterModule,

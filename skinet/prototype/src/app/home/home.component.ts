@@ -6,22 +6,21 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   products: IProduct[];
   baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.getPcProduct().subscribe((response:any) => {
+    this.getPcProduct().subscribe((response: any) => {
       this.products = response.data;
-    })
+    });
   }
 
-  getPcProduct(){
-    return this.http.get(this.baseUrl + 'products?producttagid=1')
+  getPcProduct() {
+    return this.http.get(this.baseUrl + 'products?producttagid=20');
   }
-
 }

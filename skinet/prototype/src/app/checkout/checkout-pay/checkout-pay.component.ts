@@ -68,24 +68,24 @@ export class CheckoutPayComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {}
 
-  pay() {
-    this.dropIninstance.requestPaymentMethod((err, payload) => {
-      if (err) {
-        // deal with error
-        // console.log(err);
-      } else {
+  // pay() {
+  //   this.dropIninstance.requestPaymentMethod((err, payload) => {
+  //     if (err) {
+  //       // deal with error
+  //       // console.log(err);
+  //     } else {
 
-        const paymentData = {
-          orderid: this.order && this.order.id,
-          nonce: payload.nonce,
-        };
-        //send nonce to the server
-        this.checkoutService
-          .handlePayPalPayment(paymentData)
-          .subscribe((response) => {
-            this.router.navigate(['checkout/success']);
-          });
-      }
-    });
-  }
+  //       const paymentData = {
+  //         orderid: this.order && this.order.id,
+  //         nonce: payload.nonce,
+  //       };
+  //       //send nonce to the server
+  //       this.checkoutService
+  //         .handlePayPalPayment(paymentData)
+  //         .subscribe((response) => {
+  //           this.router.navigate(['checkout/success']);
+  //         });
+  //     }
+  //   });
+  // }
 }
