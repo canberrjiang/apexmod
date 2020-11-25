@@ -5,7 +5,6 @@ import { ITag } from 'src/app/shared/models/tag';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../admin.service';
 
-
 @Component({
   selector: 'app-edit-product-form',
   templateUrl: './edit-product-form.component.html',
@@ -44,7 +43,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private adminService: AdminService,
     private router: Router
-  ) { }
+  ) {}
 
   setRowsData() {
     this.rows = this.product.childProducts;
@@ -52,7 +51,6 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   }
 
   deleteProduct(id) {
-
     const resultIndex = this.rows.findIndex((item, index, items) => {
       return item.id === id;
     });
@@ -65,7 +63,6 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     rows.splice(resultIndex, 1);
     this.rows = rows;
     this.updateChildProductUpdateFormat();
-
   }
 
   setDefault(id) {
@@ -85,31 +82,31 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     this.adminService
       .getChildProductByCategory(this.pickCategoryId)
       .subscribe((response: []) => {
-
         this.childProductsGroupByCate = response;
         // console.log(this.childProductsGroupByCate);
       });
   }
 
-
   handleAddChildProduct() {
-    // console.log(1, this.pickChildProduct); 
-    if (this.pickChildProduct === "none" || this.pickChildProduct === undefined) {
-      return
+    // console.log(1, this.pickChildProduct);
+    if (
+      this.pickChildProduct === 'none' ||
+      this.pickChildProduct === undefined
+    ) {
+      return;
     } else {
       let newChildProduct = this.changeChildProductData(this.pickChildProduct);
-      // console.log(2, newChildProduct); 
+      // console.log(2, newChildProduct);
       let rows = [...this.rows, newChildProduct];
       this.rows = rows;
       this.updateChildProductUpdateFormat();
     }
-
   }
 
   HandleChildProduct(value) {
     // console.log(value);
     // console.log(this.pickChildProduct);
-    // this.pickChildProduct = 
+    // this.pickChildProduct =
   }
 
   changeChildProductData(product) {
@@ -134,11 +131,9 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
       return newElement;
     });
     this.childProductNewFormatGroup = newRows;
-
   }
 
   ngOnInit(): void {
-
     let self = this;
     this.editorConfig = {
       base_url: '/tinymce', // Root for resources
@@ -160,13 +155,11 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
         const file = blobInfo.blob();
         self.adminService.uploadRichImages(formData).subscribe((response) => {
-
           let url = 'https://www.toplayer.com.au/Content/' + response;
           success(url);
         });
       },
     };
-
 
     this.editorConfig02 = {
       base_url: '/tinymce', // Root for resources
@@ -176,23 +169,20 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
       plugins: [
         'advlist autolink lists link image charmap print preview anchor',
         'searchreplace visualblocks code fullscreen',
-        'insertdatetime media table paste code help wordcount'
+        'insertdatetime media table paste code help wordcount',
       ],
       toolbar:
         'undo redo | formatselect | bold italic backcolor | \
         alignleft aligncenter alignright alignjustify | \
-        bullist numlist outdent indent | removeformat |'
+        bullist numlist outdent indent | removeformat |',
     };
-
-
 
     this.setRowsData();
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {}
 
   handleChangeTagIds(id) {
-
     const checkCurrentTagId = this.product.productTagIds.includes(id);
 
     if (checkCurrentTagId === false) {
@@ -203,7 +193,6 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
       );
       this.product.productTagIds.splice(index, 1);
     }
-
   }
 
   deleteSomeObjectKey() {
@@ -219,7 +208,6 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     }
 
     if (this.route.snapshot.url[0].path === 'edit') {
-
       const updatedProduct = {
         ...this.product,
         ...product,
@@ -245,7 +233,6 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
       };
       this.adminService.createProduct(newProduct).subscribe((response: any) => {
         this.router.navigate([`/admin/edit/${response}`]);
-
       });
     }
   }
@@ -259,7 +246,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   }
   getRowClass(row) {
     return {
-      'default-true': row.isDefault === true
+      'default-true': row.isDefault === true,
     };
   }
 }
