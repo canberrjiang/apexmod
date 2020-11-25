@@ -40,7 +40,7 @@ namespace Infrastructure.Services
             var childItemId = subItem.FirstOrDefault().Value;
             var childItem = await _unitOfWork.Repository<BaseProduct>().GetByIdAsync(childItemId);
             productDescription += "- " + childItem.Name + Environment.NewLine;
-            calcPrice += childItem.Price;
+            calcPrice += childItem.Price - childItem.DiscountPrice;
           }
           var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Name, productDescription,
                   productItem.Photos.FirstOrDefault(x => x.IsMain)?.PictureUrl);
@@ -55,9 +55,9 @@ namespace Infrastructure.Services
           var itemOrdered = new ProductItemOrdered(childProductItem.Id, childProductItem.Name, productDescription,
                   childProductItem.Photos.FirstOrDefault(x => x.IsMain)?.PictureUrl);
 
-          if (item.Price != childProductItem.Price)
+          if (item.Price != (childProductItem.Price - childProductItem.DiscountPrice))
           {
-            item.Price = childProductItem.Price;
+            item.Price = childProductItem.Price - childProductItem.DiscountPrice;
           }
           var orderItem = new OrderItem(itemOrdered, item.Price, item.Quantity);
           items.Add(orderItem);

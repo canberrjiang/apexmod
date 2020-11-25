@@ -10,6 +10,7 @@ namespace Core.Entities
     public string Information { get; set; }
     public string Description { get; set; }
     public decimal Price { get; set; }
+    public decimal DiscountPrice { get; set; }
     public string PictureUrl { get; set; }
     public int Stock { get; set; }
     public List<ProductTag> ProductTag { get; set; }

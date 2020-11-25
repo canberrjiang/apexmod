@@ -57,6 +57,7 @@ namespace API.Helpers
         .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
         .ForMember(d => d.Name, o => o.MapFrom(s => s.Name))
         .ForMember(d => d.Price, o => o.MapFrom(s => s.Price))
+        .ForMember(d => d.DiscountPrice, o => o.MapFrom(s => s.DiscountPrice))
         .ForMember(d => d.ProductCategory, o => o.MapFrom(s => s.ProductCategory.Name))
         .ForMember(d => d.PictureUrl, o => o.MapFrom<ChildProductPhotoUrlResolver>())
         .ForMember(d => d.Description, o => o.MapFrom(s => s.Description))
@@ -73,6 +74,7 @@ namespace API.Helpers
       ForMember(d => d.Description, o => o.MapFrom(s => s.ChildProduct.Description)).
       ForMember(d => d.ProductCategory, o => o.MapFrom(s => s.ChildProduct.ProductCategory.Name)).
       ForMember(d => d.Price, o => o.MapFrom(s => s.ChildProduct.Price)).
+      ForMember(d => d.DiscountPrice, o => o.MapFrom(s => s.ChildProduct.DiscountPrice)).
       ForMember(d => d.PictureUrl, o => o.MapFrom<ChildProductsToReturnUrlResolver>()).
       ForMember(d => d.IsPublished, o => o.MapFrom(s => s.ChildProduct.IsPublished)).
       ForMember(d => d.IsDefault, o => o.MapFrom(s => s.IsDefault)).ReverseMap();

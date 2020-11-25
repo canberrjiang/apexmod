@@ -8,6 +8,7 @@ namespace API.Dtos
     public string Description { get; set; }
     public string ProductCategory { get; set; }
     public decimal Price { get; set; }
+    public decimal DiscountPrice { get; set; }
     public string PictureUrl { get; set; }
     public bool IsPublished { get; set; }
     public bool IsDefault { get; set; }
