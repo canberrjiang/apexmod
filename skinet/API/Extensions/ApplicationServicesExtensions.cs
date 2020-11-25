@@ -20,8 +20,9 @@ namespace API.Extensions
       services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddScoped<IBasketRepository, BasketRepository>();
       services.AddScoped<IPhotoService, PhotoService>();
-      services.AddScoped<IEmailService, EmailService>();
-      services.AddScoped<IBraintreeService, BraintreeService>();
+      // services.AddScoped<IEmailService, EmailService>();
+      // services.AddScoped<IBraintreeService, BraintreeService>();
+      services.AddScoped<IPayPalService, PayPalService>();
       services.Configure<ApiBehaviorOptions>(options =>
       {
         options.InvalidModelStateResponseFactory = actionContext =>

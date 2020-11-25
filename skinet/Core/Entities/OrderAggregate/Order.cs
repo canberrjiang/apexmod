@@ -31,10 +31,16 @@ namespace Core.Entities.OrderAggregate
     public decimal GetTotal()
     {
       // Deposit Only
-      if (DeliveryMethod.ShortName == "Deposit Only")
+      if (DeliveryMethod.Id == 4)
       {
         return DeliveryMethod.Price;
       }
+
+      if (Subtotal >= 1000)
+      {
+        return Subtotal;
+      }
+
       return Subtotal + DeliveryMethod.Price;
     }
   }
