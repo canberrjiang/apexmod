@@ -137,6 +137,27 @@ namespace API.Controllers
       return Ok(tagToReturn);
     }
 
+    [HttpPost("tags")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<TagToReturnDto>> CreateAdminProductTag(TagToCreateDto newTag)
+    {
+      Tag tag = _mapper.Map<TagToCreateDto, Tag>(newTag);
+      _unitOfWork.Repository<Tag>().Add(tag);
+      var result = await _unitOfWork.Complete();
+      return Ok(_mapper.Map<Tag, TagToReturnDto>(tag));
+    }
+
+    [HttpPut("tags/{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<TagToReturnDto>> UpdateAdminProductTag(int id, TagToCreateDto newTag)
+    {
+      var tag = await _unitOfWork.Repository<Tag>().GetByIdAsync(id);
+      if (tag == null) return BadRequest(new ApiResponse(400, "tag does not exist"));
+      _mapper.Map(newTag, tag);
+      _unitOfWork.Repository<Tag>().Update(tag);
+      var result = _unitOfWork.Complete();
+      return Ok(_mapper.Map<Tag, TagToReturnDto>(tag));
+    }
     // Only return tags that attached to products
     // [HttpGet("tags")]
     // public async Task<ActionResult<IReadOnlyList<TagToReturnDto>>> GetAdminProductTags()
@@ -156,6 +177,16 @@ namespace API.Controllers
       var result = await _unitOfWork.Repository<ProductCategory>().ListAllAsync();
       var categoryToReturn = _mapper.Map<IReadOnlyList<ProductCategory>, IReadOnlyList<ProductCategoryToReturnDto>>(result);
       return Ok(categoryToReturn);
+    }
+
+    [HttpPost("categories")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<TagToReturnDto>> CreateAdminProductCategory(CategoryToCreateDto newCategory)
+    {
+      ProductCategory category = _mapper.Map<CategoryToCreateDto, ProductCategory>(newCategory);
+      _unitOfWork.Repository<ProductCategory>().Add(category);
+      var result = await _unitOfWork.Complete();
+      return Ok(_mapper.Map<ProductCategory, CategoryToReturnDto>(category));
     }
 
     // For Admin to view all products

@@ -50,6 +50,9 @@ namespace API.Helpers
       CreateMap<Tag, TagToReturnDto>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.Name));
+      CreateMap<ProductCategory, CategoryToReturnDto>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.Name));
       CreateMap<ChildProduct, ChildProductToReturnDto>()
         .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
         .ForMember(d => d.Name, o => o.MapFrom(s => s.Name))
@@ -74,6 +77,8 @@ namespace API.Helpers
       ForMember(d => d.IsPublished, o => o.MapFrom(s => s.ChildProduct.IsPublished)).
       ForMember(d => d.IsDefault, o => o.MapFrom(s => s.IsDefault)).ReverseMap();
       CreateMap<DeliveryMethodToCreate, DeliveryMethod>();
+      CreateMap<TagToCreateDto, Tag>();
+      CreateMap<CategoryToCreateDto, ProductCategory>();
     }
   }
 }
