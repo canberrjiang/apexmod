@@ -59,6 +59,46 @@
       </div>
     </div>
   </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="price">Discount Price</label>
+      <input
+        [ngClass]="{
+          'is-invalid':
+            discountPrice.invalid &&
+            (discountPrice.dirty || discountPrice.touched)
+        }"
+        required
+        type="text"
+        class="form-control"
+        id="discountPrice"
+        placeholder="Price"
+        currencyMask
+        name="discountPrice"
+        #discountPrice="ngModel"
+        min="0.00"
+        [ngModel]="+product.discountPrice"
+        (ngModelChange)="updateDiscountPrice(+$event)"
+      />
+      <div
+        *ngIf="
+          discountPrice.invalid &&
+          (discountPrice.dirty || discountPrice.touched)
+        "
+        class="invalid-feedback"
+      >
+        <div *ngIf="discountPrice.errors.required">
+          Discount price is required
+        </div>
+        <div *ngIf="discountPrice.errors.pattern">
+          Discount price needs to be decimal value
+        </div>
+        <div *ngIf="discountPrice.errors.min">
+          Discount price must be greater than or equal to zero
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- <div class="form-row">
     <div class="form-group col-md-12">

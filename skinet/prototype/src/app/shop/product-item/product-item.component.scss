@@ -1,10 +1,8 @@
-
-.product-card{
+.product-card {
   min-width: 210px;
   max-width: 253px;
   margin-left: auto;
   margin-right: auto;
-
 }
 
 .btn {
@@ -12,27 +10,34 @@
   height: 40px;
 }
 
-.btn-groups{
+.btn-groups {
   display: flex;
   justify-content: space-around;
-
 }
 
-.img-box{
-  width:100%;
+.img-box {
+  width: 100%;
   height: 0;
   padding-bottom: 100%;
 }
 
-.product-item__title{
+.product-item__title {
   font-weight: bold;
   color: black;
   height: 44px;
-  overflow:hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
-
 }
 
-.btn--view{
+.btn--view {
   font-weight: bold;
+}
+
+.discount-price {
+  color: red;
+}
+.default-price {
+  text-decoration: line-through;
+  -webkit-text-decoration-color: red; /* Safari */
+  text-decoration-color: red;
 }

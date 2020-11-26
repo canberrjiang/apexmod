@@ -7,18 +7,17 @@ export interface IProduct {
   // productType: string;
   // productGraphic: string;
   // productBrand: string;
-  
+
   // tags:[]
   photos: IPhoto[];
-  childProducts:IComponent[];
-  productCategory:string;
+  childProducts: IComponent[];
+  productCategory: string;
   quantity: number;
   tags: any;
   isPublished: boolean;
-  information?:string;
-  discriminator:string;
-
-
+  information?: string;
+  discriminator: string;
+  discountPrice: number;
 }
 
 export interface IProductToCreate {
@@ -27,11 +26,12 @@ export interface IProductToCreate {
   price: number;
   pictureUrl: string;
   productCategoryId: number;
-  productTagIds :number[];
-  selectedChildProducts : IChildProduct[];
+  productTagIds: number[];
+  selectedChildProducts: IChildProduct[];
   isPublished: boolean;
-  discriminator:string;
-  information:string;
+  discriminator: string;
+  information: string;
+  discountPrice: number;
   // productTypeId: number;
   // productGraphicId: number;
   // productBrand: string;
@@ -43,16 +43,17 @@ export class ProductFormValues implements IProductToCreate {
   description = '';
   price = 0;
   pictureUrl = '';
-  productCategoryId:number;
-  productTagIds :number[]=[];
+  productCategoryId: number;
+  productTagIds: number[] = [];
   // childProductIds:IChildProduct[];
-  selectedChildProducts:IChildProduct[];
+  selectedChildProducts: IChildProduct[];
   isPublished = false;
-  childProducts=[];
-  productCategory ='';
-  tags ='';
-  discriminator:string;
+  childProducts = [];
+  productCategory = '';
+  tags = '';
+  discriminator: string;
   information = '';
+  discountPrice = 0;
   // productBrandId: number;
   // productTypeId: number;
   // productPlatformId: number;
@@ -61,7 +62,6 @@ export class ProductFormValues implements IProductToCreate {
   constructor(init?: ProductFormValues) {
     Object.assign(this, init);
   }
-  
 }
 
 export interface IPhoto {
@@ -72,10 +72,9 @@ export interface IPhoto {
 }
 
 export interface IChildProduct {
-  childProductId: number,
-  IsDefault: boolean
+  childProductId: number;
+  IsDefault: boolean;
 }
-
 
 export interface IComponent {
   id: number;
@@ -83,10 +82,10 @@ export interface IComponent {
   description: string;
   price: number;
   pictureUrl: string;
-  name: string,
-  category: string,
-  isPublished: true,
-  default: boolean
+  name: string;
+  category: string;
+  isPublished: true;
+  default: boolean;
 }
 
 export interface IComponentPhoto {
@@ -95,30 +94,27 @@ export interface IComponentPhoto {
   fileName: string;
 }
 
-export interface IComponentToCreate {
-  title: string;
-  description: string;
-  pPrice: number;
-  tPrice: number;
-  productId: number;
-}
+// export interface IComponentToCreate {
+//   title: string;
+//   description: string;
+//   pPrice: number;
+//   tPrice: number;
+//   productId: number;
+// }
 
-export class ComponentFormValues implements IComponentToCreate {
-  title = '';
-  description = '';
-  pPrice = 0;
-  tPrice = 0;
-  productId = null;
+// export class ComponentFormValues implements IComponentToCreate {
+//   title = '';
+//   description = '';
+//   pPrice = 0;
+//   tPrice = 0;
+//   productId = null;
 
-  constructor(init?: ComponentFormValues) {
-    Object.assign(this, init);
-  }
-  
-}
-
+//   constructor(init?: ComponentFormValues) {
+//     Object.assign(this, init);
+//   }
+// }
 
 export interface IChildrenComponent {
   category: string;
-  itemsList:[]
-
+  itemsList: [];
 }

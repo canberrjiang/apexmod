@@ -241,6 +241,9 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     this.product.price = event;
   }
 
+  updateDiscountPrice(event: any) {
+    this.product.discountPrice = event;
+  }
   closeAlert() {
     this.success = false;
   }

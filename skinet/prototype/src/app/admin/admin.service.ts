@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import {environment} from '../../environments/environment';
-import {ProductFormValues, ComponentFormValues} from '../shared/models/products';
-import { IDeliveryMethodToUpdate } from "../shared/models/deliveryMethod";
-import {HttpClient} from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { ProductFormValues } from '../shared/models/products';
+import { IDeliveryMethodToUpdate } from '../shared/models/deliveryMethod';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminService {
   baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   createProduct(product: ProductFormValues) {
     return this.http.post(this.baseUrl + 'products', product);
@@ -29,41 +29,48 @@ export class AdminService {
     formData.append('photo', file, 'image.png');
     return this.http.put(this.baseUrl + 'products/' + id + '/photo', formData, {
       reportProgress: true,
-      observe: 'events'
+      observe: 'events',
     });
   }
 
-
   deleteProductPhoto(photoId: number, productId: number) {
-    return this.http.delete(this.baseUrl + 'products/' + productId + '/photo/' + photoId);
+    return this.http.delete(
+      this.baseUrl + 'products/' + productId + '/photo/' + photoId
+    );
   }
 
   setMainPhoto(photoId: number, productId: number) {
-    return this.http.post(this.baseUrl + 'products/' + productId + '/photo/' + photoId, {});
+    return this.http.post(
+      this.baseUrl + 'products/' + productId + '/photo/' + photoId,
+      {}
+    );
   }
-
-
 
   // getAllChildProduct(){
   //   return this.http.get(this.baseUrl+ 'products/discriminator/childproduct');
   // }
 
-  getChildProductByCategory(id){
-    return this.http.get(this.baseUrl+ 'products/productcategory/' +id);
+  getChildProductByCategory(id) {
+    return this.http.get(this.baseUrl + 'products/productcategory/' + id);
   }
 
   uploadRichImages(formData) {
     return this.http.post(this.baseUrl + 'products/richtextphoto', formData, {
-      responseType: 'text'
+      responseType: 'text',
     });
   }
 
-
-  deleteComponentPhoto(componentId: number,photoId: number) {
-    return this.http.delete(this.baseUrl + 'productcomponent/' + componentId + '/componentphoto/' + photoId);
+  deleteComponentPhoto(componentId: number, photoId: number) {
+    return this.http.delete(
+      this.baseUrl +
+        'productcomponent/' +
+        componentId +
+        '/componentphoto/' +
+        photoId
+    );
   }
 
-  getOrdersForAdmin(){
+  getOrdersForAdmin() {
     return this.http.get(this.baseUrl + 'orders/all');
   }
 
@@ -71,13 +78,14 @@ export class AdminService {
     return this.http.get(this.baseUrl + 'orders/all/' + id);
   }
 
-  getDeliveryMethod4(){
-    return this.http.get(this.baseUrl + 'orders/deliverymethods/4')
+  getDeliveryMethod4() {
+    return this.http.get(this.baseUrl + 'orders/deliverymethods/4');
   }
 
-  updateDeliveryMethod4(deliveryMethod:IDeliveryMethodToUpdate){
-    return this.http.put(this.baseUrl + 'orders/deliverymethods/4', deliveryMethod)
+  updateDeliveryMethod4(deliveryMethod: IDeliveryMethodToUpdate) {
+    return this.http.put(
+      this.baseUrl + 'orders/deliverymethods/4',
+      deliveryMethod
+    );
   }
-
-
 }

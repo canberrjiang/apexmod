@@ -28,17 +28,23 @@
       src="{{ product.pictureUrl }}"
       alt="{{ product.name }}"
       routerLink="/shop/{{ product.id }}"
-      class="img-fluid bg-Light "
+      class="img-fluid bg-Light"
     />
-
   </div>
 
-  <div class="card-body ">
+  <div class="card-body">
     <a routerLink="/shop/{{ product.id }}" class="">
       <h5 class="card-title product-item__title">{{ product.name }}</h5>
     </a>
-    <p class="card-text">{{ product.price | currency }}</p>
-
+    <p *ngIf="product.discountPrice === 0" class="card-text">
+      {{ product.price | currency }}
+    </p>
+    <p *ngIf="product.discountPrice !== 0" class="card-text">
+      <span class="default-price">{{ product.price | currency }}</span> -
+      <span class="discount-price"
+        >{{ product.price - product.discountPrice | currency }} </span
+      ><span> ({{ product.discountPrice | currency }} off)</span>
+    </p>
     <div class="btn-groups">
       <ng-container
         *ngIf="product.discriminator === 'Product'; else other_content"
@@ -58,17 +64,14 @@
           class="btn btn-success fa fa-shopping-cart mr-2"
         ></button>
 
-      <button
-        routerLink="/shop/{{ product.id }}"
-        type="button"
-        class="btn btn-primary btn--view"
-      >
-        View
-      </button>
-
+        <button
+          routerLink="/shop/{{ product.id }}"
+          type="button"
+          class="btn btn-primary btn--view"
+        >
+          View
+        </button>
       </ng-template>
-
-
     </div>
   </div>
 </div>

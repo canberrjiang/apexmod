@@ -178,13 +178,13 @@ export class ProductDetailsComponent implements OnInit {
     for (let key in data) {
       count += data[key];
     }
-    this.product.price = count;
+    this.product.price = count - this.product.discountPrice;
     return count;
   }
 
-  handleChange(productCategory, id, price, pictureUrl) {
+  handleChange(productCategory, id, price, pictureUrl, discountPrice) {
     this.childComponentsId[productCategory] = id;
-    this.childComponentsPrice[productCategory] = price;
+    this.childComponentsPrice[productCategory] = price - discountPrice;
     this.childComponentsImg[productCategory] = pictureUrl;
     // console.log(this.childComponentsImg);
     this.setPrice(this.childComponentsPrice);
@@ -207,7 +207,7 @@ export class ProductDetailsComponent implements OnInit {
     arr.forEach((items, index) => {
       let products = priceGroup[items.productCategory] || 0;
       if (items.isDefault) {
-        products = items.price;
+        products = items.price - items.discountPrice;
       }
       priceGroup[items.productCategory] = products;
     });
@@ -338,6 +338,8 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe(
         (product) => {
           this.product = product;
+          this.product.price = product.price - product.discountPrice;
+          // console.log(this.product);
           this.bcService.set('@productDetails', product.name);
           this.initializeGallery();
 
@@ -375,6 +377,7 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe(
         (product) => {
           this.product = product;
+          this.product.price = product.price - product.discountPrice;
           // console.log('imagecheck3', this.product);
           this.bcService.set('@productDetails', product.name);
           this.initializeGallery();
