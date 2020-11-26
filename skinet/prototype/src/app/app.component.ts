@@ -9,6 +9,7 @@ import { AccountService } from './account/account.service';
 })
 export class AppComponent implements OnInit {
   title = 'Apex Mod';
+  show = true;
 
   constructor(
     private basketService: BasketService,
@@ -45,5 +46,9 @@ export class AppComponent implements OnInit {
         }
       );
     }
+  }
+
+  toggleLogo() {
+    this.show = !this.show;
   }
 }

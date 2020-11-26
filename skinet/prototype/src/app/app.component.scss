@@ -62,7 +62,7 @@
     }
 
     & .chat__details {
-      display: none;
+      display: block;
       position: absolute;
       right: 60px;
       top: -103px;
@@ -83,8 +83,12 @@
         width: 160px;
       }
     }
-    &:hover .chat__details {
-      display: block;
-    }
+    // &:hover .chat__details {
+    //   display: block;
+    // }
   }
+}
+
+.btn--close {
+  margin-right: 1px;
 }

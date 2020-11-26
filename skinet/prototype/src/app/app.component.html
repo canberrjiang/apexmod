@@ -17,16 +17,21 @@
         src="assets/images/phone_logo.png"
         class="logo"
         style="display: block"
+        (click)="toggleLogo()"
       />
-      <div class="chat__details" style="text-align: center">
-        <!-- <img src="assets/images/wei01.jpeg" /> -->
+      <div class="chat__details" style="text-align: center" [hidden]="show">
+        <button type="button" class="close btn--close" (click)="toggleLogo()">
+          &times;
+        </button>
         <div class="chat__detail">
           <p><strong>Phone:</strong></p>
-          <p>0408 148 811</p>
+          <a href="tel:0408148811"><p>0408 148 811</p></a>
         </div>
         <div class="chat__detail">
           <p><strong>Email:</strong></p>
-          <p>support@toplayer.com.au</p>
+          <a href="mailto:support@toplayer.com.au"
+            ><p>support@toplayer.com.au</p></a
+          >
         </div>
         <div class="chat__detail">
           <p><strong>Service Hours:</strong></p>
