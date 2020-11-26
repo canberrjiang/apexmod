@@ -1,9 +1,9 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
-@import "../node_modules/bootswatch/dist/cosmo/bootstrap.min.css";
+@import "../node_modules/bootswatch/dist/journal/bootstrap.min.css";
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
 @import "../node_modules/ngx-toastr/toastr.css";
-@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import "~@swimlane/ngx-datatable/themes/material.scss";
 /* You can add global styles to this file, and also import other style files */
 .xng-breadcrumb-root {
   // padding: 8px 16px;
@@ -24,24 +24,26 @@ label.xng-breadcrumb-trail {
   height: 3.125em;
 }
 
-.product-tabset > .nav-tabs > li.open > a, .product-tabset > .nav-tabs > li:hover > a {
+.product-tabset > .nav-tabs > li.open > a,
+.product-tabset > .nav-tabs > li:hover > a {
   border: 0;
   background: none !important;
   color: #333333;
 }
 
-.product-tabset > .nav-tabs > li.open > a > i, .product-tabset > .nav-tabs > li:hover > a > i {
+.product-tabset > .nav-tabs > li.open > a > i,
+.product-tabset > .nav-tabs > li:hover > a > i {
   color: #a6a6a6;
 }
 
-.product-tabset > .nav-tabs > li.open .dropdown-menu, .product-tabset > .nav-tabs > li:hover .dropdown-menu {
-
+.product-tabset > .nav-tabs > li.open .dropdown-menu,
+.product-tabset > .nav-tabs > li:hover .dropdown-menu {
   margin-top: 0px;
   z-index: 100;
 }
 
 .product-tabset > .nav-tabs > li.active {
-  border-bottom: 4px solid #E95420;
+  border-bottom: 4px solid #e95420;
   position: relative;
 }
 
@@ -62,34 +64,34 @@ label.xng-breadcrumb-trail {
   padding: 15px 0;
 }
 
-
-#description--text{
+#description--text {
   width: inherit;
-  & >p{
+  & > p {
     width: inherit !important;
-  } 
-  & img{
+  }
+  & img {
     width: 100% !important;
     height: auto !important;
   }
 }
-#information--text{
+#information--text {
   width: inherit;
-  & >p{
+  & > p {
     width: inherit !important;
-  } 
-  & img{
+  }
+  & img {
     width: 100% !important;
     height: auto !important;
   }
 }
 
-.ngx-gallery-icon-content{
+.ngx-gallery-icon-content {
   color: #000000;
   background-color: rgba(255, 255, 255, 0.6);
 }
 
-.carousel-control-prev-icon, .carousel-control-next-icon{
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
   width: 25px;
   height: 25px;
 }
@@ -111,16 +113,16 @@ label.xng-breadcrumb-trail {
   overflow: hidden;
 }
 
-.main-container{
+.main-container {
   background-color: white;
   min-height: calc(100vh - 240px);
 }
 
-#navbars-apex .dropdown-menu{
+#navbars-apex .dropdown-menu {
   right: -16px !important;
   z-index: 100;
 }
 
-.default-true{
+.default-true {
   background: pink;
 }
