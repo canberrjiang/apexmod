@@ -21,6 +21,6 @@ export class HomeComponent implements OnInit {
   }
 
   getPcProduct() {
-    return this.http.get(this.baseUrl + 'products?producttagid=20');
+    return this.http.get(this.baseUrl + 'products?producttagid=20&pageSize=12');
   }
 }

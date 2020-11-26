@@ -1,5 +1,5 @@
 export class ShopParams {
-  producttagid= 1;
+  producttagid = 3;
   sort = 'name';
   pageNumber = 1;
   pageSize = 12;
