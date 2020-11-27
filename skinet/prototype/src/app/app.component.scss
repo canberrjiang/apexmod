@@ -22,7 +22,8 @@
     z-index: -2;
     background-color: black;
     background-size: contain;
-    background-image: url("../assets/images/bg_left.jpg");
+    // background-image: url("../assets/images/bg_left.jpg");
+    background-image: url("../assets/images/bg.jpeg");
     background-repeat: no-repeat;
   }
   &::after {
@@ -33,7 +34,8 @@
     right: 0;
     top: 0;
     z-index: -2;
-    background-image: url("../assets/images/bg_left.jpg");
+    // background-image: url("../assets/images/bg_left.jpg");
+    background-image: url("../assets/images/bg.jpeg");
     background-size: contain;
     background-color: black;
     background-position: right 0;
