@@ -22,8 +22,8 @@
     z-index: -2;
     background-color: black;
     background-size: contain;
-    // background-image: url("../assets/images/bg_left.jpg");
-    background-image: url("../assets/images/bg.jpeg");
+    background-image: url("https://raw.githubusercontent.com/apexmod/bg/main/top1.jpeg");
+    // background-image: url("../assets/images/bg.jpeg");
     background-repeat: no-repeat;
   }
   &::after {
@@ -34,8 +34,8 @@
     right: 0;
     top: 0;
     z-index: -2;
-    // background-image: url("../assets/images/bg_left.jpg");
-    background-image: url("../assets/images/bg.jpeg");
+    background-image: url("https://raw.githubusercontent.com/apexmod/bg/main/top1.jpeg");
+    // background-image: url("../assets/images/bg.jpeg");
     background-size: contain;
     background-color: black;
     background-position: right 0;
@@ -75,6 +75,7 @@
       z-index: 2;
       & .chat__detail {
         margin-bottom: 6px;
+        font-size: 0.91rem;
 
         & p {
           margin-bottom: 1px;
