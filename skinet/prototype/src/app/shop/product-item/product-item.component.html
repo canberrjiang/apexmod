@@ -40,9 +40,10 @@
       {{ product.price | currency }}
     </p>
     <p *ngIf="product.discountPrice !== 0" class="card-text">
-      <span class="default-price">{{ product.price | currency }}</span> -
-      <span class="discount-price"
-        >{{ product.price - product.discountPrice | currency }} </span
+      <span class="default-price">{{
+        product.price + product.discountPrice | currency
+      }}</span>
+      - <span class="discount-price">{{ product.price | currency }} </span
       ><span> ({{ product.discountPrice | currency }} off)</span>
     </p>
     <div class="btn-groups">

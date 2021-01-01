@@ -12,14 +12,15 @@ export class ProductItemComponent implements OnInit {
 
   constructor(private basketService: BasketService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.product.price = this.product.price - this.product.discountPrice;
+  }
 
   addItemToBasket() {
-    this.updatePrice();
     this.basketService.addItemToBasket(this.product, 1);
   }
 
-  updatePrice() {
-    this.product.price = this.product.price - this.product.discountPrice;
-  }
+  // updatePrice() {
+  //   this.product.price = this.product.price - this.product.discountPrice;
+  // }
 }
