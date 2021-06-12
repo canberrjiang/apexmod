@@ -10,10 +10,10 @@ import { BasketService } from 'src/app/basket/basket.service';
 export class ProductItemComponent implements OnInit {
   @Input() product: IProduct;
 
-  constructor(private basketService: BasketService) {}
+  constructor(private basketService: BasketService) { }
 
   ngOnInit() {
-    this.product.price = this.product.price - this.product.discountPrice;
+    // this.product.price = this.product.price - this.product.discountPrice;
   }
 
   addItemToBasket() {
