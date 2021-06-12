@@ -26,7 +26,7 @@ export class BasketService {
   private quantityNumSource = new BehaviorSubject<IBasketQuantity>(null);
   quantityNum$ = this.quantityNumSource.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createPaymentIntent() {
     // console.log(this.getCurrentBasketValue());
@@ -162,13 +162,14 @@ export class BasketService {
 
   private calculateTotals() {
     const basket = this.getCurrentBasketValue();
+    const dmId = basket.deliveryMethodId;
     const shipping = this.shipping;
     const subtotal = basket.items.reduce(
       (prevValue, item) => item.price * item.quantity + prevValue,
       0
     );
     let total = 0;
-    if (shipping == 200) {
+    if (dmId == 4) {
       total = shipping;
     } else {
       total = subtotal + shipping;
