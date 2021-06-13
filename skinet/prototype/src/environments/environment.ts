@@ -4,8 +4,8 @@
 
 export const environment = {
   production: true,
-  // apiUrl: 'https://localhost:5001/api/'
-  apiUrl: 'https://www.toplayer.com.au/api/'
+  apiUrl: 'https://localhost:5001/api/'
+  // apiUrl: 'https://www.toplayer.com.au/api/'
   // apiUrl: 'https://www.apexmod.com.au/api/'
 
 
