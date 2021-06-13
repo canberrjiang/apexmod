@@ -28,17 +28,12 @@ namespace API.Controllers
       var order = new OrderRequest();
       var orderSpec = new OrderWithDeliveryMethodSpecification(id);
       var myOrder = await _unitOfWork.Repository<Core.Entities.OrderAggregate.Order>().GetEntityWithSpec(orderSpec);
-      var myOrderSubtotal = myOrder.Subtotal;
-      var shippingCost = myOrder.Subtotal >= 1000 ? 0 : myOrder.DeliveryMethod.Price;
       HttpResponse response;
       if (myOrder.Status == Core.Entities.OrderAggregate.OrderStatus.PaymentRecevied) return new Order();
-      if (myOrder.DeliveryMethod.Id == 4)
+      order = new OrderRequest()
       {
-        myOrderSubtotal = myOrder.DeliveryMethod.Price;
-        order = new OrderRequest()
-        {
-          CheckoutPaymentIntent = "CAPTURE",
-          PurchaseUnits = new List<PurchaseUnitRequest>()
+        CheckoutPaymentIntent = "CAPTURE",
+        PurchaseUnits = new List<PurchaseUnitRequest>()
                 {
                     new PurchaseUnitRequest()
                     {
@@ -64,67 +59,13 @@ namespace API.Controllers
                         }
                     }
                 },
-          ApplicationContext = new ApplicationContext()
-          {
-            ReturnUrl = "https://toplayer.com.au/",
-            CancelUrl = "https://toplayer.com.au/"
-          }
-        };
-      }
-      else
-      {
-        // Construct a request object and set desired parameters
-        // Create a POST request to /v2/checkout/orders
-        order = new OrderRequest()
+        ApplicationContext = new ApplicationContext()
         {
-          CheckoutPaymentIntent = "CAPTURE",
-          PurchaseUnits = new List<PurchaseUnitRequest>()
-                {
-                    new PurchaseUnitRequest()
-                    {
-                        AmountWithBreakdown = new AmountWithBreakdown()
-                        {
-                            CurrencyCode = "AUD",
-                            AmountBreakdown = new AmountBreakdown()
-                            {
-                              ItemTotal = new Money()
-                              {
-                                CurrencyCode = "AUD",
-                                Value = myOrder.Subtotal.ToString()
-                              },
-                              Shipping = new Money()
-                              {
-                                CurrencyCode = "AUD",
-                                Value = shippingCost.ToString()
-                              }
-                            },
-                            Value = myOrder.GetTotal().ToString()
-                        },
-                        ShippingDetail = new ShippingDetail()
-                        {
-                          AddressPortable = new AddressPortable()
-                          {
-                            AddressLine1 = myOrder.ShipToAddress.Street,
-                            AdminArea1 = myOrder.ShipToAddress.City,
-                            AdminArea2 = myOrder.ShipToAddress.State,
-                            PostalCode = myOrder.ShipToAddress.Zipcode,
-                            CountryCode = "AU"
-                          },
-                          Name = new Name()
-                          {
-                            FullName = myOrder.ShipToAddress.FirstName + " " + myOrder.ShipToAddress.LastName
-                          }
-                        }
-                    }
-                },
-          ApplicationContext = new ApplicationContext()
-          {
-            ReturnUrl = "https://apexmod.com.au/",
-            CancelUrl = "https://apexmod.com.au/"
-          }
-        };
+          ReturnUrl = "https://toplayer.com.au/",
+          CancelUrl = "https://toplayer.com.au/"
+        }
+      };
 
-      }
 
       // Call Paypal API
       var request = new OrdersCreateRequest();

@@ -30,18 +30,18 @@ namespace Core.Entities.OrderAggregate
     public OrderStatus Status { get; set; } = OrderStatus.Pending;
     public decimal GetTotal()
     {
+      var result = Subtotal + DeliveryMethod.Price;
       // Deposit Only
       if (DeliveryMethod.Id == 4)
       {
-        return DeliveryMethod.Price;
+        result = DeliveryMethod.Price;
       }
-
-      if (Subtotal >= 1000)
+      else if (Subtotal >= 1000)
       {
-        return Subtotal;
+        result = Subtotal;
       }
 
-      return Subtotal + DeliveryMethod.Price;
+      return Math.Round(Decimal.Multiply(result, (decimal)1.015), 2);
     }
   }
 }

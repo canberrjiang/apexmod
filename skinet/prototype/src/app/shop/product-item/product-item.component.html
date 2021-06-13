@@ -24,12 +24,8 @@
 
 <div class="card h-100 shadow-sm product-card">
   <div class="image position-relative img-box" style="cursor: pointer">
-    <img
-      src="{{ product.pictureUrl }}"
-      alt="{{ product.name }}"
-      routerLink="/shop/{{ product.id }}"
-      class="img-fluid bg-Light"
-    />
+    <img src="{{ product.pictureUrl }}" alt="{{ product.name }}" routerLink="/shop/{{ product.id }}"
+      class="img-fluid bg-Light" />
   </div>
 
   <div class="card-body">
@@ -41,35 +37,22 @@
     </p>
     <p *ngIf="product.discountPrice !== 0" class="card-text">
       <span class="default-price">{{
-        product.price + product.discountPrice | currency
-      }}</span>
-      - <span class="discount-price">{{ product.price | currency }} </span
-      ><span> ({{ product.discountPrice | currency }} off)</span>
+        product.price | currency
+        }}</span>
+      - <span class="discount-price">{{ product.price - product.discountPrice | currency }} </span><span> ({{
+        product.discountPrice | currency
+        }} off)</span>
     </p>
     <div class="btn-groups">
-      <ng-container
-        *ngIf="product.discriminator === 'Product'; else other_content"
-      >
-        <button
-          routerLink="/shop/{{ product.id }}"
-          type="button"
-          class="btn btn-success mr-2 btn--view"
-        >
+      <ng-container *ngIf="product.discriminator === 'Product'; else other_content">
+        <button routerLink="/shop/{{ product.id }}" type="button" class="btn btn-success mr-2 btn--view">
           Configure
         </button>
       </ng-container>
       <ng-template #other_content>
-        <button
-          (click)="addItemToBasket()"
-          type="button"
-          class="btn btn-success fa fa-shopping-cart mr-2"
-        ></button>
+        <button (click)="addItemToBasket()" type="button" class="btn btn-success fa fa-shopping-cart mr-2"></button>
 
-        <button
-          routerLink="/shop/{{ product.id }}"
-          type="button"
-          class="btn btn-primary btn--view"
-        >
+        <button routerLink="/shop/{{ product.id }}" type="button" class="btn btn-primary btn--view">
           View
         </button>
       </ng-template>

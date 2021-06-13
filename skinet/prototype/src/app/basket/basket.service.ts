@@ -220,7 +220,7 @@ export class BasketService {
     return {
       id: item.id,
       productName: item.name,
-      price: item.price,
+      price: item.price - item.discountPrice,
       pictureUrl: item.pictureUrl,
       quantity,
       childProducts: childProducts,
