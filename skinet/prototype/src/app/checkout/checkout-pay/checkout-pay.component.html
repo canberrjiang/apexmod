@@ -27,12 +27,9 @@
         </div>
       </div>
       <div class="col-12 col-sm-5 col-md-4">
-        <app-order-totals
-          *ngIf="order"
-          [shippingPrice]="order.shippingPrice"
-          [subtotal]="order.subtotal"
-          [total]="order.total"
-        ></app-order-totals>
+        <app-checkout-pay-order-totals *ngIf="order" [shippingPrice]="order.shippingPrice" [subtotal]="order.subtotal"
+          [total]="order.total">
+        </app-checkout-pay-order-totals>
       </div>
     </div>
   </div>

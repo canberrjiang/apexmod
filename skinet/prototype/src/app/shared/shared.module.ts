@@ -23,10 +23,11 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { HtmlPipe } from './shared.pipe';
+import { CheckoutPayOrderTotalsComponent } from './components/checkout-pay-order-totals/checkout-pay-order-totals.component';
 
 
 @NgModule({
-  declarations: [PagingHeaderComponent, PagerComponent, OrderTotalsComponent, TextInputComponent, StepperComponent, BasketSummaryComponent, PhotoWidgetComponent, ProductItemsComponent, HtmlPipe],
+  declarations: [PagingHeaderComponent, PagerComponent, OrderTotalsComponent, TextInputComponent, StepperComponent, BasketSummaryComponent, PhotoWidgetComponent, ProductItemsComponent, HtmlPipe, CheckoutPayOrderTotalsComponent],
   imports: [
     CommonModule,
     PaginationModule.forRoot(),
@@ -51,6 +52,7 @@ import { HtmlPipe } from './shared.pipe';
     PagerComponent,
     CarouselModule,
     OrderTotalsComponent,
+    CheckoutPayOrderTotalsComponent,
     ReactiveFormsModule,
     FormsModule,
     BsDropdownModule,
