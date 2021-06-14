@@ -14,11 +14,11 @@
     </li>
     <li class="d-flex justify-content-between py-3 border-bottom">
       <strong class="text-muted">Transaction fee (1.5%)</strong>
-      <strong>{{(subtotal + shippingPrice) * 0.015 | currency}}</strong>
+      <strong>{{total * 0.015 | currency}}</strong>
     </li>
     <li class="d-flex justify-content-between py-3 border-bottom">
       <strong class="text-muted">Total</strong>
-      <strong>{{(subtotal + shippingPrice) * 1.015 | currency}}</strong>
+      <strong>{{total * 1.015 | currency}}</strong>
     </li>
   </ul>
 </div>
